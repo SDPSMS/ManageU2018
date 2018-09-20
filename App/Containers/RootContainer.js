@@ -5,9 +5,11 @@ import { connect } from 'react-redux'
 
 // Styles
 import styles from './Styles/RootContainerStyles'
+import {initializeFirebase} from "../Services/FirebaseConfig";
 
 class RootContainer extends Component {
-  componentDidMount () {
+  componentWillMount () {
+    initializeFirebase()
   }
 
   render () {

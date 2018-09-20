@@ -26,7 +26,7 @@ export default (rootReducer) => {
   /* ------------- Assemble Middleware ------------- */
   enhancers.push(applyMiddleware(...middleware))
 
-  const store = createStore(rootReducer, compose(...enhancers))
+  const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), compose(...enhancers))
 
   // kick off root saga
 

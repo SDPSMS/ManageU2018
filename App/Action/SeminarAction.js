@@ -1,4 +1,6 @@
 import firebase from 'firebase';
+import NavigationActions from '../Services/NavigationService'
+import * as NavPath from '../Navigation/NavigationPath'
 
 function loadSeminarStart () {
   return {
@@ -16,3 +18,11 @@ export function loadAllSeminars () {
       });
   };
 }
+
+export function selectSeminar (seminarId) {
+  return (dispatch) => {
+    dispatch({type: 'SELECTED_SEMINAR', payload: seminarId})
+    // dispatch(NavigationActions.navigate(NavPath.LOGIN))
+  }
+}
+
