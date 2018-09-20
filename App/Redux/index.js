@@ -10,6 +10,10 @@ export default () => {
   let { store } = configureStore(reducers)
 
   if (module.hot) {
+    module.hot.accept(() => {
+      const nextRootReducer = require('./').reducers
+      store.replaceReducer(nextRootReducer)
+    })
   }
 
   return store
