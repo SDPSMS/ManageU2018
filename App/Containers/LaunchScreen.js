@@ -3,7 +3,7 @@ import { ScrollView, Text, Image, View } from 'react-native'
 import { Images } from '../Themes'
 
 // Styles
-import styles from './Styles/LaunchScreenStyles'
+import styles from './Styles/ContainerStyle'
 
 export default class LaunchScreen extends Component {
   render () {

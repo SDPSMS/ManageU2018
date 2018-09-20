@@ -1,35 +1,23 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Text, TouchableOpacity } from 'react-native'
-import styles from './Styles/DrawerButtonStyles'
-import ExamplesRegistry from '../Services/ExamplesRegistry'
+import React from 'react'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
-// Note that this file (App/Components/DrawerButton) needs to be
-// imported in your app somewhere, otherwise your component won't be
-// compiled and added to the examples dev screen.
-
-// Ignore in coverage report
-/* istanbul ignore next */
-ExamplesRegistry.addComponentExample('Drawer Button', () =>
-  <DrawerButton
-    text='Example left drawer button'
-    onPress={() => window.alert('Your drawers are showing')}
-  />
-)
-
-class DrawerButton extends Component {
-  static propTypes = {
-    text: PropTypes.string,
-    onPress: PropTypes.func
-  }
-
-  render () {
-    return (
-      <TouchableOpacity onPress={this.props.onPress}>
-        <Text style={styles.text}>{this.props.text}</Text>
-      </TouchableOpacity>
-    )
-  }
+/**
+ * Button to toggle open/close the drawer.
+ * @param navigation
+ * @returns {*}
+ */
+// TODO: Change with button. (Nav drawer button.)
+const drawerButton = (navigation) => {
+  // TODO: Needs redux implementation to check the type.
+  // the navigation function has to be tested.
+  return (
+    <Icon
+      name={'menu'}
+      size={20}
+      onPress={() => { navigation.state.index === 0 ? navigation.navigate('DrawerOpen') : navigation.navigate('DrawerClose') }}
+      style={{marginLeft: 10, color: 'white'}}
+    />
+  )
 }
 
-export default DrawerButton
+export default drawerButton
