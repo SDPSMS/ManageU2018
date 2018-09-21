@@ -26,6 +26,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+        isLoading: false,
       };
 
     case 'LOGIN_SUCCESS':

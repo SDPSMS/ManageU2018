@@ -1,5 +1,6 @@
 //Move firebase on to another folder.
 import firebase from 'firebase'
+import NavigationActions from '../Services/NavigationService'
 
 function startAuthentication () {
   return {
@@ -63,7 +64,7 @@ export function logout () {
     firebase.auth().signOut()
       .then(() => {
         dispatch(logoutSuccess())
-        NavigationService.navigate('LoggedOutNavigation')
+        dispatch(NavigationActions.navigate('LoggedOutNav'))
       })
       //TODO: Change the catch
       .catch(dispatch(logoutError()));
@@ -99,9 +100,18 @@ export function fetchMySeminar() {
 //TODO: Use this but can't directly use this in app.js.
 export function checkAuthenticated () {
   return (dispatch) => {
+    dispatch(startAuthentication())
     firebase.auth().onAuthStateChanged((user) => {
       dispatch({type: 'CHECK_AUTHENTICATED', payload: user});
-    });
+      console.log(NavigationActions)
+      if(user != null) {
+        //TODO: Dispatching the navigations here might not be right.
+        dispatch(NavigationActions.navigate('RootLoggedInNavigation'))
+      } else {
+        dispatch(NavigationActions.navigate('RootLoggedOutNavigation'))
+      }
+    })
+    ;
   };
 }
 

@@ -11,6 +11,10 @@ const ApplicationStyles = {
       flex: 1,
       backgroundColor: Colors.background
     },
+    secondaryContainer: {
+      flex: 1,
+      backgroundColor: Colors.fire
+    },
     backgroundImage: {
       position: 'absolute',
       top: 0,

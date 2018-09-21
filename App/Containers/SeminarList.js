@@ -9,13 +9,8 @@ import Loader from "../Components/Loader";
 import SeminarItem from "./SeminarItem";
 
 class SeminarList extends Component {
-  componentWillMount () {
-    this.props.loadAllSeminars()
-  }
-
   renderLoad () {
-    return this.props.isLoading ? <Loader/> :
-      (
+      return (
         <View style={styles.mainContainer}>
           <ScrollView style={styles.container}>
             <View>
@@ -51,11 +46,10 @@ function mapStateToProps (state) {
     }
   })
   return {
-    isLoading: state.seminar.isLoading,
     seminarsList: seminar
   }
 }
-export default connect(mapStateToProps, {loadAllSeminars})(SeminarList)
+export default connect(mapStateToProps, null)(SeminarList)
 
 // SeminarList.propTypes = {
 //   seminar: PropTypes.array,

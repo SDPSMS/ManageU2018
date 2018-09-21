@@ -9,6 +9,8 @@ import Register from '../Containers/Register'
 import DrawerButton from '../Components/DrawerButton'
 import Logout from "../Containers/Logout";
 
+import AuthLoadingScreen from '../Containers/AuthLoadingScreen'
+
 const AuthenticationStack = StackNavigator(
   {
     Login: {
@@ -96,18 +98,13 @@ const LoggedInNav = StackNavigator(
     })
   })
 
-
-
-const RootNavigation = (signedIn) => {
-  return SwitchNavigator(
-    {
-      LoggedInNavigation: {screen: LoggedInNav},
-      LoggedOutNavigation: {screen: LoggedOutNav},
-    },
-    {
-      initialRouteName: signedIn ? 'LoggedInNavigation' : 'LoggedOutNavigation'
-    }
-  )
-}
-
-export default LoggedOutNav
+export default SwitchNavigator(
+  {
+    AuthLoading: {screen: AuthLoadingScreen},
+    RootLoggedInNavigation: {screen: LoggedInNav},
+    RootLoggedOutNavigation: {screen: LoggedOutNav},
+  },
+  {
+    initialRouteName: 'AuthLoading'
+  }
+)
