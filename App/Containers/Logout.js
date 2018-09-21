@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import { Button } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {logout} from '../Action/UserAction'
+import { logout } from '../Action/UserAction'
 
 class Logout extends Component {
-
-  //TODO: Or instead of logging out directly, we can use modal dialog to ask whether user really wants to log out and
-  //then waits for confirmation
+  // TODO: Or instead of logging out directly, we can use modal dialog to ask whether user really wants to log out and
+  // then waits for confirmation
   render () {
     return (
       <Button
@@ -22,4 +21,4 @@ Logout.propTypes = {
   logout: PropTypes.func.isRequired
 }
 
-export default connect(null, {logout})(Logout);
+export default connect(null, { logout })(Logout)

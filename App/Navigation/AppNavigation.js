@@ -7,7 +7,7 @@ import styles from './Styles/NavigationStyles'
 import Login from '../Containers/Login'
 import Register from '../Containers/Register'
 import DrawerButton from '../Components/DrawerButton'
-import Logout from "../Containers/Logout";
+import Logout from '../Containers/Logout'
 
 import AuthLoadingScreen from '../Containers/AuthLoadingScreen'
 
@@ -56,10 +56,10 @@ const LoggedOutDrawerNav = DrawerNavigator({
 
 const LoggedOutNav = StackNavigator(
   {
-    LoggedOutNav: {screen: LoggedOutDrawerNav}
+    LoggedOutNav: { screen: LoggedOutDrawerNav }
   }, {
-    navigationOptions: ({navigation}) => ({
-      headerStyle: {backgroundColor: '#6495ed'},
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: { backgroundColor: '#6495ed' },
       gesturesEnabled: false,
       // TODO: Gives styling to ManageU Text here.
       title: 'ManageU',
@@ -81,17 +81,17 @@ const LoggedInDrawerNav = DrawerNavigator(
       navigationOptions: {
         drawerLabel: 'Logout'
       }
-    },
+    }
 
   })
 
 const LoggedInNav = StackNavigator(
   {
-    //TODO: Drawer Change in here instead of creating two nav.
-    LoggedInNav: {screen: LoggedInDrawerNav},
+    // TODO: Drawer Change in here instead of creating two nav.
+    LoggedInNav: { screen: LoggedInDrawerNav }
   }, {
-    navigationOptions: ({navigation}) => ({
-      headerStyle: {backgroundColor: '#6495ed'},
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: { backgroundColor: '#6495ed' },
       title: 'ManageU',
       gesturesEnabled: false,
       headerLeft: DrawerButton(navigation)
@@ -100,9 +100,9 @@ const LoggedInNav = StackNavigator(
 
 export default SwitchNavigator(
   {
-    AuthLoading: {screen: AuthLoadingScreen},
-    RootLoggedInNavigation: {screen: LoggedInNav},
-    RootLoggedOutNavigation: {screen: LoggedOutNav},
+    AuthLoading: { screen: AuthLoadingScreen },
+    RootLoggedInNavigation: { screen: LoggedInNav },
+    RootLoggedOutNavigation: { screen: LoggedOutNav }
   },
   {
     initialRouteName: 'AuthLoading'

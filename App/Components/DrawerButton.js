@@ -15,7 +15,7 @@ const drawerButton = (navigation) => {
       name={'menu'}
       size={20}
       onPress={() => { navigation.state.index === 0 ? navigation.navigate('DrawerOpen') : navigation.navigate('DrawerClose') }}
-      style={{marginLeft: 10, color: 'white'}}
+      style={{ marginLeft: 10, color: 'white' }}
     />
   )
 }

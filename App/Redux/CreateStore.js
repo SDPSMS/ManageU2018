@@ -31,6 +31,6 @@ export default (rootReducer) => {
   // kick off root saga
 
   return {
-    store,
+    store
   }
 }

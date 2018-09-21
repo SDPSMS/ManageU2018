@@ -8,8 +8,8 @@ import { ActivityIndicator, View } from 'react-native'
  * @returns {*}
  * @constructor
  */
-//size refer to the activity indicator's size.
-const Loader = ({size}) => {
+// size refer to the activity indicator's size.
+const Loader = ({ size }) => {
   return (
     <View styles={styles.loader}>
       <ActivityIndicator
@@ -23,13 +23,13 @@ const Loader = ({size}) => {
 export default Loader
 
 Loader.propTypes = {
-  size: PropTypes.string,
+  size: PropTypes.string
 }
 
 const styles = {
   // TODO: make it to the middle. (center)
   loader: {
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   }
 }

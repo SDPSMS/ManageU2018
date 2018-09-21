@@ -8,9 +8,9 @@ import { login } from '../Action/UserAction'
 // import AccentButton from '../components/AccentButton'
 // import TextField from '../components/TextField'
 import styles from './Styles/ContainerStyle'
-import RoundedButton from "../Components/RoundedButton"
+import RoundedButton from '../Components/RoundedButton'
 import TextField from '../Components/TextField'
-import Loader from "../Components/Loader"
+import Loader from '../Components/Loader'
 
 class Login extends Component {
   constructor (props) {
@@ -28,9 +28,9 @@ class Login extends Component {
   renderLoad () {
     console.log(this.state.email, this.state.password)
     return (
-      this.props.isLoading ? <Loader size='large'/> :
-        <RoundedButton text='Login' onPress={() => this.props.login(this.state.email, this.state.password)}/>
-    );
+      this.props.isLoading ? <Loader size='large' />
+        : <RoundedButton text='Login' onPress={() => this.props.login(this.state.email, this.state.password)} />
+    )
   }
 
   render () {
@@ -38,8 +38,8 @@ class Login extends Component {
       <View style={styles.mainContainer}>
         <View>
           <Text style={styles.sectionText}>Login</Text>
-          <TextField placeholder='Email' value={this.state.email} onChangeText={(email) => this.setState({email})}/>
-          <TextField placeholder='Password' value={this.state.password} onChangeText={(password) => this.setState({password})} secure={true}/>
+          <TextField placeholder='Email' value={this.state.email} onChangeText={(email) => this.setState({ email })} />
+          <TextField placeholder='Password' value={this.state.password} onChangeText={(password) => this.setState({ password })} secure />
           {this.renderLoad()}
           <Text>
             {this.props.error}
@@ -65,4 +65,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, {login})(Login);
+export default connect(mapStateToProps, { login })(Login)

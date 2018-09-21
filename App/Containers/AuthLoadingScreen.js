@@ -3,13 +3,13 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Text, FlatList, ScrollView } from 'react-native'
 import { loadAllSeminars } from '../Action/SeminarAction'
-import { checkAuthenticated } from "../Action/UserAction"
+import { checkAuthenticated } from '../Action/UserAction'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import styles from './Styles/ContainerStyle'
-import Loader from "../Components/Loader";
-import SeminarItem from "./SeminarItem";
+import Loader from '../Components/Loader'
+import SeminarItem from './SeminarItem'
 
 class AuthLoadingScreen extends Component {
   componentDidMount () {
@@ -18,13 +18,13 @@ class AuthLoadingScreen extends Component {
   }
 
   render () {
-    //TODO: Instead of usign secondary container, we can create a new one and says like LaunchScreen Container?
+    // TODO: Instead of usign secondary container, we can create a new one and says like LaunchScreen Container?
     return (
       <View style={styles.secondaryContainer}>
-        <Loader/>
+        <Loader />
       </View>
     )
   }
 }
 
-export default connect(null, {checkAuthenticated, loadAllSeminars})(AuthLoadingScreen)
+export default connect(null, { checkAuthenticated, loadAllSeminars })(AuthLoadingScreen)
