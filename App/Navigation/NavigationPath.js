@@ -8,4 +8,3 @@ export const SEMINAR_LIST = 'SeminarList'
 export const AUTH_STACK = 'AuthStack'
 
 /** The logged in navigation path **/
-

@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 
 // Example
 ExamplesRegistry.addPluginExample('Vector Icons', () =>
-  <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+  <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
     <Icon name='rocket' size={40} color='white' />
     <Icon name='send' size={40} color='white' />
     <Icon name='star' size={40} color='white' />

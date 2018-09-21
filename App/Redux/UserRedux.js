@@ -3,9 +3,9 @@ const initialState = {
   error: '',
   isLoading: false,
   myseminar: [],
-  //Admin only utility.
-  userslist: [],
-};
+  // Admin only utility.
+  userslist: []
+}
 
 /**
  * User reducer
@@ -19,85 +19,85 @@ export default (state = initialState, action) => {
     case 'START_LOADING':
       return {
         ...state,
-        isLoading: true,
-      };
+        isLoading: true
+      }
 
     case 'CHECK_AUTHENTICATED':
       return {
         ...state,
         user: action.payload,
-      };
+        isLoading: false
+      }
 
     case 'LOGIN_SUCCESS':
       return {
         ...state,
         isLoading: false,
-        error: '',
-      };
+        error: ''
+      }
 
     case 'LOGIN_ERROR':
       return {
         ...state,
         error: action.message,
-        isLoading: false,
-      };
+        isLoading: false
+      }
 
     case 'LOGOUT_SUCCESS':
       return {
         ...state,
-        user: null,
-      };
+        user: null
+      }
 
     case 'LOGOUT_ERROR':
       return {
-        ...state,
-        //TODO: Write error, for example, if error we show that there is an error signing out dialog.
-      };
+        ...state
+        // TODO: Write error, for example, if error we show that there is an error signing out dialog.
+      }
 
     case 'REGISTER_SUCCESS':
       return {
         ...state,
-        error: '',
-      };
+        error: ''
+      }
 
     case 'REGISTER_ERROR':
       return {
         ...state,
-        error: action.message,
-      };
+        error: action.message
+      }
 
     case 'LOAD_MY_SEMINAR':
       return {
         ...state,
-        myseminar: action.payload,
-      };
+        myseminar: action.payload
+      }
 
     case 'FETCH_USER_START':
       return {
         ...state,
-        isLoading: true,
+        isLoading: true
       }
     case 'FETCH_USERS_LIST':
       return {
         ...state,
         isLoading: false,
-        userslist: action.payload,
+        userslist: action.payload
       }
 
     case 'START_ADD_NEW_USER':
       return {
         ...state,
-        adminAddUserView: true,
+        adminAddUserView: true
       }
 
     case 'ADD_NEW_USER':
       return {
         ...state,
-        //overriding the state.
+        // overriding the state.
         userslist: [...state.userslist, action.payload]
       }
     default:
-      return state;
-
+      return state
   }
-};
+}
