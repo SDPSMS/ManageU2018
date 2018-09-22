@@ -14,6 +14,7 @@ export function loadAllSeminars () {
 
     firebase.database().ref('seminars/')
       .on('value', (snapshot) => {
+        console.log(snapshot.val())
         dispatch({ type: 'LOAD_ALL_SEMINAR', payload: snapshot.val() })
       })
   }

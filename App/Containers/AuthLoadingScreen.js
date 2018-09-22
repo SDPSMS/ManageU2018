@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 import styles from './Styles/ContainerStyle'
 import Loader from '../Components/Loader'
-import SeminarItem from './SeminarItem'
+import SeminarItem from './Seminar/SeminarItem'
 
 class AuthLoadingScreen extends Component {
   componentDidMount () {
