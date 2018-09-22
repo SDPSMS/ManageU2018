@@ -4,7 +4,8 @@ const initialState = {
   isLoading: false,
   myseminar: [],
   // Admin only utility.
-  userslist: []
+  userslist: [],
+  selectedUser: null,
 }
 
 /**
@@ -96,6 +97,14 @@ export default (state = initialState, action) => {
         ...state,
         // overriding the state.
         userslist: [...state.userslist, action.payload]
+      }
+
+    case 'USER_SELECTED':
+      return {
+        // ES6 Syntax, merging the state with the rest.
+        ...state,
+        // the payload refer to the actions, the selectedid in SELECTED_USER action.
+        selectedUser: action.payload
       }
     default:
       return state

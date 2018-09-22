@@ -102,7 +102,6 @@ export function checkAuthenticated () {
     dispatch(startAuthentication())
     firebase.auth().onAuthStateChanged((user) => {
       dispatch({ type: 'CHECK_AUTHENTICATED', payload: user })
-      console.log(NavigationActions)
       if (user != null) {
         // TODO: Dispatching the navigations here might not be right.
         dispatch(NavigationActions.navigate('RootLoggedInNavigation'))
@@ -122,18 +121,15 @@ export function loadAllUser () {
       .then((snapshot) => {
         snapshot.forEach((childSnapshot) => {
           if (childSnapshot.val().role !== 'Admin') {
-            users.push(childSnapshot.val())
+            const id = childSnapshot.key
+            const value = childSnapshot.val()
+            const user = {id, ...value}
+
+            users.push(user)
           }
         })
       })
       .then(() => dispatch({ type: 'FETCH_USERS_LIST', payload: users }))
-  }
-}
-
-export function startEditNewUser () {
-  return (dispatch) => {
-    dispatch({ type: 'START_ADD_NEW_USER' })
-    NavigationService.navigate('AddUser')
   }
 }
 
@@ -144,7 +140,40 @@ export function addNewUser (email, name, role) {
     }).then(() => {
       dispatch({ type: 'ADD_NEW_USER', payload: { email, name, role } })
     }).then(() => {
-      NavigationService.navigate('UsersList')
+      dispatch(NavigationActions.navigate('UsersList'))
     }).catch(() => console.log('Failed!'))
   }
 }
+
+export function selectUser (userId) {
+  return (dispatch) => {
+    dispatch({type: 'USER_SELECTED', payload: userId})
+    dispatch(NavigationActions.push('EditUser'))
+  }
+}
+
+export function saveUser({id, name, email, role}) {
+  return (dispatch) => {
+    firebase.database().ref(`users/${id}`)
+      .set({name, email, role})
+      .then(() => {
+        //SAVE USER IN THE DATABASE
+        dispatch({type: 'SAVE_USER'});
+        //Navigate because we want to retrieve data directly again.
+        //TODO: Instead of navigate, maybe we can update the state instead?
+        dispatch(NavigationActions.navigate('UsersList'))
+      });
+  };
+}
+
+export function deleteUser(userId) {
+  return (dispatch) => {
+    firebase.database().ref(`users/${userId}`)
+      .remove()
+      .then(() => {
+        //after remove, we dispatch the actions so that the redux state can be updated.
+        dispatch(NavigationActions.navigate('UsersList'))
+      });
+  }
+}
+

@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, FlatList, ScrollView } from 'react-native'
-import { loadAllSeminars } from '../Action/SeminarAction'
-import PropTypes from 'prop-types'
+import {  View, Text, FlatList, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash'
-import styles from './Styles/ContainerStyle'
-import Loader from '../Components/Loader'
+import styles from '../Styles/ContainerStyle'
 import SeminarItem from './SeminarItem'
 
 class SeminarList extends Component {
@@ -40,6 +37,7 @@ class SeminarList extends Component {
 
 function mapStateToProps (state) {
   const seminar = _.map(state.seminar.seminars, (val, uid) => {
+    console.log(uid)
     return {
       ...val,
       uid
@@ -50,22 +48,3 @@ function mapStateToProps (state) {
   }
 }
 export default connect(mapStateToProps, null)(SeminarList)
-
-// SeminarList.propTypes = {
-//   seminar: PropTypes.array,
-//   loadAllSeminars: PropTypes.func.isRequired,
-// }
-//
-// function mapStateToProps (state) {
-//   const seminar = _.map(state.seminar.seminars, (val, uid) => {
-//     return {
-//       ...val,
-//       uid
-//     }
-//   })
-//   return {
-//     seminar,
-//   }
-// }
-
-// export default connect(mapStateToProps, {loadAllSeminars})(SeminarList)

@@ -3,9 +3,7 @@ import { Text, View, StyleSheet, Image, TouchableWithoutFeedback } from 'react-n
 import { connect } from 'react-redux'
 import Icon from 'react-native-vector-icons/EvilIcons'
 import PropTypes from 'prop-types'
-import { selectSeminar } from '../Action/SeminarAction'
-
-// loading the theme that comes with material kit, using the pre built styles.
+import { selectSeminar } from '../../Action/SeminarAction'
 
 // we do not need the react lifecycle, so stateless components
 const SeminarItem = (props) => {

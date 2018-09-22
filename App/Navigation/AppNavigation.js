@@ -1,5 +1,5 @@
 import { StackNavigator, DrawerNavigator, SwitchNavigator } from 'react-navigation'
-import SeminarList from '../Containers/SeminarList'
+import SeminarList from '../Containers/Seminar/SeminarList'
 
 import * as NavPath from './NavigationPath'
 
@@ -10,6 +10,9 @@ import DrawerButton from '../Components/DrawerButton'
 import Logout from '../Containers/Logout'
 
 import AuthLoadingScreen from '../Containers/AuthLoadingScreen'
+import UserList from '../Containers/User/UserList'
+import AddUser from '../Containers/User/AddUser'
+import EditUser from '../Containers/User/EditUser'
 
 const AuthenticationStack = StackNavigator(
   {
@@ -67,13 +70,45 @@ const LoggedOutNav = StackNavigator(
     })
   })
 
+//ADMIN ONLY LOGGED IN UTILITY
+//TODO: Only show this if user role when logged in is checked as admin.
+const UserManagementStack = StackNavigator(
+  {
+    UsersList: {
+      screen: UserList,
+      navigationOptions: {
+        drawerLabel: 'Users List'
+      }
+    },
+    AddUser: {
+      screen: AddUser,
+      navigationOptions: {
+        drawerLabel: null
+      }
+    },
+    EditUser: {
+      screen: EditUser,
+      navigationOptions: {
+        drawerLabel: null
+      }
+    }
+  },
+  {
+    initialRouteName: 'UsersList',
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
+    }
+  }
+)
+
 const LoggedInDrawerNav = DrawerNavigator(
   {
     Home: {
       screen: SeminarList,
       navigationOptions: {
-        title: 'Home LoggedIn',
-        drawerLabel: 'Home LoggedIn'
+        title: 'Home',
+        drawerLabel: 'Home'
       }
     },
     Logout: {
@@ -81,7 +116,14 @@ const LoggedInDrawerNav = DrawerNavigator(
       navigationOptions: {
         drawerLabel: 'Logout'
       }
+    },
+    UserManagement: {
+      screen: UserManagementStack,
+      navigationOptions: {
+        drawerLabel: 'User Management'
+      }
     }
+
 
   })
 

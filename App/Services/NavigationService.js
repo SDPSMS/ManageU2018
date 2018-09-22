@@ -1,4 +1,4 @@
-import { NavigationActions, StackActions } from 'react-navigation'
+import { NavigationActions } from 'react-navigation'
 
 function navigate (routeName, params) {
   return (
@@ -10,8 +10,8 @@ function navigate (routeName, params) {
 }
 
 function push (routeName, params) {
-  navigator.dispatch(
-    StackActions.push({
+  return (
+    NavigationActions.push({
       routeName,
       params
     })
@@ -19,8 +19,8 @@ function push (routeName, params) {
 }
 
 function goBack () {
-  navigator.dispatch(
-    StackActions.pop()
+  return (
+    NavigationActions.pop()
   )
 }
 
