@@ -37,7 +37,6 @@ class SeminarList extends Component {
 
 function mapStateToProps (state) {
   const seminar = _.map(state.seminar.seminars, (val, uid) => {
-    console.log(uid)
     return {
       ...val,
       uid

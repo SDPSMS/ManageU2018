@@ -13,42 +13,16 @@ const SeminarItem = (props) => {
       onPress={() => props.selectSeminar(props.seminar)}
     >
       <View>
-        <Text style={[styles.title]}>
+        <Text>
           {props.seminar.label}
         </Text>
-        <Text style={[styles.action]}>
+        <Text>
           Speaker: {props.seminar.speaker}
         </Text>
       </View>
     </TouchableWithoutFeedback>
   )
 }
-
-const styles = StyleSheet.create({
-  card: {
-    marginTop: 20
-  },
-  title: {
-    top: 40,
-    left: 80,
-    fontSize: 14
-  },
-  image: {
-    height: 100
-  },
-  action: {
-    backgroundColor: 'black',
-    color: 'white'
-  },
-  // absolute position makes the icon stays in the card background
-  icon: {
-    position: 'absolute',
-    top: 15,
-    left: 0,
-    color: 'white',
-    backgroundColor: 'rgba(255,255,255,0)'
-  }
-})
 
 SeminarItem.propTypes = {
   seminar: PropTypes.object,

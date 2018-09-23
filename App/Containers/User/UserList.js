@@ -16,7 +16,7 @@ class UserList extends Component {
     console.log(this.props.userslist)
     return (
       <View>
-        <Text>Attendee Lists</Text>
+        <Text>User Lists</Text>
         <FlatList
           data={this.props.userslist}
           renderItem={
