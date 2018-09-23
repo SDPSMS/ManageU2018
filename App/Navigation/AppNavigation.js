@@ -13,6 +13,8 @@ import AuthLoadingScreen from '../Containers/AuthLoadingScreen'
 import UserList from '../Containers/User/UserList'
 import AddUser from '../Containers/User/AddUser'
 import EditUser from '../Containers/User/EditUser'
+import SeminarItem from '../Containers/Seminar/SeminarItem'
+import SeminarDetails from '../Containers/Seminar/SeminarDetails'
 
 const AuthenticationStack = StackNavigator(
   {
@@ -38,9 +40,29 @@ const AuthenticationStack = StackNavigator(
   }
 )
 
-const LoggedOutDrawerNav = DrawerNavigator({
+const SeminarStack = StackNavigator({
   SeminarList: {
     screen: SeminarList,
+  },
+  SeminarItem: {
+    screen: SeminarItem
+  },
+  SeminarDetails: {
+    screen: SeminarDetails
+  }
+},
+  {
+    initialRouteName: 'SeminarList',
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false
+    }
+  }
+)
+
+const LoggedOutDrawerNav = DrawerNavigator({
+  SeminarList: {
+    screen: SeminarStack,
     navigationOptions: {
       title: 'Home',
       drawerLabel: 'Home'
@@ -105,7 +127,7 @@ const UserManagementStack = StackNavigator(
 const LoggedInDrawerNav = DrawerNavigator(
   {
     Home: {
-      screen: SeminarList,
+      screen: SeminarStack,
       navigationOptions: {
         title: 'Home',
         drawerLabel: 'Home'
