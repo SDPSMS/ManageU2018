@@ -1,9 +1,6 @@
 import { StackNavigator, DrawerNavigator, SwitchNavigator } from 'react-navigation'
 import SeminarList from '../Containers/Seminar/SeminarList'
 
-import * as NavPath from './NavigationPath'
-
-import styles from './Styles/NavigationStyles'
 import Login from '../Containers/Login'
 import Register from '../Containers/Register'
 import DrawerButton from '../Components/DrawerButton'
@@ -15,6 +12,8 @@ import AddUser from '../Containers/User/AddUser'
 import EditUser from '../Containers/User/EditUser'
 import SeminarItem from '../Containers/Seminar/SeminarItem'
 import SeminarDetails from '../Containers/Seminar/SeminarDetails'
+import AddSeminar from '../Containers/Seminar/AddSeminar'
+import EditSeminar from '../Containers/Seminar/EditSeminar'
 
 const AuthenticationStack = StackNavigator(
   {
@@ -40,17 +39,22 @@ const AuthenticationStack = StackNavigator(
   }
 )
 
-const SeminarStack = StackNavigator({
-  SeminarList: {
-    screen: SeminarList,
+const SeminarStack = StackNavigator(
+  {
+    SeminarList: {
+      screen: SeminarList
+    },
+    SeminarItem: {
+      screen: SeminarItem
+    },
+    SeminarDetails: {
+      screen: SeminarDetails
+    },
+    // TODO: Attendee should not be able to edit seminar.
+    EditSeminar: {
+      screen: EditSeminar
+    }
   },
-  SeminarItem: {
-    screen: SeminarItem
-  },
-  SeminarDetails: {
-    screen: SeminarDetails
-  }
-},
   {
     initialRouteName: 'SeminarList',
     headerMode: 'none',
@@ -92,8 +96,8 @@ const LoggedOutNav = StackNavigator(
     })
   })
 
-//ADMIN ONLY LOGGED IN UTILITY
-//TODO: Only show this if user role when logged in is checked as admin.
+// ADMIN ONLY LOGGED IN UTILITY
+// TODO: Only show this if user role when logged in is checked as admin.
 const UserManagementStack = StackNavigator(
   {
     UsersList: {
@@ -119,7 +123,7 @@ const UserManagementStack = StackNavigator(
     initialRouteName: 'UsersList',
     headerMode: 'none',
     navigationOptions: {
-      headerVisible: false,
+      headerVisible: false
     }
   }
 )
@@ -144,9 +148,13 @@ const LoggedInDrawerNav = DrawerNavigator(
       navigationOptions: {
         drawerLabel: 'User Management'
       }
+    },
+    AddSeminar: {
+      screen: AddSeminar,
+      navigationOptions: {
+        drawerLabel: 'Add Seminar'
+      }
     }
-
-
   })
 
 const LoggedInNav = StackNavigator(

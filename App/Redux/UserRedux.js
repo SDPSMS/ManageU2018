@@ -5,7 +5,7 @@ const initialState = {
   myseminar: [],
   // Admin only utility.
   userslist: [],
-  selectedUser: null,
+  selectedUser: null
 }
 
 /**

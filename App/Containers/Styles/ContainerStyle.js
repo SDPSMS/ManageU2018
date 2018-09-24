@@ -5,7 +5,7 @@ export default StyleSheet.create({
   ...ApplicationStyles.screen,
   container: {
     padding: Metrics.baseMargin,
-    backgroundColor: Colors.textPrimaryColour
+    backgroundColor: Colors.background
   },
   logo: {
     marginTop: Metrics.doubleSection,

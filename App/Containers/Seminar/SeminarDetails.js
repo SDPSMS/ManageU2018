@@ -14,7 +14,7 @@ class SeminarDetails extends Component {
     this.state = {
       showModal: false,
       name: '',
-      email: '',
+      email: ''
     }
   }
 
@@ -24,11 +24,11 @@ class SeminarDetails extends Component {
       <View>
         <TextField
           placeholder={'Name'}
-          onChangeText={(value) => this.setState({name: value})}
+          onChangeText={(value) => this.setState({ name: value })}
         />
         <TextField
           placeholder={'Email'}
-          onChangeText={(value) => this.setState({email: value})}
+          onChangeText={(value) => this.setState({ email: value })}
         />
       </View>
     )
@@ -61,10 +61,10 @@ class SeminarDetails extends Component {
         <Text>Time: {this.props.seminar.time}</Text>
         <Text>Venue: {this.props.seminar.venue}</Text>
         <View>
-          <RoundedButton text='Join' onPress={() => this.setState({showModal: true})}/>
+          <RoundedButton text='Join' onPress={() => this.setState({ showModal: true })} />
         </View>
-        <ModalDialog onPressPositive={() => console.log(this.state.name, this.state.email)} onPressNegative={() => this.setState({showModal: false})} children={dialogContent} title='Join a Seminar' isVisible={this.state.showModal} />
-        <Button title="Display Attendees" onPress={() => this.props.loadAttendees(this.props.seminar.uid)}/>
+        <ModalDialog onPressPositive={() => console.log(this.state.name, this.state.email)} onPressNegative={() => this.setState({ showModal: false })} children={dialogContent} title='Join a Seminar' isVisible={this.state.showModal} />
+        <Button title='Display Attendees' onPress={() => this.props.loadAttendees(this.props.seminar.uid)} />
       </View>
     )
   }
@@ -80,12 +80,12 @@ class SeminarDetails extends Component {
 
 SeminarDetails.propTypes = {
   seminar: PropTypes.object,
-  unselectSeminar: PropTypes.func.isRequired,
+  unselectSeminar: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
   return {
-    seminar: state.seminar.seminarSelected,
+    seminar: state.seminar.seminarSelected
   }
 }
 
