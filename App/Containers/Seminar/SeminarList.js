@@ -11,7 +11,7 @@ class SeminarList extends Component {
       <View style={styles.mainContainer}>
         <ScrollView style={styles.container}>
           <View>
-            <Text style={styles.sectionText}>Seminars List</Text>
+            <Text style={styles.titleText}>Seminars List</Text>
             <FlatList
               data={this.props.seminarsList}
               renderItem={

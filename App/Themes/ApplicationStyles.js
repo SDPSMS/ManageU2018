@@ -47,7 +47,12 @@ const ApplicationStyles = {
     titleText: {
       ...Fonts.style.h2,
       fontSize: 14,
-      color: Colors.text
+      color: Colors.primaryTextColour
+    },
+    subtitleText: {
+      ...Fonts.style.h2,
+      fontSize: 12,
+      color: Colors.secondaryTextColour
     }
   },
   darkLabelContainer: {
@@ -79,6 +84,11 @@ const ApplicationStyles = {
     alignItems: 'center',
     textAlign: 'center'
   },
+  
+  sectionSubTitle: {
+
+  },
+
 }
 
 export default ApplicationStyles
