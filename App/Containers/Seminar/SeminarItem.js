@@ -4,19 +4,21 @@ import { connect } from 'react-redux'
 import Icon from 'react-native-vector-icons/EvilIcons'
 import PropTypes from 'prop-types'
 import { selectSeminar } from '../../Action/SeminarAction'
+import styles from '../Styles/ContainerStyle'
 
 // we do not need the react lifecycle, so stateless components
 const SeminarItem = (props) => {
   return (
     <TouchableWithoutFeedback
       // props.seminar refer to the seminar id.
+
       onPress={() => props.selectSeminar(props.seminar)}
     >
-      <View>
-        <Text>
+      <View style = {styles.listContainer}>
+        <Text style={styles.titleText}>
           {props.seminar.label}
         </Text>
-        <Text>
+        <Text style={styles.subtitleText}> 
           Speaker: {props.seminar.speaker}
         </Text>
       </View>
