@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import { View, Text, FlatList } from 'react-native'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import {loadAllUser} from '../../Action/UserAction'
+import { loadAllUser } from '../../Action/UserAction'
 import { connect } from 'react-redux'
 import RoundedButton from '../../Components/RoundedButton'
 import UserItem from './UserItem'
 
 class UserList extends Component {
-  componentDidMount() {
+  componentDidMount () {
     this.props.loadAllUser()
   }
 
@@ -20,12 +20,12 @@ class UserList extends Component {
         <FlatList
           data={this.props.userslist}
           renderItem={
-            ({item}) =>
-              <UserItem user={item}/>
+            ({ item }) =>
+              <UserItem user={item} />
           }
           keyExtractor={(item, index) => index.toString()}
         />
-        <RoundedButton text='Add new User' onPress={() => this.props.navigation.push('AddUser')}/>
+        <RoundedButton text='Add new User' onPress={() => this.props.navigation.push('AddUser')} />
       </View>
     )
   }
@@ -38,8 +38,8 @@ UserList.propTypes = {
 
 function mapStateToProps (state) {
   return {
-    userslist: state.user.userslist,
+    userslist: state.user.userslist
   }
 }
 
-export default connect(mapStateToProps, {loadAllUser})(UserList)
+export default connect(mapStateToProps, { loadAllUser })(UserList)

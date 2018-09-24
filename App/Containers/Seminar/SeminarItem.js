@@ -11,14 +11,13 @@ const SeminarItem = (props) => {
   return (
     <TouchableWithoutFeedback
       // props.seminar refer to the seminar id.
-
       onPress={() => props.selectSeminar(props.seminar)}
     >
-      <View style = {styles.listContainer}>
+      <View style={styles.listContainer}>
         <Text style={styles.titleText}>
           {props.seminar.label}
         </Text>
-        <Text style={styles.subtitleText}> 
+        <Text style={styles.subtitleText}>
           Speaker: {props.seminar.speaker}
         </Text>
       </View>

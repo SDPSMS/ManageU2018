@@ -17,9 +17,9 @@ export default class Register extends Component {
         <View>
           <Text style={styles.sectionText}>Register</Text>
           <TextField placeholder='Email' value={this.state.email}
-            onChangeText={(email) => this.setState({email})} />
+            onChangeText={(email) => this.setState({ email })} />
           <TextField placeholder='Password' value={this.state.password}
-            onChangeText={(password) => this.setState({password})} />
+            onChangeText={(password) => this.setState({ password })} />
         </View>
       </View>
     )

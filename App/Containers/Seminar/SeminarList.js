@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {  View, Text, FlatList, ScrollView } from 'react-native'
+import { View, Text, FlatList, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import styles from '../Styles/ContainerStyle'
