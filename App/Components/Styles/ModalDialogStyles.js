@@ -11,10 +11,12 @@ export default StyleSheet.create({
   contentContainer: {
     alignSelf: 'center',
     alignItems: 'center'
+
   },
   title: {
     fontFamily: Fonts.type.bold,
-    fontSize: Fonts.size.regular
+    fontSize: Fonts.size.regular,
+
   },
   message: {
     marginTop: Metrics.baseMargin,
@@ -23,6 +25,10 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.base,
     fontSize: Fonts.size.small,
     fontWeight: 'bold',
-    color: Colors.steel
+  },
+  textInput:{
+    width: 100,
+    alignItems: 'flex-start',
+    alignSelf: "flex-start",
   }
 })
