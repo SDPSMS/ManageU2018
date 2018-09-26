@@ -31,10 +31,11 @@ export default class ListViewSectionsExample extends Component {
   }
 
   renderRow (rowData, sectionID) {
+    console.log(rowData)
     return (
       <TouchableOpacity>
         <Text>{rowData.name}</Text>
-        <Text>{rowData.art}</Text>
+        <Text>{rowData.email}</Text>
       </TouchableOpacity>
     )
   }

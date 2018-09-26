@@ -58,6 +58,11 @@ export function login (email, password) {
 }
 
 // TODO: Make register function.
+export function startRegister () {
+  return (dispatch) => {
+    dispatch({ type: 'REGISTER_START' })
+  }
+}
 
 export function logout () {
   return (dispatch) => {
