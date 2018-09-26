@@ -2,7 +2,7 @@
 import apisauce from 'apisauce'
 
 // our "constructor"
-const create = (baseURL = 'https://rawgit.com/GantMan/rn-textables/') => {
+const create = (baseURL = 'http:/localhost:3000/') => {
   // ------
   // STEP 1
   // ------
@@ -34,7 +34,7 @@ const create = (baseURL = 'https://rawgit.com/GantMan/rn-textables/') => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
-  const getFaces = () => api.get('master/App/Fixtures/faces.json')
+  const getFaces = () => api.get('staffs')
 
   // ------
   // STEP 3
