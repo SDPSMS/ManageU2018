@@ -21,8 +21,10 @@ export default class ModalDialog extends Component {
             <Text style={styles.title}>{title}</Text>
             {children}
             <View style={{ marginTop: 20 }}>
-              <Button onPress={onPressPositive} title={confirmText} />
-              <Button onPress={onPressNegative} title={negativeText} />
+              <View style= {{flexDirection:'row',alignItems:'flex-start',alignSelf:'flex-start'}}> 
+                <Button onPress={onPressPositive} title={confirmText} />
+                <Button onPress={onPressNegative} title={negativeText} />
+              </View>
             </View>
           </View>
         </View>
