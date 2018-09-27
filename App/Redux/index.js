@@ -3,12 +3,14 @@ import configureStore from './CreateStore'
 
 import seminar from './SeminarRedux'
 import user from './UserRedux'
+import attendee from './AttendeeRedux'
 
 /* ------------- Assemble The Reducers ------------- */
 export const reducers = combineReducers({
   nav: require('./NavigationRedux').reducer,
   seminar,
-  user
+  user,
+  attendee
 })
 
 export default () => {
