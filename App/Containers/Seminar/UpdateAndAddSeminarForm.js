@@ -4,6 +4,7 @@ import TextField from '../../Components/TextField'
 import { formUpdate } from '../../Action/SeminarAction'
 import { connect } from 'react-redux'
 import { View } from 'react-native'
+import CustomDropdown from '../../Components/Dropdown'
 
 class UpdateAndAddForm extends Component {
   static defaultProps = {
@@ -45,8 +46,15 @@ class UpdateAndAddForm extends Component {
           value={speaker}
           onChangeText={(value) => this.props.formUpdate({ prop: 'speaker', value })}
         />
-        <TextField
-          placeholder={'Venue'}
+        <CustomDropdown
+          data={[{
+            value: 'Banana'
+          }, {
+            value: 'Mango'
+          }, {
+            value: 'Pear'
+          }]}
+          label={'Venue'}
           value={venue}
           onChangeText={(value) => this.props.formUpdate({ prop: 'venue', value })}
         />
