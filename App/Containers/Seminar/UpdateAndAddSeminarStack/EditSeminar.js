@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { StyleSheet, ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
-import * as actions from '../../Action/SeminarAction'
-import UpdateSeminarForm from './UpdateAndAddSeminarStack/Abstract'
-import RoundedButton from '../../Components/RoundedButton'
-import styles from '../Styles/ContainerStyle'
+import * as actions from '../../../Action/SeminarAction'
+import UpdateSeminarForm from './EditAndAddSeminarForm'
+import RoundedButton from '../../../Components/RoundedButton'
+import styles from '../../Styles/ContainerStyle'
 
 class EditSeminar extends Component {
   onUpdatePressed () {

@@ -44,7 +44,7 @@ class Login extends Component {
           <Text>
             {this.props.error}
           </Text>
-          <RoundedButton onPress={() => this.props.navigation.navigate('Register')}>
+          <RoundedButton onPress={() => this.props.navigation.navigate('RegisterStack')}>
             Register
           </RoundedButton>
         </View>

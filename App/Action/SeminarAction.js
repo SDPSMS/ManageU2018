@@ -76,7 +76,7 @@ export function addNewSeminar ({abstract, date, time, duration, label, speaker, 
       .push({abstract, date, time, duration, label, speaker, venue, ownerid: currentUser.uid})
       .then(() => {
         dispatch({type: 'ADD_SEMINAR'})
-        dispatch(NavigationActions.navigate('Home'))
+        dispatch(NavigationActions.navigate('SeminarList'))
       })
   }
 }
@@ -93,7 +93,7 @@ export function formUpdate ({prop, value}) {
 export function loadAttendeeStart () {
   return (dispatch) => {
     dispatch({type: 'LIST_ATTENDEE_START'})
-    dispatch(NavigationActions.navigate('AttendeeHomeView'))
+    dispatch(NavigationActions.navigate('SeminarAttendeesView'))
   }
 }
 

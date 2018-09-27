@@ -34,7 +34,7 @@ class DateTime extends Component {
         />
         <RoundedButton
           text={'Add'}
-          onPress={() => this.onAddPressed.bind(this)}
+          onPress={this.onAddPressed.bind(this)}
         />
       </View>
     )

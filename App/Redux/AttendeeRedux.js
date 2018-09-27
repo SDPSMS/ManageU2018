@@ -1,7 +1,7 @@
 const initialState = {
   seminarAttendees: [],
-  isLoading: false,
-};
+  isLoading: false
+}
 
 export default (state = initialState, action) => {
   switch (action.type) {

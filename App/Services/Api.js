@@ -34,7 +34,7 @@ const create = (baseURL = 'http:/localhost:3000/') => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
-  const getFaces = () => api.get('staffs')
+  const getStaffs = () => api.get('staffs')
 
   // ------
   // STEP 3
@@ -50,7 +50,7 @@ const create = (baseURL = 'http:/localhost:3000/') => {
   //
   return {
     // a list of the API functions from step 2
-    getFaces
+    getStaffs: getStaffs
   }
 }
 

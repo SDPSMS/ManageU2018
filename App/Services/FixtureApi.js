@@ -1,9 +1,9 @@
 export default {
   // Functions return fixtures
-  getFaces: () => {
+  getStaffs: () => {
     return {
       ok: true,
-      data: require('../Fixtures/faces.json')
+      data: require('../Fixtures/staffs.json')
     }
   },
 }

@@ -57,11 +57,22 @@ export function login (email, password) {
   }
 }
 
-// TODO: Make register function.
-export function startRegister () {
+export function saveUserToDatabase (email, uid, name, role) {
   return (dispatch) => {
-    dispatch({ type: 'REGISTER_START' })
+    firebase.database().child(`users/${uid}`).set({email, name, role}).then(() => console.log(email))
   }
+}
+
+// TODO: Make register function.
+export function register (email, password, role) {
+  return (dispatch) => {
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        firebase.database().ref(`users/${user.user.uid}`).set({email, name: password, role}).then(() => console.log(email))
+      })
+      .then(dispatch(NavigationActions.navigate('RootLoggedInNavigation')))
+  }
+  // TODO: Handle catch error
 }
 
 export function logout () {

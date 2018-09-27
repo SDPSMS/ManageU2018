@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { Text, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
-import AddSeminarForm from './UpdateAndAddSeminarStack/Abstract'
-import styles from '../Styles/ContainerStyle'
-import * as actions from '../../Action/SeminarAction'
-import RoundedButton from '../../Components/RoundedButton'
+import AddSeminarForm from './Abstract'
+import styles from '../../Styles/ContainerStyle'
+import * as actions from '../../../Action/SeminarAction'
 
+/**
+ * This class contains all the form.
+ */
 class AddSeminar extends Component {
-
-  // TODO: Create form component for add/updating seminar
   render () {
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
