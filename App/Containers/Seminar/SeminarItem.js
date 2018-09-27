@@ -20,6 +20,9 @@ const SeminarItem = (props) => {
         <Text style={styles.subtitleText}>
           Speaker: {props.seminar.speaker}
         </Text>
+        <Text style={styles.subtitleText} numberOfLines={2} ellipsizeMode ={'tail'}>
+          Description: {props.seminar.abstract}
+        </Text>
       </View>
     </TouchableWithoutFeedback>
   )
