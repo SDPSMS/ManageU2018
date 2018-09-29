@@ -116,7 +116,6 @@ export function loadAttendees (seminarId) {
               attendeesListAndDetails.push(snapshot.val())
             })
             .then(() => {
-              console.log(attendeesListAndDetails)
               dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
               dispatch(loadAttendeeFinish())
             })

@@ -9,7 +9,7 @@ import styles from './Styles/ModalDialogStyles'
 export default class ModalDialog extends Component {
   static defaultProps = {
     negativeText: 'Cancel',
-    confirmText: 'RegisterInit'
+    confirmText: 'Register'
   }
 
   render () {

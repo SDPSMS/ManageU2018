@@ -18,17 +18,40 @@ class SeminarDetails extends Component {
     }
   }
 
+  renderOrganiserOnlyContent () {
+    const {user} = this.props
+    if (this.props.user != null) {
+      if (user.role === 'Organiser' || user.role === 'Host') {
+        return (
+          <View>
+            <SimpleIcon
+              name={'settings'}
+              size={30}
+              onPress={() => this.props.editSeminar(this.props.seminar)}
+            />
+
+            <SimpleIcon
+              name={'minus'}
+              size={30}
+              onPress={() => this.props.deleteSeminar(this.props.seminar.uid)}
+            />
+          </View>
+        )
+      }
+    }
+  }
+
   // TODO: The Display attendees button should not have that function when clicked (should only move the screen).
   renderDetails () {
     let dialogContent = (
       <View>
         <TextField
           placeholder={'Name'}
-          onChangeText={(value) => this.setState({ name: value })}
+          onChangeText={(value) => this.setState({name: value})}
         />
         <TextField
           placeholder={'Email'}
-          onChangeText={(value) => this.setState({ email: value })}
+          onChangeText={(value) => this.setState({email: value})}
         />
       </View>
     )
@@ -40,19 +63,7 @@ class SeminarDetails extends Component {
           size={30}
           onPress={() => this.props.unselectSeminar()}
         />
-
-        <SimpleIcon
-          name={'settings'}
-          size={30}
-          onPress={() => this.props.editSeminar(this.props.seminar)}
-        />
-
-        <SimpleIcon
-          name={'minus'}
-          size={30}
-          onPress={() => this.props.deleteSeminar(this.props.seminar.uid)}
-        />
-
+        {this.renderOrganiserOnlyContent()}
         <Text>Abstract: {this.props.seminar.abstract}</Text>
         <Text>Label: {this.props.seminar.label}</Text>
         <Text>Date: {this.props.seminar.date}</Text>
@@ -61,15 +72,18 @@ class SeminarDetails extends Component {
         <Text>Time: {this.props.seminar.time}</Text>
         <Text>Venue: {this.props.seminar.venue}</Text>
         <View>
-          <RoundedButton text='Join' onPress={() => this.setState({ showModal: true })} />
+          <RoundedButton text='Join' onPress={() => this.setState({showModal: true})}/>
         </View>
-        <ModalDialog onPressPositive={() => console.log(this.state.name, this.state.email)} onPressNegative={() => this.setState({ showModal: false })} children={dialogContent} title='Join a Seminar' isVisible={this.state.showModal} />
-        <Button title='Display Attendees' onPress={() => this.props.loadAttendees(this.props.seminar.uid)} />
+        <ModalDialog onPressPositive={() => console.log(this.state.name, this.state.email)}
+                     onPressNegative={() => this.setState({showModal: false})} children={dialogContent}
+                     title='Join a Seminar' isVisible={this.state.showModal}/>
+        <Button title='Display Attendees' onPress={() => this.props.loadAttendees(this.props.seminar.uid)}/>
       </View>
     )
   }
 
   render () {
+
     return (
       <View>
         {this.renderDetails()}
@@ -78,15 +92,22 @@ class SeminarDetails extends Component {
   }
 }
 
-SeminarDetails.propTypes = {
+SeminarDetails
+  .propTypes = {
   seminar: PropTypes.object,
   unselectSeminar: PropTypes.func.isRequired
 }
 
-const mapStateToProps = (state) => {
-  return {
-    seminar: state.seminar.seminarSelected
+const
+  mapStateToProps = (state) => {
+    return {
+      seminar: state.seminar.seminarSelected,
+      user: state.user.user,
+    }
   }
-}
 
-export default connect(mapStateToProps, actions)(SeminarDetails)
+export default connect(mapStateToProps, actions)
+
+(
+  SeminarDetails
+)

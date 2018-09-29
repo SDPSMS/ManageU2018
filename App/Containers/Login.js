@@ -26,7 +26,6 @@ class Login extends Component {
    * @returns {*}
    */
   renderLoad () {
-    console.log(this.state.email, this.state.password)
     return (
       this.props.isLoading ? <Loader size='large' />
         : <RoundedButton text='Login' onPress={() => this.props.login(this.state.email, this.state.password)} />
