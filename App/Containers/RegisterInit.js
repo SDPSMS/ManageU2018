@@ -32,7 +32,7 @@ export default class RegisterInit extends Component {
     // TODO: Continue from here tommorow.
     // change map so can break.
     this.state.dataSource.staffs.map((staff) => {
-      if(staff.name === this.state.password && staff.email === this.state.email) {
+      if (staff.name === this.state.password && staff.email === this.state.email) {
         console.log('successful!')
         // should show a new register form that use their uts staff email and they can input password and username and roles --Organiser, Host?
         this.props.navigation.push('Register')

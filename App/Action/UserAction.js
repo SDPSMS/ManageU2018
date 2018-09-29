@@ -59,7 +59,7 @@ export function login (email, password) {
 
 export function saveUserToDatabase (email, uid, name, role) {
   return (dispatch) => {
-    firebase.database().child(`users/${uid}`).set({email, name, role}).then(() => console.log(email))
+    firebase.database().child(`users/${uid}`).set({ email, name, role }).then(() => console.log(email))
   }
 }
 
@@ -68,7 +68,7 @@ export function register (email, password, role) {
   return (dispatch) => {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((user) => {
-        firebase.database().ref(`users/${user.user.uid}`).set({email, name: password, role}).then(() => console.log(email))
+        firebase.database().ref(`users/${user.user.uid}`).set({ email, name: password, role }).then(() => console.log(email))
       })
       .then(dispatch(NavigationActions.navigate('RootLoggedInNavigation')))
   }

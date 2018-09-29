@@ -9,12 +9,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         seminarAttendees: action.payload,
-        isLoading: false,
+        isLoading: false
       }
     case 'LIST_ATTENDEE_START':
       return {
         ...state,
-        isLoading: true,
+        isLoading: true
       }
 
     default:

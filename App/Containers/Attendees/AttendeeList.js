@@ -21,9 +21,9 @@ class AttendeeList extends Component {
         <FlatList
           data={this.props.attendeeLists}
           renderItem={
-            ({item}) =>
+            ({ item }) =>
               <View>
-                <Text style={{marginTop: 20}}>Attendee</Text>
+                <Text style={{ marginTop: 20 }}>Attendee</Text>
                 <Text>Email: {item.email}</Text>
                 <Text>Name: {item.name}</Text>
               </View>
@@ -36,7 +36,7 @@ class AttendeeList extends Component {
 }
 
 AttendeeList.propTypes = {
-  attendeeLists: PropTypes.array,
+  attendeeLists: PropTypes.array
 }
 
 function mapStateToProps (state) {

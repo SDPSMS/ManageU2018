@@ -29,12 +29,12 @@ class Register extends Component {
           <Text style={styles.sectionText}>You have been authenticated, Enter the email and password you want to use for
             the apps.</Text>
           <TextField placeholder='Email' value={this.state.email}
-                     onChangeText={(email) => this.setState({email})} />
+            onChangeText={(email) => this.setState({ email })} />
           <TextField placeholder='Password' value={this.state.password}
-                     onChangeText={(password) => this.setState({password})} />
+            onChangeText={(password) => this.setState({ password })} />
           <CustomDropdown
-            label='Role' value={this.state.role} onChangeText={(role) => this.setState({role})}
-            data={[{value: 'Organiser'}, {value: 'Host'}]}
+            label='Role' value={this.state.role} onChangeText={(role) => this.setState({ role })}
+            data={[{ value: 'Organiser' }, { value: 'Host' }]}
           />
           <RoundedButton text='Register' onPress={this.handleRegister.bind(this)} />
         </View>
@@ -43,4 +43,4 @@ class Register extends Component {
   }
 }
 
-export default connect(null, {register})(Register)
+export default connect(null, { register })(Register)

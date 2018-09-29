@@ -5,5 +5,5 @@ export default {
       ok: true,
       data: require('../Fixtures/staffs.json')
     }
-  },
+  }
 }

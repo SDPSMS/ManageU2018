@@ -15,33 +15,33 @@ class Abstract extends Component {
   render () {
     const dataObj = []
     venueData.forEach((element) => {
-      dataObj.push(JSON.parse(JSON.stringify({value: element})))
+      dataObj.push(JSON.parse(JSON.stringify({ value: element })))
     })
 
-    const {abstract, label, speaker, venue} = this.props
+    const { abstract, label, speaker, venue } = this.props
 
     return (
-      <View style={{marginLeft: 20, marginRight: 20}}>
+      <View style={{ marginLeft: 20, marginRight: 20 }}>
         <TextField
           placeholder={'Label'}
           value={label}
-          onChangeText={(value) => this.props.formUpdate({prop: 'label', value})}
+          onChangeText={(value) => this.props.formUpdate({ prop: 'label', value })}
         />
         <TextField
           placeholder={'Abstract'}
           value={abstract}
-          onChangeText={(value) => this.props.formUpdate({prop: 'abstract', value})}
+          onChangeText={(value) => this.props.formUpdate({ prop: 'abstract', value })}
         />
         <TextField
           placeholder={'Speaker'}
           value={speaker}
-          onChangeText={(value) => this.props.formUpdate({prop: 'speaker', value})}
+          onChangeText={(value) => this.props.formUpdate({ prop: 'speaker', value })}
         />
         <CustomDropdown
           data={dataObj}
           label={'Venue'}
           value={venue}
-          onChangeText={(value) => this.props.formUpdate({prop: 'venue', value})}
+          onChangeText={(value) => this.props.formUpdate({ prop: 'venue', value })}
         />
         <RoundedButton
           text={'Add'}
@@ -53,10 +53,10 @@ class Abstract extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const {abstract, date, time, duration, label, speaker, venue} = state.seminar
+  const { abstract, date, time, duration, label, speaker, venue } = state.seminar
   return {
     abstract, date, time, duration, label, speaker, venue
   }
 }
 
-export default connect(mapStateToProps, {formUpdate})(Abstract)
+export default connect(mapStateToProps, { formUpdate })(Abstract)

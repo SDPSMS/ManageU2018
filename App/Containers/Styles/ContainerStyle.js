@@ -27,6 +27,6 @@ export default StyleSheet.create({
     color: Colors.primaryTextColour
   },
   formStyle: {
-    margin: 40,
+    margin: 40
   }
 })

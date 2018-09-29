@@ -16,7 +16,7 @@ class DateTime extends Component {
     const { date, time, duration } = this.props
 
     return (
-      <View style={{marginLeft: 20, marginRight: 20}}>
+      <View style={{ marginLeft: 20, marginRight: 20 }}>
         <TextField
           placeholder={'Date'}
           value={date}

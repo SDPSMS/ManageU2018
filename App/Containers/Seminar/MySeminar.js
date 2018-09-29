@@ -22,7 +22,7 @@ class MySeminar extends Component {
         <FlatList
           data={this.props.mySeminar}
           renderItem={
-            ({item}) =>
+            ({ item }) =>
               <SeminarItem seminar={item} />
           }
           keyExtractor={(item, index) => index.toString()}
@@ -57,5 +57,5 @@ function mapStateToProps (state) {
   }
 }
 
-const MySeminarComponent = connect(mapStateToProps, {fetchMySeminar})(MySeminar)
+const MySeminarComponent = connect(mapStateToProps, { fetchMySeminar })(MySeminar)
 export { MySeminarComponent }

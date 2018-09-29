@@ -244,7 +244,7 @@ export default SwitchNavigator(
   {
     AuthLoading: { screen: AuthLoadingScreen },
     RootLoggedInNavigation: { screen: LoggedInNav },
-    RootLoggedOutNavigation: { screen: LoggedOutNav },
+    RootLoggedOutNavigation: { screen: LoggedOutNav }
   },
   {
     initialRouteName: 'AuthLoading'
