@@ -10,21 +10,20 @@ import SeminarItem from './SeminarItem'
  * Display the lists owned by a seminar hosts.
  */
 class MySeminar extends Component {
-
   componentDidMount () {
     this.props.fetchMySeminar()
   }
 
   renderInitialView () {
     return (
-      //Return the list view
+      // Return the list view
       <View>
         <Text>My Seminars</Text>
         <FlatList
           data={this.props.mySeminar}
           renderItem={
-            ({item}) =>
-              <SeminarItem seminar={item}/>
+            ({ item }) =>
+              <SeminarItem seminar={item} />
           }
           keyExtractor={(item, index) => index.toString()}
         />
@@ -43,7 +42,7 @@ class MySeminar extends Component {
 
 MySeminar.propTypes = {
   mySeminar: PropTypes.array,
-  fetchMySeminar: PropTypes.func.isRequired,
+  fetchMySeminar: PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
@@ -54,9 +53,9 @@ function mapStateToProps (state) {
     }
   })
   return {
-    mySeminar,
+    mySeminar
   }
 }
 
-const MySeminarComponent = connect(mapStateToProps, {fetchMySeminar})(MySeminar)
+const MySeminarComponent = connect(mapStateToProps, { fetchMySeminar })(MySeminar)
 export { MySeminarComponent }

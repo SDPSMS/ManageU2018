@@ -25,5 +25,8 @@ export default StyleSheet.create({
   },
   titleText: {
     color: Colors.primaryTextColour
+  },
+  formStyle: {
+    margin: 40
   }
 })

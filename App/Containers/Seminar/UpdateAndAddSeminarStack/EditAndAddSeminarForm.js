@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import TextField from '../../Components/TextField'
-import { formUpdate } from '../../Action/SeminarAction'
+import TextField from '../../../Components/TextField'
+import { formUpdate } from '../../../Action/SeminarAction'
+import CustomDropdown from '../../../Components/Dropdown'
 import { connect } from 'react-redux'
 import { View } from 'react-native'
-import CustomDropdown from '../../Components/Dropdown'
 
 class UpdateAndAddForm extends Component {
   static defaultProps = {

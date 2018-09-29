@@ -1,6 +1,5 @@
 import firebase from 'firebase'
 import NavigationActions from '../Services/NavigationService'
-import * as NavPath from '../Navigation/NavigationPath'
 
 function loadSeminarStart () {
   return {
@@ -77,7 +76,7 @@ export function addNewSeminar ({ abstract, date, time, duration, label, speaker,
       .push({ abstract, date, time, duration, label, speaker, venue, ownerid: currentUser.uid })
       .then(() => {
         dispatch({ type: 'ADD_SEMINAR' })
-        dispatch(NavigationActions.navigate('Home'))
+        dispatch(NavigationActions.navigate('SeminarList'))
       })
   }
 }
@@ -88,5 +87,43 @@ export function formUpdate ({ prop, value }) {
     payload: {
       prop, value
     }
+  }
+}
+
+export function loadAttendeeStart () {
+  return (dispatch) => {
+    dispatch({ type: 'LIST_ATTENDEE_START' })
+    dispatch(NavigationActions.navigate('SeminarAttendeesView'))
+  }
+}
+
+function loadAttendeeFinish () {
+  return {
+    type: 'LIST_ATTENDEE_FINISH'
+  }
+}
+
+export function loadAttendees (seminarId) {
+  return (dispatch) => {
+    dispatch(loadAttendeeStart())
+    let attendeesListAndDetails = []
+    // orderBy equalTo
+    firebase.database().ref('attendeelist').child(seminarId)
+      .once('value').then((snapshot) => {
+        snapshot.forEach((attendeeid) => {
+          firebase.database().ref('atendees').child(attendeeid.val())
+            .once('value').then((snapshot) => {
+              attendeesListAndDetails.push(snapshot.val())
+            })
+            .then(() => {
+              dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
+              dispatch(loadAttendeeFinish())
+            })
+        })
+      })
+    // .then(() => {
+    //   dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
+    //   dispatch(loadAttendeeFinish())
+    // })
   }
 }
