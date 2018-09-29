@@ -137,6 +137,7 @@ export function checkAuthenticated () {
           dispatch(NavigationActions.navigate('RootLoggedInNavigation'))
         })
       } else {
+        dispatch({type: 'CHECK_AUTHENTICATED', payload: null})
         dispatch(NavigationActions.navigate('RootLoggedOutNavigation'))
       }
     })

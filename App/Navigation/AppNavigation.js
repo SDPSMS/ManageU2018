@@ -76,7 +76,6 @@ const SeminarStack = StackNavigator(
     SeminarDetails: {
       screen: SeminarDetails
     },
-    // TODO: Attendee should not be able to edit and see seminar attendees.
     EditSeminar: {
       screen: EditSeminar
     }
@@ -179,6 +178,15 @@ const MySeminarStack = StackNavigator(
     },
     SeminarAttendeesView: {
       screen: AttendeeList
+    },
+    SeminarItem: {
+      screen: SeminarItem
+    },
+    SeminarDetails: {
+      screen: SeminarDetails
+    },
+    EditSeminar: {
+      screen: EditSeminar
     }
   },
   {

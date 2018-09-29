@@ -3,7 +3,8 @@ import { Button, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons'
-import * as actions from '../../Action/SeminarAction'
+import { editSeminar, deleteSeminar, unselectSeminar, loadAttendees } from '../../Action/SeminarAction'
+import { attendSeminar } from '../../Action/AttendeeAction'
 import ModalDialog from '../../Components/ModalDialog'
 import RoundedButton from '../../Components/RoundedButton'
 import TextField from '../../Components/TextField'
@@ -16,6 +17,11 @@ class SeminarDetails extends Component {
       name: '',
       email: ''
     }
+  }
+
+  attendSeminar () {
+    this.props.attendSeminar(this.state.name, this.state.email, this.props.seminar.uid)
+    this.setState({showModal: false})
   }
 
   renderOrganiserOnlyContent () {
@@ -35,6 +41,7 @@ class SeminarDetails extends Component {
               size={30}
               onPress={() => this.props.deleteSeminar(this.props.seminar.uid)}
             />
+            <Button title='Display Attendees' onPress={() => this.props.loadAttendees(this.props.seminar.uid)}/>
           </View>
         )
       }
@@ -56,6 +63,7 @@ class SeminarDetails extends Component {
       </View>
     )
 
+    console.log(this.state.name, this.state.email, this.props.seminar.uid)
     return (
       <View>
         <SimpleIcon
@@ -74,16 +82,15 @@ class SeminarDetails extends Component {
         <View>
           <RoundedButton text='Join' onPress={() => this.setState({showModal: true})}/>
         </View>
-        <ModalDialog onPressPositive={() => console.log(this.state.name, this.state.email)}
-                     onPressNegative={() => this.setState({showModal: false})} children={dialogContent}
-                     title='Join a Seminar' isVisible={this.state.showModal}/>
-        <Button title='Display Attendees' onPress={() => this.props.loadAttendees(this.props.seminar.uid)}/>
+        <ModalDialog
+          onPressPositive={() => this.attendSeminar()}
+          onPressNegative={() => this.setState({showModal: false})} children={dialogContent}
+          title='Join a Seminar' isVisible={this.state.showModal}/>
       </View>
     )
   }
 
   render () {
-
     return (
       <View>
         {this.renderDetails()}
@@ -92,8 +99,7 @@ class SeminarDetails extends Component {
   }
 }
 
-SeminarDetails
-  .propTypes = {
+SeminarDetails.propTypes = {
   seminar: PropTypes.object,
   unselectSeminar: PropTypes.func.isRequired
 }
@@ -102,12 +108,14 @@ const
   mapStateToProps = (state) => {
     return {
       seminar: state.seminar.seminarSelected,
-      user: state.user.user,
+      user: state.user.user
     }
   }
 
-export default connect(mapStateToProps, actions)
-
-(
-  SeminarDetails
-)
+export default connect(mapStateToProps, {
+  editSeminar,
+  deleteSeminar,
+  unselectSeminar,
+  loadAttendees,
+  attendSeminar
+})(SeminarDetails)
