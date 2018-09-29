@@ -41,6 +41,7 @@ export default (state = initialState, action) => {
     case 'REGISTER_SUCCESS':
       return {
         ...state,
+        isLoading: false,
         user: action.payload
       }
     case 'LOGIN_ERROR':
