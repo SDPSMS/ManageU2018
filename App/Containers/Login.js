@@ -38,7 +38,7 @@ class Login extends Component {
       <View style={styles.mainContainer}>
         <View>
           <Text style={styles.sectionText}>Login</Text>
-          <TextField placeholder='Email' value={this.state.email} onChangeText={(email) => this.setState({ email })} />
+          <TextField placeholder='Email Address' value={this.state.email} onChangeText={(email) => this.setState({ email })} />
           <TextField placeholder='Password' value={this.state.password} onChangeText={(password) => this.setState({ password })} secure />
           {this.renderLoad()}
           <Text>
@@ -47,6 +47,7 @@ class Login extends Component {
           <RoundedButton onPress={() => this.props.navigation.navigate('Register')}>
             Register
           </RoundedButton>
+
         </View>
       </View>
     )
