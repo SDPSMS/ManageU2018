@@ -1,9 +1,6 @@
 import { StackNavigator, DrawerNavigator, SwitchNavigator } from 'react-navigation'
 import SeminarList from '../Containers/Seminar/SeminarList'
 
-import * as NavPath from './NavigationPath'
-
-import styles from './Styles/NavigationStyles'
 import Login from '../Containers/Login'
 import Register from '../Containers/Register'
 import DrawerButton from '../Components/DrawerButton'
@@ -15,6 +12,11 @@ import AddUser from '../Containers/User/AddUser'
 import EditUser from '../Containers/User/EditUser'
 import SeminarItem from '../Containers/Seminar/SeminarItem'
 import SeminarDetails from '../Containers/Seminar/SeminarDetails'
+import EditSeminar from '../Containers/Seminar/EditSeminar'
+import ShowFaces from '../Containers/ShowFaces'
+
+import { MySeminarComponent } from '../Containers/'
+import AddSeminar from '../Containers/Seminar/AddSeminar'
 
 const AuthenticationStack = StackNavigator(
   {
@@ -40,17 +42,22 @@ const AuthenticationStack = StackNavigator(
   }
 )
 
-const SeminarStack = StackNavigator({
-  SeminarList: {
-    screen: SeminarList,
+const SeminarStack = StackNavigator(
+  {
+    SeminarList: {
+      screen: SeminarList
+    },
+    SeminarItem: {
+      screen: SeminarItem
+    },
+    SeminarDetails: {
+      screen: SeminarDetails
+    },
+    // TODO: Attendee should not be able to edit seminar.
+    EditSeminar: {
+      screen: EditSeminar
+    }
   },
-  SeminarItem: {
-    screen: SeminarItem
-  },
-  SeminarDetails: {
-    screen: SeminarDetails
-  }
-},
   {
     initialRouteName: 'SeminarList',
     headerMode: 'none',
@@ -92,8 +99,8 @@ const LoggedOutNav = StackNavigator(
     })
   })
 
-//ADMIN ONLY LOGGED IN UTILITY
-//TODO: Only show this if user role when logged in is checked as admin.
+// ADMIN ONLY LOGGED IN UTILITY
+// TODO: Only show this if user role when logged in is checked as admin.
 const UserManagementStack = StackNavigator(
   {
     UsersList: {
@@ -119,11 +126,13 @@ const UserManagementStack = StackNavigator(
     initialRouteName: 'UsersList',
     headerMode: 'none',
     navigationOptions: {
-      headerVisible: false,
+      headerVisible: false
     }
   }
 )
 
+// TODO: Check user type, if they are seminar host, then make them see their seminars list, if they are admin, they should see users list.
+// TODO: We probably need to refactor this, because an admin or an organiser might not even need to see a seminar list at all
 const LoggedInDrawerNav = DrawerNavigator(
   {
     Home: {
@@ -144,9 +153,19 @@ const LoggedInDrawerNav = DrawerNavigator(
       navigationOptions: {
         drawerLabel: 'User Management'
       }
+    },
+    AddSeminar: {
+      screen: AddSeminar,
+      navigationOptions: {
+        drawerLabel: 'Add Seminar'
+      }
+    },
+    MySeminar: {
+      screen: MySeminarComponent,
+      navigationOptions: {
+        drawerLabel: 'My Seminar'
+      }
     }
-
-
   })
 
 const LoggedInNav = StackNavigator(
@@ -166,7 +185,8 @@ export default SwitchNavigator(
   {
     AuthLoading: { screen: AuthLoadingScreen },
     RootLoggedInNavigation: { screen: LoggedInNav },
-    RootLoggedOutNavigation: { screen: LoggedOutNav }
+    RootLoggedOutNavigation: { screen: LoggedOutNav },
+    ShowFaces: { screen: ShowFaces },
   },
   {
     initialRouteName: 'AuthLoading'

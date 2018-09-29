@@ -82,8 +82,8 @@ export default (state = initialState, action) => {
     case 'SAVE_SEMINAR':
       return {
         ...state,
-        // bring back to the full list view.
-        seminarSelected: null,
+        // TODO: Should change seminarSelected: null,
+        // seminarSelected: null,
         abstract: '',
         date: '',
         time: '',

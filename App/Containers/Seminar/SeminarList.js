@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {  View, Text, FlatList, ScrollView } from 'react-native'
+import { View, Text, FlatList, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import styles from '../Styles/ContainerStyle'
@@ -11,7 +11,7 @@ class SeminarList extends Component {
       <View style={styles.mainContainer}>
         <ScrollView style={styles.container}>
           <View>
-            <Text style={styles.sectionText}>Seminars List</Text>
+            <Text style={styles.titleText}>Seminars List</Text>
             <FlatList
               data={this.props.seminarsList}
               renderItem={

@@ -2,11 +2,11 @@ import { StyleSheet } from 'react-native'
 import { Colors, Metrics, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
-  //TODO: Static width and height?
+  // TODO: Static width and height?
   modalContainer: {
     alignSelf: 'center',
     backgroundColor: Colors.silver,
-    padding: Metrics.baseMargin,
+    padding: Metrics.baseMargin
   },
   contentContainer: {
     alignSelf: 'center',
@@ -14,7 +14,7 @@ export default StyleSheet.create({
   },
   title: {
     fontFamily: Fonts.type.bold,
-    fontSize: Fonts.size.regular,
+    fontSize: Fonts.size.regular
   },
   message: {
     marginTop: Metrics.baseMargin,
@@ -24,5 +24,5 @@ export default StyleSheet.create({
     fontSize: Fonts.size.small,
     fontWeight: 'bold',
     color: Colors.steel
-  },
+  }
 })
