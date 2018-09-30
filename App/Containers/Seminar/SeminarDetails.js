@@ -20,7 +20,8 @@ class SeminarDetails extends Component {
   }
 
   attendSeminar () {
-    this.props.attendSeminar(this.state.name, this.state.email, this.props.seminar.uid)
+    console.log(this.props.seminar.id)
+    this.props.attendSeminar(this.state.name, this.state.email, this.props.seminar.id)
     this.setState({showModal: false})
   }
 
@@ -39,9 +40,9 @@ class SeminarDetails extends Component {
             <SimpleIcon
               name={'minus'}
               size={30}
-              onPress={() => this.props.deleteSeminar(this.props.seminar.uid)}
+              onPress={() => this.props.deleteSeminar(this.props.seminar.id)}
             />
-            <Button title='Display Attendees' onPress={() => this.props.loadAttendees(this.props.seminar.uid)}/>
+            <Button title='Display Attendees' onPress={() => this.props.loadAttendees(this.props.seminar.id)} />
           </View>
         )
       }
@@ -63,7 +64,6 @@ class SeminarDetails extends Component {
       </View>
     )
 
-    console.log(this.state.name, this.state.email, this.props.seminar.uid)
     return (
       <View>
         <SimpleIcon

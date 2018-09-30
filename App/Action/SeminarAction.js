@@ -40,11 +40,11 @@ export function editSeminar (seminar) {
 }
 
 // TODO: Instead of using this, wrap everything in one object called details
-export function saveSeminar ({ abstract, date, time, duration, label, speaker, venue, uid }) {
+export function saveSeminar ({ abstract, date, time, duration, label, speaker, venue, id }) {
   const { currentUser } = firebase.auth()
   return (dispatch) => {
-    firebase.database().ref(`seminars/${uid}`)
-      .set({ abstract, date, time, duration, label, speaker, venue, ownerid: currentUser.uid })
+    firebase.database().ref(`seminars/${id}`)
+      .set({ id, abstract, date, time, duration, label, speaker, venue, ownerid: currentUser.uid })
       .then(() => {
         // SAVE SEMINAR IN THE DATABASE
         dispatch({ type: 'SAVE_SEMINAR' })
@@ -72,8 +72,9 @@ export function addNewSeminar ({ abstract, date, time, duration, label, speaker,
 
   return (dispatch) => {
     // setting the current user uid (who created the seminar) as a foreign key in the seminars entity.
-    firebase.database().ref('seminars')
-      .push({ abstract, date, time, duration, label, speaker, venue, ownerid: currentUser.uid })
+    const ref = firebase.database().ref('seminars').push()
+    const key = ref.getKey()
+    ref.set({ id: key, abstract, date, time, duration, label, speaker, venue, ownerid: currentUser.uid })
       .then(() => {
         dispatch({ type: 'ADD_SEMINAR' })
         dispatch(NavigationActions.navigate('SeminarList'))
@@ -125,5 +126,19 @@ export function loadAttendees (seminarId) {
     //   dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
     //   dispatch(loadAttendeeFinish())
     // })
+  }
+}
+
+export function sortSeminarByDate () {
+  return (dispatch) => {
+    const sorted = []
+    // Sort by date.
+    firebase.database().ref('seminars').orderByChild('time').once('value').then((snapshot) => {
+      snapshot.forEach((snap) => {
+        sorted.push(snap.val())
+      })
+    }).then(() => {
+      dispatch({ type: 'SORT_SEMINAR_DATE', payload: sorted })
+    })
   }
 }
