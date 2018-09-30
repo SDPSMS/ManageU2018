@@ -25,6 +25,7 @@
     "git-hook": "npm run lint -s && npm run test -s"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "apisauce": "^0.14.2",
     "body-parser": "latest",
     "express": "latest",
