@@ -74,7 +74,7 @@ export default (state = initialState, action) => {
         label: action.payload.label,
         speaker: action.payload.speaker,
         venue: action.payload.venue,
-        uid: action.payload.uid
+        id: action.payload.id
         // seminarSelected: null,
       }
 
@@ -97,6 +97,11 @@ export default (state = initialState, action) => {
       return {
         ...state
         // seminarSelected: null
+      }
+    case 'SORT_SEMINAR_DATE':
+      return {
+        ...state,
+        seminars: action.payload
       }
 
     default:
