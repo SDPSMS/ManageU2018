@@ -11,7 +11,7 @@ const initialState = {
 /**
  * User reducer
  * @param state: the state that the reducers contains
- * @param action: the action that was dispatched from user interaction. '../actions/index.js'
+ * @param action: the action that was dispatched from user interaction. '../actions/server.js'
  * @returns by default: {{user: null, error: string, isLoading: boolean}} //change when action is dispatched
  * https://redux.js.org/
  */
