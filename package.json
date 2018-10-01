@@ -25,6 +25,7 @@
     "git-hook": "npm run lint -s && npm run test -s"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "apisauce": "^0.14.2",
     "body-parser": "latest",
     "express": "latest",
@@ -38,6 +39,7 @@
     "react": "16.3.1",
     "react-native": "0.55.1",
     "react-native-config": "^0.10.0",
+    "react-native-html-to-pdf": "^0.6.0",
     "react-native-material-dropdown": "^0.11.1",
     "react-native-modal": "^6.5.0",
     "react-native-vector-icons": "4.3.0",
