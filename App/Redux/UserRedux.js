@@ -20,7 +20,8 @@ export default (state = initialState, action) => {
     case 'START_LOADING':
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        error: ''
       }
 
     case 'CHECK_AUTHENTICATED':
@@ -66,6 +67,7 @@ export default (state = initialState, action) => {
     case 'REGISTER_ERROR':
       return {
         ...state,
+        isLoading: false,
         error: action.message
       }
 

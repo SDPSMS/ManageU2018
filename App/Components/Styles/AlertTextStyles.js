@@ -3,16 +3,10 @@ import { Metrics, Colors, Fonts } from '../../Themes'
 
 export default {
   container: {
-    padding: Metrics.baseMargin,
-    width: 350,
+    margin: Metrics.smallMargin,
     alignItems: 'center',
     alignSelf: 'center',
-
-    margin: 10,
-    borderWidth: 5,
-    borderRadius: 10,
-    borderColor: '#A1A8EE',
-    backgroundColor: 'white'
+    color: Colors.error
   }
 
 }

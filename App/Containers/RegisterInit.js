@@ -5,6 +5,7 @@ import TextField from '../Components/TextField'
 // TODO: Calling it directly in react native might not be right.
 import API from '../Services/Api'
 import RoundedButton from '../Components/RoundedButton'
+import AlertText from '../Components/AlertText'
 
 export default class RegisterInit extends Component {
   constructor (props) {
@@ -13,7 +14,8 @@ export default class RegisterInit extends Component {
     this.state = {
       email: '',
       password: '',
-      dataSource: []
+      dataSource: [],
+      message: ''
     }
 
     this.getData()
@@ -38,7 +40,7 @@ export default class RegisterInit extends Component {
         this.props.navigation.push('Register')
       }
     })
-    console.log('No UTS Staff FOUND!')
+    this.setState({message: 'Please enter a correct UTS Staff Email and Password'})
   }
 
   render () {
@@ -50,6 +52,7 @@ export default class RegisterInit extends Component {
             onChangeText={(email) => this.setState({ email })} />
           <TextField placeholder='Password' value={this.state.password}
             onChangeText={(password) => this.setState({ password })} />
+          <AlertText>{this.state.message}</AlertText>
           <RoundedButton text='Continue' onPress={this.handleRegister.bind(this)} />
         </View>
       </View>

@@ -12,10 +12,7 @@ export default class TextField extends Component {
   }
 
   render () {
-    const { onChangeText, style, value, placeholder, secure } = this.props
-    const textStyle = {
-      ...style
-    }
+    const { onChangeText, value, placeholder, secure } = this.props
     return (
       <TextInput
         style={styles.container}
@@ -23,7 +20,7 @@ export default class TextField extends Component {
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secure}
-        underlineColorAndroid ='transparent'
+        underlineColorAndroid='transparent'
       />
     )
   }

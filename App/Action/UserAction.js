@@ -22,6 +22,13 @@ function loginError () {
   }
 }
 
+function registerError () {
+  return {
+    type: 'REGISTER_ERROR',
+    message: 'Please enter a correct UTS Staff Email and Password!'
+  }
+}
+
 function logoutSuccess () {
   return {
     type: 'LOGOUT_SUCCESS'
@@ -69,22 +76,26 @@ export function login (email, password) {
 
 export function saveUserToDatabase (email, uid, name, role) {
   return (dispatch) => {
-    firebase.database().child(`users/${uid}`).set({email, name, role}).then(() => console.log(email))
+    firebase.database().child(`users/${uid}`).set({ email, name, role }).then(() => console.log(email))
   }
 }
 
 // TODO: Make register function.
 export function register (email, password, role) {
   return (dispatch) => {
+    dispatch(startAuthentication())
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((user) => {
-        const newUser = {email, name: password, role}
+        const newUser = { email, name: password, role }
         firebase.database().ref(`users/${user.user.uid}`).set(newUser).then(() => {
           dispatch(NavigationActions.navigate('RootLoggedInNavigation'))
           dispatch(registerSuccess(newUser))
         })
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err)
+        dispatch(registerError())
+      })
   }
   // TODO: Handle catch error
 }
@@ -114,14 +125,14 @@ export function checkUserType () {
 
 // TODO: Need to check everytime updated as well, maybe we can do onChildChanged or onChildAdded.
 export function fetchMySeminar () {
-  const {currentUser} = firebase.auth()
+  const { currentUser } = firebase.auth()
 
   return (dispatch) => {
     dispatch(viewSeminar())
     // TODO: If we do this here now, we will have to update two entities when updating it.
     firebase.database().ref('seminars').orderByChild('ownerid').equalTo(currentUser.uid)
       .on('value', (snapshot) => {
-        dispatch({type: 'LOAD_MY_SEMINAR', payload: snapshot.val()})
+        dispatch({ type: 'LOAD_MY_SEMINAR', payload: snapshot.val() })
       })
   }
 }
@@ -133,11 +144,11 @@ export function checkAuthenticated () {
     firebase.auth().onAuthStateChanged((user) => {
       if (user != null) {
         firebase.database().ref(`users/${user.uid}`).on('value', (snapshot) => {
-          dispatch({type: 'CHECK_AUTHENTICATED', payload: snapshot.val()})
+          dispatch({ type: 'CHECK_AUTHENTICATED', payload: snapshot.val() })
           dispatch(NavigationActions.navigate('RootLoggedInNavigation'))
         })
       } else {
-        dispatch({type: 'CHECK_AUTHENTICATED', payload: null})
+        dispatch({ type: 'CHECK_AUTHENTICATED', payload: null })
         dispatch(NavigationActions.navigate('RootLoggedOutNavigation'))
       }
     })
@@ -155,13 +166,13 @@ export function loadAllUser () {
           if (childSnapshot.val().role !== 'Admin') {
             const id = childSnapshot.key
             const value = childSnapshot.val()
-            const user = {id, ...value}
+            const user = { id, ...value }
 
             users.push(user)
           }
         })
       })
-      .then(() => dispatch({type: 'FETCH_USERS_LIST', payload: users}))
+      .then(() => dispatch({ type: 'FETCH_USERS_LIST', payload: users }))
   }
 }
 
@@ -170,7 +181,7 @@ export function addNewUser (email, name, role) {
     firebase.database().ref('users').push({
       email, name, role
     }).then(() => {
-      dispatch({type: 'ADD_NEW_USER', payload: {email, name, role}})
+      dispatch({ type: 'ADD_NEW_USER', payload: { email, name, role } })
     }).then(() => {
       dispatch(NavigationActions.navigate('UsersList'))
     }).catch(() => console.log('Failed!'))
@@ -179,18 +190,18 @@ export function addNewUser (email, name, role) {
 
 export function selectUser (userId) {
   return (dispatch) => {
-    dispatch({type: 'USER_SELECTED', payload: userId})
+    dispatch({ type: 'USER_SELECTED', payload: userId })
     dispatch(NavigationActions.push('EditUser'))
   }
 }
 
-export function saveUser ({id, name, email, role}) {
+export function saveUser ({ id, name, email, role }) {
   return (dispatch) => {
     firebase.database().ref(`users/${id}`)
-      .set({name, email, role})
+      .set({ name, email, role })
       .then(() => {
         // SAVE USER IN THE DATABASE
-        dispatch({type: 'SAVE_USER'})
+        dispatch({ type: 'SAVE_USER' })
         // Navigate because we want to retrieve data directly again.
         // TODO: Instead of navigate, maybe we can update the state instead?
         dispatch(NavigationActions.navigate('UsersList'))

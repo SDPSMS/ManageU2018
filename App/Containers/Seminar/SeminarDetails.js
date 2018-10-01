@@ -22,11 +22,11 @@ class SeminarDetails extends Component {
   attendSeminar () {
     console.log(this.props.seminar.id)
     this.props.attendSeminar(this.state.name, this.state.email, this.props.seminar.id)
-    this.setState({showModal: false})
+    this.setState({ showModal: false })
   }
 
   renderOrganiserOnlyContent () {
-    const {user} = this.props
+    const { user } = this.props
     if (this.props.user != null) {
       if (user.role === 'Organiser' || user.role === 'Host') {
         return (
@@ -55,11 +55,11 @@ class SeminarDetails extends Component {
       <View>
         <TextField
           placeholder={'Name'}
-          onChangeText={(value) => this.setState({name: value})}
+          onChangeText={(value) => this.setState({ name: value })}
         />
         <TextField
           placeholder={'Email'}
-          onChangeText={(value) => this.setState({email: value})}
+          onChangeText={(value) => this.setState({ email: value })}
         />
       </View>
     )
@@ -80,12 +80,12 @@ class SeminarDetails extends Component {
         <Text>Time: {this.props.seminar.time}</Text>
         <Text>Venue: {this.props.seminar.venue}</Text>
         <View>
-          <RoundedButton text='Join' onPress={() => this.setState({showModal: true})}/>
+          <RoundedButton text='Join' onPress={() => this.setState({ showModal: true })} />
         </View>
         <ModalDialog
           onPressPositive={() => this.attendSeminar()}
-          onPressNegative={() => this.setState({showModal: false})} children={dialogContent}
-          title='Join a Seminar' isVisible={this.state.showModal}/>
+          onPressNegative={() => this.setState({ showModal: false })} children={dialogContent}
+          title='Join a Seminar' isVisible={this.state.showModal} />
       </View>
     )
   }
