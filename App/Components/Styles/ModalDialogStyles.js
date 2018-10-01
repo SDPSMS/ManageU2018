@@ -27,7 +27,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
   },
   textInput:{
-    width: 100,
+    width: null,
     alignItems: 'flex-start',
     alignSelf: "flex-start",
   }
