@@ -1,7 +1,8 @@
+import Secrets from 'react-native-config-node'
 const sgMail = require('@sendgrid/mail')
 
 // TODO: Set environment variables for API KEY.
-sgMail.setApiKey('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')
+sgMail.setApiKey(Secrets.SENDGRID_API_KEY)
 
 export function sendMessage (req, res, next) {
   sgMail.send({
