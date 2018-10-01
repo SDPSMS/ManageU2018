@@ -17,11 +17,16 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   listContainer: {
+    marginTop: Metrics.doubleBaseMargin,
     padding: Metrics.baseMargin,
     borderWidth: 1,
-    borderColor: Colors.dividerColour
+    borderColor: Colors.dividerColour,
+    borderRadius: 5
   },
   titleText: {
     color: Colors.primaryTextColour
+  },
+  formStyle: {
+    margin: 40
   }
 })

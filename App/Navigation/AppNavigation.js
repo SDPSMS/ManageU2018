@@ -2,7 +2,7 @@ import { StackNavigator, DrawerNavigator, SwitchNavigator } from 'react-navigati
 import SeminarList from '../Containers/Seminar/SeminarList'
 
 import Login from '../Containers/Login'
-import Register from '../Containers/Register'
+import RegisterInit from '../Containers/RegisterInit'
 import DrawerButton from '../Components/DrawerButton'
 import Logout from '../Containers/Logout'
 
@@ -12,8 +12,34 @@ import AddUser from '../Containers/User/AddUser'
 import EditUser from '../Containers/User/EditUser'
 import SeminarItem from '../Containers/Seminar/SeminarItem'
 import SeminarDetails from '../Containers/Seminar/SeminarDetails'
-import AddSeminar from '../Containers/Seminar/AddSeminar'
-import EditSeminar from '../Containers/Seminar/EditSeminar'
+import EditSeminar from '../Containers/Seminar/UpdateAndAddSeminarStack/EditSeminar'
+
+import { MySeminarComponent } from '../Containers/'
+import AddSeminar from '../Containers/Seminar/UpdateAndAddSeminarStack/AddSeminar'
+
+// Refactor EDITSEMINAR TO USE THIS AS WELL.
+import Abstract from '../Containers/Seminar/UpdateAndAddSeminarStack/Abstract'
+import DateTime from '../Containers/Seminar/UpdateAndAddSeminarStack/DateTime'
+import AttendeeList from '../Containers/Attendees/AttendeeList'
+import Register from '../Containers/Register'
+
+const RegisterLogicStack = StackNavigator(
+  {
+    RegisterInit: {
+      screen: RegisterInit
+    },
+    Register: {
+      screen: Register
+    }
+  },
+  {
+    initialRouteName: 'RegisterInit',
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false
+    }
+  }
+)
 
 const AuthenticationStack = StackNavigator(
   {
@@ -23,8 +49,8 @@ const AuthenticationStack = StackNavigator(
         drawerLabel: 'Login'
       }
     },
-    Register: {
-      screen: Register,
+    RegisterStack: {
+      screen: RegisterLogicStack,
       navigationOptions: {
         drawerLabel: null
       }
@@ -50,7 +76,6 @@ const SeminarStack = StackNavigator(
     SeminarDetails: {
       screen: SeminarDetails
     },
-    // TODO: Attendee should not be able to edit seminar.
     EditSeminar: {
       screen: EditSeminar
     }
@@ -128,6 +153,53 @@ const UserManagementStack = StackNavigator(
   }
 )
 
+const AddSeminarStack = StackNavigator(
+  {
+    Abstract: {
+      screen: Abstract
+    },
+    DateTime: {
+      screen: DateTime
+    }
+  },
+  {
+    initialRouteName: 'Abstract',
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false
+    }
+  }
+)
+
+const MySeminarStack = StackNavigator(
+  {
+    MySeminar: {
+      screen: MySeminarComponent
+    },
+    SeminarAttendeesView: {
+      screen: AttendeeList
+    },
+    SeminarItem: {
+      screen: SeminarItem
+    },
+    SeminarDetails: {
+      screen: SeminarDetails
+    },
+    EditSeminar: {
+      screen: EditSeminar
+    }
+  },
+  {
+    initialRouteName: 'MySeminar',
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false
+    }
+  }
+)
+
+// TODO: Check user type, if they are seminar host, then make them see their seminars list, if they are admin, they should see users list.
+// TODO: We probably need to refactor this, because an admin or an organiser might not even need to see a seminar list at all
 const LoggedInDrawerNav = DrawerNavigator(
   {
     Home: {
@@ -150,9 +222,15 @@ const LoggedInDrawerNav = DrawerNavigator(
       }
     },
     AddSeminar: {
-      screen: AddSeminar,
+      screen: AddSeminarStack,
       navigationOptions: {
         drawerLabel: 'Add Seminar'
+      }
+    },
+    MySeminar: {
+      screen: MySeminarStack,
+      navigationOptions: {
+        drawerLabel: 'My Seminar'
       }
     }
   })

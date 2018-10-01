@@ -1,17 +1,16 @@
 import React, { Component } from 'react'
-import { StyleSheet, ScrollView } from 'react-native'
+import { StyleSheet, ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
-import * as actions from '../../Action/SeminarAction'
-import UpdateSeminarForm from './UpdateAndAddSeminarForm'
-import RoundedButton from '../../Components/RoundedButton'
-import styles from '../Styles/ContainerStyle'
-import { Text } from 'react-native'
+import * as actions from '../../../Action/SeminarAction'
+import UpdateSeminarForm from './EditAndAddSeminarForm'
+import RoundedButton from '../../../Components/RoundedButton'
+import styles from '../../Styles/ContainerStyle'
 
 class EditSeminar extends Component {
   onUpdatePressed () {
-    const { abstract, date, time, duration, label, speaker, venue, uid } = this.props
+    const { abstract, date, time, duration, label, speaker, venue, id } = this.props
     // The actions.
-    this.props.saveSeminar({ abstract, date, time, duration, label, speaker, venue, uid })
+    this.props.saveSeminar({ abstract, date, time, duration, label, speaker, venue, id })
   }
 
   render () {
@@ -40,9 +39,10 @@ class EditSeminar extends Component {
 
 // the redux function.
 const mapStateToProps = (state) => {
-  const { abstract, date, time, duration, label, speaker, venue, uid } = state.seminar
+  const { abstract, date, time, duration, label, speaker, venue } = state.seminar
+  const { id } = state.seminar.seminarSelected
   return {
-    abstract, date, time, duration, label, speaker, venue, uid
+    abstract, date, time, duration, label, speaker, venue, id
   }
 }
 

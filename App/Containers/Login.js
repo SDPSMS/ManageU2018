@@ -26,7 +26,6 @@ class Login extends Component {
    * @returns {*}
    */
   renderLoad () {
-    console.log(this.state.email, this.state.password)
     return (
       this.props.isLoading ? <Loader size='large' />
         : <RoundedButton text='Login' onPress={() => this.props.login(this.state.email, this.state.password)} />
@@ -38,15 +37,16 @@ class Login extends Component {
       <View style={styles.mainContainer}>
         <View>
           <Text style={styles.sectionText}>Login</Text>
-          <TextField placeholder='Email' value={this.state.email} onChangeText={(email) => this.setState({ email })} />
+          <TextField placeholder='Email Address' value={this.state.email} onChangeText={(email) => this.setState({ email })} />
           <TextField placeholder='Password' value={this.state.password} onChangeText={(password) => this.setState({ password })} secure />
           {this.renderLoad()}
           <Text>
             {this.props.error}
           </Text>
-          <RoundedButton onPress={() => this.props.navigation.navigate('Register')}>
+          <RoundedButton onPress={() => this.props.navigation.navigate('RegisterStack')}>
             Register
           </RoundedButton>
+
         </View>
       </View>
     )

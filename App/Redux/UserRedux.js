@@ -34,9 +34,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        error: ''
+        error: '',
+        user: action.payload
       }
 
+    case 'REGISTER_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        user: action.payload
+      }
     case 'LOGIN_ERROR':
       return {
         ...state,
@@ -54,12 +61,6 @@ export default (state = initialState, action) => {
       return {
         ...state
         // TODO: Write error, for example, if error we show that there is an error signing out dialog.
-      }
-
-    case 'REGISTER_SUCCESS':
-      return {
-        ...state,
-        error: ''
       }
 
     case 'REGISTER_ERROR':

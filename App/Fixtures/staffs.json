@@ -1,0 +1,24 @@
+{
+  'staffs': [
+    {
+      'name': 'Jason James',
+      'email': 'jason.james@staff.uts.edu.au'
+    },
+    {
+      'name': 'Sasaki Rina',
+      'email': 'Sasaki.rina@staff.uts.edu.au'
+    },
+    {
+      'name': 'James Guedes',
+      'email': 'guedes.james@staff.uts.edu.au'
+    },
+    {
+      'name': 'Chun Li',
+      'email': 'li.chun@staff.uts.edu.au'
+    },
+    {
+      'name': 'Alissa Keep',
+      'email': 'keep.alissa@staff.uts.edu.au'
+    }
+  ]
+}
