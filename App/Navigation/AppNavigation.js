@@ -13,6 +13,7 @@ import EditUser from '../Containers/User/EditUser'
 import SeminarItem from '../Containers/Seminar/SeminarItem'
 import SeminarDetails from '../Containers/Seminar/SeminarDetails'
 import EditSeminar from '../Containers/Seminar/UpdateAndAddSeminarStack/EditSeminar'
+import Print from '../Containers/Print'
 
 import { MySeminarComponent } from '../Containers/'
 import AddSeminar from '../Containers/Seminar/UpdateAndAddSeminarStack/AddSeminar'
@@ -231,6 +232,12 @@ const LoggedInDrawerNav = DrawerNavigator(
       screen: MySeminarStack,
       navigationOptions: {
         drawerLabel: 'My Seminar'
+      }
+    },
+    Print: {
+      screen: Print,
+      navigationOptions: {
+        drawerLabel: 'Print Example'
       }
     }
   })
