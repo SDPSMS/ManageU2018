@@ -83,6 +83,7 @@ export function saveUserToDatabase (email, uid, name, role) {
 // TODO: Make register function.
 export function register (email, password, role) {
   return (dispatch) => {
+    dispatch(startAuthentication())
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((user) => {
         const newUser = { email, name: password, role }

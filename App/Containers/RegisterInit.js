@@ -15,7 +15,7 @@ export default class RegisterInit extends Component {
       email: '',
       password: '',
       dataSource: [],
-      error: '',
+      message: ''
     }
 
     this.getData()
