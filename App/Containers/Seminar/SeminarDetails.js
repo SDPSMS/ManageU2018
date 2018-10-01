@@ -8,6 +8,7 @@ import { attendSeminar } from '../../Action/AttendeeAction'
 import ModalDialog from '../../Components/ModalDialog'
 import RoundedButton from '../../Components/RoundedButton'
 import TextField from '../../Components/TextField'
+import styles from '../Styles/ContainerStyle'
 
 class SeminarDetails extends Component {
   constructor (props) {
@@ -65,20 +66,44 @@ class SeminarDetails extends Component {
     )
 
     return (
-      <View>
+      <View style={ styles.container } >
         <SimpleIcon
           name={'close'}
           size={30}
           onPress={() => this.props.unselectSeminar()}
         />
         {this.renderOrganiserOnlyContent()}
-        <Text>Abstract: {this.props.seminar.abstract}</Text>
-        <Text>Label: {this.props.seminar.label}</Text>
-        <Text>Date: {this.props.seminar.date}</Text>
-        <Text>Duration: {this.props.seminar.duration}</Text>
-        <Text>speaker: {this.props.seminar.speaker}</Text>
-        <Text>Time: {this.props.seminar.time}</Text>
-        <Text>Venue: {this.props.seminar.venue}</Text>
+
+        {/* Title of Seminar */}
+        <Text style={ styles.titleText }>{this.props.seminar.label}</Text>
+
+        
+        {/* Seminar details */}
+        <Text style={ styles.sectionText }>Duration</Text>
+        <Text>{this.props.seminar.duration}</Text>
+
+        <Text style={ styles.sectionText }>Speaker</Text>
+        <Text>{this.props.seminar.speaker}</Text>
+
+        {/* TODO: Insert dividers between different sections.
+          Look to use a table view or equivalent for seminar
+          details*/}
+
+        {/* Seminar date */}
+        <Text style={ styles.sectionText }>Date</Text>
+        <Text>{this.props.seminar.date}</Text>
+        {/* Seminar time */}
+        <Text style={ styles.sectionText }>Time</Text>
+        <Text>{this.props.seminar.time}</Text>
+
+        <Text style={ styles.sectionText }>Venue</Text>
+        <Text>{this.props.seminar.venue}</Text>
+
+        {/* Abstract text */}
+        <Text style={ styles.sectionText }>Abstract</Text>
+        <Text>{this.props.seminar.abstract}</Text>
+
+
         <View>
           <RoundedButton text='Join' onPress={() => this.setState({ showModal: true })} />
         </View>

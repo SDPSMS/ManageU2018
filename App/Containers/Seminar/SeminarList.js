@@ -22,7 +22,7 @@ class SeminarList extends Component {
   renderLoad () {
     const dataObj = ConvertToObject(venueData)
     return (
-      <View style={styles.mainContainer}>
+      <View>
         <ScrollView style={styles.container}>
           <RoundedButton text='Sort Seminar By Date' onPress={() => this.props.sortSeminarByDate()} />
           <CustomDropdown label='Venue List' data={dataObj} onChangeText={(venue) => this.setState({venue})} />

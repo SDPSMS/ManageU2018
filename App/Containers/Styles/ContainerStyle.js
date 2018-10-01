@@ -24,7 +24,15 @@ export default StyleSheet.create({
     borderRadius: 5
   },
   titleText: {
+    color: Colors.primaryTextColour,
+    fontSize: 20
+  },
+  sectionText: {
     color: Colors.primaryTextColour
+  },
+  subtitleText: {
+    color: Colors.primaryTextColour,
+    fontWeight: 'bold'
   },
   formStyle: {
     margin: 40

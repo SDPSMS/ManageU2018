@@ -14,14 +14,18 @@ const SeminarItem = (props) => {
       onPress={() => props.selectSeminar(props.seminar)}
     >
       <View style={styles.listContainer}>
-        <Text style={styles.titleText}>
+        <Text style={styles.titleText} numberOfLines={1} ellipsizeMode={'tail'}>
           {props.seminar.label}
         </Text>
-        <Text style={styles.subtitleText}>
-          Speaker: {props.seminar.speaker}
+
+        <Text numberOfLines={1} ellipsizeMode={'tail'}>
+          <Text style={styles.subtitleText}>Speaker:</Text>
+          <Text> {props.seminar.speaker}</Text>
         </Text>
-        <Text style={styles.subtitleText} numberOfLines={2} ellipsizeMode={'tail'}>
-          Description: {props.seminar.abstract}
+
+        <Text numberOfLines={2} ellipsizeMode={'tail'}>
+          <Text style={styles.subtitleText} >Description:</Text>
+          <Text> {props.seminar.abstract}</Text>
         </Text>
       </View>
     </TouchableWithoutFeedback>
