@@ -10,7 +10,7 @@ import RoundedButton from '../../Components/RoundedButton'
 class SeminarList extends Component {
   renderLoad () {
     return (
-      <View style={styles.mainContainer}>
+      <View>
         <ScrollView style={styles.container}>
           <RoundedButton text='Sort Seminar By Date' onPress={() => this.props.sortSeminarByDate()} />
           <View>
