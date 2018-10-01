@@ -30,6 +30,9 @@ export default StyleSheet.create({
   sectionText: {
     color: Colors.primaryTextColour
   },
+  subtitleText: {
+    color: Colors.primaryTextColour
+  },
   formStyle: {
     margin: 40
   }
