@@ -2,6 +2,7 @@ const initialState = {
   seminars: [],
   seminarSelected: null,
   isLoading: false,
+  message: '',
   abstract: '',
   date: '',
   time: '',
@@ -101,7 +102,15 @@ export default (state = initialState, action) => {
     case 'SORT_SEMINAR_DATE':
       return {
         ...state,
-        seminars: action.payload
+        seminars: action.payload,
+        message: action.message
+      }
+
+    case 'SORT_SEMINAR_VENUE':
+      return {
+        ...state,
+        seminars: action.payload,
+        message: action.message
       }
 
     default:

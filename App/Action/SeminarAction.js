@@ -138,7 +138,28 @@ export function sortSeminarByDate () {
         sorted.push(snap.val())
       })
     }).then(() => {
-      dispatch({ type: 'SORT_SEMINAR_DATE', payload: sorted })
+      if (sorted.length !== 0) {
+        dispatch({type: 'SORT_SEMINAR_DATE', payload: sorted})
+      } else {
+        dispatch({type: 'SORT_SEMINAR_DATE', message: 'No Seminar in the given date found!'})
+      }
+    })
+  }
+}
+
+export function sortSeminarByVenue (venue) {
+  return (dispatch) => {
+    const filtered = []
+    firebase.database().ref('seminars').orderByChild('venue').equalTo(venue).once('value').then((snapshot) => {
+      snapshot.forEach((snap) => {
+        filtered.push(snap.val())
+      })
+    }).then(() => {
+      if (filtered.length !== 0) {
+        dispatch({ type: 'SORT_SEMINAR_VENUE', payload: filtered })
+      } else {
+        dispatch({type: 'SORT_SEMINAR_DATE', message: 'No Seminar in the given venue found!'})
+      }
     })
   }
 }

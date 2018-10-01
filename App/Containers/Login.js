@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-// import { MKColor, MKTextField, MKButton } from 'react-native-material-kit'
+import { Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-// import Loader from '../components/Loader'
 import { login } from '../Action/UserAction'
-// import AccentButton from '../components/AccentButton'
-// import TextField from '../components/TextField'
 import styles from './Styles/ContainerStyle'
 import RoundedButton from '../Components/RoundedButton'
 import TextField from '../Components/TextField'
 import Loader from '../Components/Loader'
+import AlertText from '../Components/AlertText'
 
 class Login extends Component {
   constructor (props) {
@@ -40,10 +37,10 @@ class Login extends Component {
           <TextField placeholder='Email Address' value={this.state.email} onChangeText={(email) => this.setState({ email })} />
           <TextField placeholder='Password' value={this.state.password} onChangeText={(password) => this.setState({ password })} secure />
           {this.renderLoad()}
-          <Text>
+          <AlertText>
             {this.props.error}
-          </Text>
-          <RoundedButton onPress={() => this.props.navigation.navigate('RegisterStack')}>
+          </AlertText>
+          <RoundedButton onPress={() => this.props.navigation.push('RegisterInit')}>
             Register
           </RoundedButton>
 

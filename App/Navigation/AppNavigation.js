@@ -23,37 +23,16 @@ import DateTime from '../Containers/Seminar/UpdateAndAddSeminarStack/DateTime'
 import AttendeeList from '../Containers/Attendees/AttendeeList'
 import Register from '../Containers/Register'
 
-const RegisterLogicStack = StackNavigator(
+const AuthenticationStack = StackNavigator(
   {
+    Login: {
+      screen: Login
+    },
     RegisterInit: {
       screen: RegisterInit
     },
     Register: {
       screen: Register
-    }
-  },
-  {
-    initialRouteName: 'RegisterInit',
-    headerMode: 'none',
-    navigationOptions: {
-      headerVisible: false
-    }
-  }
-)
-
-const AuthenticationStack = StackNavigator(
-  {
-    Login: {
-      screen: Login,
-      navigationOptions: {
-        drawerLabel: 'Login'
-      }
-    },
-    RegisterStack: {
-      screen: RegisterLogicStack,
-      navigationOptions: {
-        drawerLabel: null
-      }
     }
   },
   {
