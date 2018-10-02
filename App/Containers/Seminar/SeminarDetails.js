@@ -21,7 +21,6 @@ class SeminarDetails extends Component {
   }
 
   attendSeminar () {
-    console.log(this.props.seminar.id)
     this.props.attendSeminar(this.state.name, this.state.email, this.props.seminar.id)
     this.setState({ showModal: false })
   }

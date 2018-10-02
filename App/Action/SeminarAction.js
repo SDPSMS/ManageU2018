@@ -112,17 +112,17 @@ export function loadAttendees (seminarId) {
     // orderBy equalTo
     firebase.database().ref('attendeelist').child(seminarId)
       .once('value').then((snapshot) => {
-      snapshot.forEach((attendeeid) => {
-        firebase.database().ref('attendees').child(attendeeid.val())
+        snapshot.forEach((attendeeid) => {
+          firebase.database().ref('attendees').child(attendeeid.val())
           .once('value').then((snapshot) => {
-          attendeesListAndDetails.push(snapshot.val())
-        })
+            attendeesListAndDetails.push(snapshot.val())
+          })
           .then(() => {
             dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
             dispatch(loadAttendeeFinish())
           })
+        })
       })
-    })
     // .then(() => {
     //   dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
     //   dispatch(loadAttendeeFinish())
@@ -171,17 +171,17 @@ async function sendEmail (emails) {
 }
 
 // TODO: Might not be right here.
-export function sendUpdateEmailNotif (seminarid, emails) {
+export function sendUpdateEmailNotif (seminarid) {
   return (dispatch) => {
     let attendeesListAndDetails = []
     // orderBy equalTo
     firebase.database().ref('attendeelist').child(seminarid)
       .once('value').then((snapshot) => {
-        snapshot.forEach((attendeeid) => {
-          firebase.database().ref('attendees').child(attendeeid.val())
+      snapshot.forEach((attendeeid) => {
+        firebase.database().ref('attendees').child(attendeeid.val())
           .once('value').then((snapshot) => {
-            attendeesListAndDetails.push(snapshot.val())
-          })
+          attendeesListAndDetails.push(snapshot.val())
+        })
           .then(() => {
             console.log(attendeesListAndDetails)
             // TODO: Handle error and success!
@@ -190,7 +190,7 @@ export function sendUpdateEmailNotif (seminarid, emails) {
             })
               .catch(() => console.log('Fail'))
           })
-        })
       })
+    })
   }
 }
