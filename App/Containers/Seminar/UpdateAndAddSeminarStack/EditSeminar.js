@@ -8,10 +8,9 @@ import styles from '../../Styles/ContainerStyle'
 
 class EditSeminar extends Component {
   onUpdatePressed () {
-    const { abstract, date, time, duration, label, speaker, venue, id, seminarAttendees } = this.props
+    const { abstract, date, time, duration, label, speaker, venue, id } = this.props
     // The actions.
-    console.log(seminarAttendees.email)
-    this.props.sendUpdateEmailNotif(id, seminarAttendees)
+    this.props.sendUpdateEmailNotif(id)
     this.props.saveSeminar({ abstract, date, time, duration, label, speaker, venue, id })
   }
 
@@ -42,10 +41,9 @@ class EditSeminar extends Component {
 // the redux function.
 const mapStateToProps = (state) => {
   const { abstract, date, time, duration, label, speaker, venue } = state.seminar
-  const { seminarAttendees } = state.attendee
   const { id } = state.seminar.seminarSelected
   return {
-    abstract, date, time, duration, label, speaker, venue, id, seminarAttendees
+    abstract, date, time, duration, label, speaker, venue, id
   }
 }
 
