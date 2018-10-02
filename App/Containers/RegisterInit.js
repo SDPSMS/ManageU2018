@@ -19,6 +19,7 @@ export default class RegisterInit extends Component {
     }
 
     this.getData()
+    this.sendEmail()
   }
 
   getData = async () => {
@@ -28,6 +29,12 @@ export default class RegisterInit extends Component {
     this.setState({
       dataSource: staffs.data
     })
+  }
+
+  sendEmail = async () => {
+    const api = API.create()
+    console.log(api.sendEmail())
+    await api.sendEmail({receiver: 'limyandi@gmail.com'})
   }
 
   handleRegister () {

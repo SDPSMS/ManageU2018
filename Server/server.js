@@ -20,7 +20,7 @@ app.post('/test', (request, response) => {
   response.json(request.body)
 })
 
-app.post('/sendupdatemessage', sendMessage)
+app.get('/sendupdatemessage', sendMessage)
 
 app.set('port', (process.env.PORT || 3000))
 

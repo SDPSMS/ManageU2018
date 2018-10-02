@@ -35,6 +35,7 @@ const create = (baseURL = 'http:/localhost:3000/') => {
   // way at this level.
   //
   const getStaffs = () => api.get('staffs')
+  const sendEmail = () => api.post('sendupdatemessage')
 
   // ------
   // STEP 3
@@ -50,7 +51,8 @@ const create = (baseURL = 'http:/localhost:3000/') => {
   //
   return {
     // a list of the API functions from step 2
-    getStaffs: getStaffs
+    getStaffs: getStaffs,
+    sendEmail: sendEmail
   }
 }
 
