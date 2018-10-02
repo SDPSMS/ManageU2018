@@ -1,5 +1,6 @@
 import firebase from 'firebase'
 import NavigationActions from '../Services/NavigationService'
+import API from '../Services/Api'
 
 function loadSeminarStart () {
   return {
@@ -13,14 +14,14 @@ export function loadAllSeminars () {
 
     firebase.database().ref('seminars/')
       .on('value', (snapshot) => {
-        dispatch({ type: 'LOAD_ALL_SEMINAR', payload: snapshot.val() })
+        dispatch({type: 'LOAD_ALL_SEMINAR', payload: snapshot.val()})
       })
   }
 }
 
 export function selectSeminar (seminarId) {
   return (dispatch) => {
-    dispatch({ type: 'SELECTED_SEMINAR', payload: seminarId })
+    dispatch({type: 'SELECTED_SEMINAR', payload: seminarId})
     dispatch(NavigationActions.push('SeminarDetails'))
   }
 }
@@ -28,26 +29,26 @@ export function selectSeminar (seminarId) {
 export function unselectSeminar () {
   return (dispatch) => {
     dispatch(NavigationActions.goBack())
-    dispatch({ type: 'NONE_SELECTED' })
+    dispatch({type: 'NONE_SELECTED'})
   }
 }
 
 export function editSeminar (seminar) {
   return (dispatch) => {
-    dispatch({ type: 'EDIT_SEMINAR', payload: seminar })
+    dispatch({type: 'EDIT_SEMINAR', payload: seminar})
     dispatch(NavigationActions.push('EditSeminar'))
   }
 }
 
 // TODO: Instead of using this, wrap everything in one object called details
-export function saveSeminar ({ abstract, date, time, duration, label, speaker, venue, id }) {
-  const { currentUser } = firebase.auth()
+export function saveSeminar ({abstract, date, time, duration, label, speaker, venue, id}) {
+  const {currentUser} = firebase.auth()
   return (dispatch) => {
     firebase.database().ref(`seminars/${id}`)
-      .set({ id, abstract, date, time, duration, label, speaker, venue, ownerid: currentUser.uid })
+      .set({id, abstract, date, time, duration, label, speaker, venue, ownerid: currentUser.uid})
       .then(() => {
         // SAVE SEMINAR IN THE DATABASE
-        dispatch({ type: 'SAVE_SEMINAR' })
+        dispatch({type: 'SAVE_SEMINAR'})
         dispatch(NavigationActions.navigate('SeminarList'))
       })
     // handle catch as well.
@@ -60,29 +61,29 @@ export function deleteSeminar (seminarId) {
       .remove()
       .then(() => {
         // after remove, we dispatch the actions so that the redux state can be updated.
-        dispatch({ type: 'DELETE_SEMINAR' })
+        dispatch({type: 'DELETE_SEMINAR'})
         dispatch(NavigationActions.navigate('SeminarList'))
       })
   }
 }
 
-export function addNewSeminar ({ abstract, date, time, duration, label, speaker, venue }) {
+export function addNewSeminar ({abstract, date, time, duration, label, speaker, venue}) {
   // TODO: Set the user to have the seminars / Set the seminars to have the user id.
-  const { currentUser } = firebase.auth()
+  const {currentUser} = firebase.auth()
 
   return (dispatch) => {
     // setting the current user uid (who created the seminar) as a foreign key in the seminars entity.
     const ref = firebase.database().ref('seminars').push()
     const key = ref.getKey()
-    ref.set({ id: key, abstract, date, time, duration, label, speaker, venue, ownerid: currentUser.uid })
+    ref.set({id: key, abstract, date, time, duration, label, speaker, venue, ownerid: currentUser.uid})
       .then(() => {
-        dispatch({ type: 'ADD_SEMINAR' })
+        dispatch({type: 'ADD_SEMINAR'})
         dispatch(NavigationActions.navigate('SeminarList'))
       })
   }
 }
 
-export function formUpdate ({ prop, value }) {
+export function formUpdate ({prop, value}) {
   return {
     type: 'FORM_UPDATE',
     payload: {
@@ -93,7 +94,7 @@ export function formUpdate ({ prop, value }) {
 
 export function loadAttendeeStart () {
   return (dispatch) => {
-    dispatch({ type: 'LIST_ATTENDEE_START' })
+    dispatch({type: 'LIST_ATTENDEE_START'})
     dispatch(NavigationActions.navigate('SeminarAttendeesView'))
   }
 }
@@ -111,17 +112,17 @@ export function loadAttendees (seminarId) {
     // orderBy equalTo
     firebase.database().ref('attendeelist').child(seminarId)
       .once('value').then((snapshot) => {
-        snapshot.forEach((attendeeid) => {
-          firebase.database().ref('attendees').child(attendeeid.val())
-            .once('value').then((snapshot) => {
-              attendeesListAndDetails.push(snapshot.val())
-            })
-            .then(() => {
-              dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
-              dispatch(loadAttendeeFinish())
-            })
+      snapshot.forEach((attendeeid) => {
+        firebase.database().ref('attendees').child(attendeeid.val())
+          .once('value').then((snapshot) => {
+          attendeesListAndDetails.push(snapshot.val())
         })
+          .then(() => {
+            dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
+            dispatch(loadAttendeeFinish())
+          })
       })
+    })
     // .then(() => {
     //   dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
     //   dispatch(loadAttendeeFinish())
@@ -156,10 +157,40 @@ export function sortSeminarByVenue (venue) {
       })
     }).then(() => {
       if (filtered.length !== 0) {
-        dispatch({ type: 'SORT_SEMINAR_VENUE', payload: filtered })
+        dispatch({type: 'SORT_SEMINAR_VENUE', payload: filtered})
       } else {
         dispatch({type: 'SORT_SEMINAR_DATE', message: 'No Seminar in the given venue found!'})
       }
     })
+  }
+}
+
+async function sendEmail (emails) {
+  const api = API.create()
+  await api.sendEmail(emails)
+}
+
+// TODO: Might not be right here.
+export function sendUpdateEmailNotif (seminarid, emails) {
+  return (dispatch) => {
+    let attendeesListAndDetails = []
+    // orderBy equalTo
+    firebase.database().ref('attendeelist').child(seminarid)
+      .once('value').then((snapshot) => {
+        snapshot.forEach((attendeeid) => {
+          firebase.database().ref('attendees').child(attendeeid.val())
+          .once('value').then((snapshot) => {
+            attendeesListAndDetails.push(snapshot.val())
+          })
+          .then(() => {
+            console.log(attendeesListAndDetails)
+            // TODO: Handle error and success!
+            sendEmail(attendeesListAndDetails).then(() => {
+              console.log('success')
+            })
+              .catch(() => console.log('Fail'))
+          })
+        })
+      })
   }
 }
