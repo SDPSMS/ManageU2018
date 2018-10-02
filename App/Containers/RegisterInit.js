@@ -34,7 +34,7 @@ export default class RegisterInit extends Component {
   sendEmail = async () => {
     const api = API.create()
     console.log(api.sendEmail())
-    await api.sendEmail({receiver: 'limyandi@gmail.com'})
+    await api.sendEmail(['limyandi@gmail.com', 'lvicotrico98@gmail.com', 'limyandi.vicotrico@metigy.com'])
   }
 
   handleRegister () {

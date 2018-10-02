@@ -35,8 +35,10 @@ const create = (baseURL = 'http:/localhost:3000/') => {
   // way at this level.
   //
   const getStaffs = () => api.get('staffs')
-  const sendEmail = () => api.post('sendupdatemessage')
-
+  const sendEmail = (email) => {
+    api.post('sendupdatemessage', {receiver: email})
+    console.log(email)
+  }
   // ------
   // STEP 3
   // ------
