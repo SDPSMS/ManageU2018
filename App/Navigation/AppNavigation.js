@@ -23,6 +23,7 @@ import Abstract from '../Containers/Seminar/UpdateAndAddSeminarStack/Abstract'
 import DateTime from '../Containers/Seminar/UpdateAndAddSeminarStack/DateTime'
 import AttendeeList from '../Containers/Attendees/AttendeeList'
 import Register from '../Containers/Register'
+import Help from '../Containers/Help'
 
 const AuthenticationStack = StackNavigator(
   {
@@ -82,6 +83,13 @@ const LoggedOutDrawerNav = DrawerNavigator({
     navigationOptions: {
       title: 'Login',
       drawerLabel: 'Login'
+    }
+  },
+  Help: {
+    screen: Help,
+    navigationOptions: {
+      title: 'Help',
+      drawerLabel: 'Help'
     }
   }
 }, {
@@ -217,6 +225,13 @@ const LoggedInDrawerNav = DrawerNavigator(
       screen: Print,
       navigationOptions: {
         drawerLabel: 'Print Example'
+      }
+    },
+    Help: {
+      screen: Help,
+      navigationOptions: {
+        title: 'Help',
+        drawerLabel: 'Help'
       }
     }
   })
