@@ -16,20 +16,20 @@ export default class ModalDialog extends Component {
   }
 
   renderButtonOrLoading () {
-    const {showLoading, confirmText, negativeText, onPressPositive, onPressNegative} = this.props
+    const { showLoading, confirmText, negativeText, onPressPositive, onPressNegative } = this.props
     return (showLoading
-        ? <Loader size='small' />
-        : <View style={{marginTop: 20, flexDirection: 'row'}}>
-          <View style={{paddingRight: 15}}>
-            <Button onPress={onPressPositive} title={confirmText} />
-          </View>
-          <Button onPress={onPressNegative} title={negativeText} />
+      ? <Loader size='small' />
+      : <View style={{ marginTop: 20, flexDirection: 'row' }}>
+        <View style={{ paddingRight: 15 }}>
+          <Button onPress={onPressPositive} title={confirmText} />
         </View>
+        <Button onPress={onPressNegative} title={negativeText} />
+      </View>
     )
   }
 
   render () {
-    const {children, isVisible, title} = this.props
+    const { children, isVisible, title } = this.props
     return (
       <Modal transparent isVisible={isVisible}>
         <View style={styles.modalContainer}>

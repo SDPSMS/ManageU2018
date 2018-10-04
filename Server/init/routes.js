@@ -1,36 +1,25 @@
 import { sendMessage } from '../service/emailService'
 
+const fs = require('fs')
+
 export default (app) => {
   app.post('/sendupdatemessage', sendMessage)
-  app.get('/staffs', (req, res) => {
-    // TODO: Change data to database (MONGODB?) here instead.
-    res.send({
-      'staffs': [
-        {
-          'name': 'Jason James',
-          'email': 'jason.james@staff.uts.edu.au'
-        },
-        {
-          'name': 'Sasaki Rina',
-          'email': 'sasaki.rina@staff.uts.edu.au'
-        },
-        {
-          'name': 'James Guedes',
-          'email': 'guedes.james@staff.uts.edu.au'
-        },
-        {
-          'name': 'Chun Li',
-          'email': 'li.chun@staff.uts.edu.au'
-        },
-        {
-          'name': 'Alissa Keep',
-          'email': 'keep.alissa@staff.uts.edu.au'
-        },
-        {
-          'name': 'A',
-          'email': 'A'
+  app.post('/staffs', (req, res) => {
+    fs.readFile('./Server/init/staffs.json', function read (err, data) {
+      if (err) {
+        console.log('Register error!')
+        return err
+      }
+      const dataSource = JSON.parse(data)
+
+      for (let staff of dataSource.staffs) {
+        if (staff.name === req.body.password && staff.email === req.body.email) {
+          res.send('Yes')
+          return
         }
-      ]
+      }
+      res.status(401)
+      res.send('None shall pass')
     })
   })
 }

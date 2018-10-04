@@ -19,7 +19,7 @@ function attendSeminarSuccess () {
 
 export function attendSeminar (name, email, seminarid) {
   return (dispatch) => {
-    dispatch({type: types.SEMINAR_ATTEND_START})
+    dispatch({ type: types.SEMINAR_ATTEND_START })
     const useridlists = []
     const emaillists = []
     // TODO: Dispatch what state and navigation?

@@ -1,3 +1,5 @@
+import * as types from '../Types/actionType'
+
 const initialState = {
   user: null,
   error: '',
@@ -111,6 +113,17 @@ export default (state = initialState, action) => {
         ...state,
         // the payload refer to the actions, the selectedid in SELECTED_USER action.
         selectedUser: action.payload
+      }
+    case types.REGISTER_CHECK_DATABASE_FAILED:
+      return {
+        ...state,
+        error: action.message
+      }
+
+    case types.REGISTER_CHECK_DATABASE_SUCCESS:
+      return {
+        ...state,
+        error: ''
       }
     default:
       return state
