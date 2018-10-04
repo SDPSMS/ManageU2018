@@ -13,7 +13,7 @@ import * as types from '../../Types/userType'
  */
 class MySeminar extends Component {
   renderAddSeminarButton () {
-    const {user} = this.props
+    const { user } = this.props
     if (user != null) {
       if (user.role === types.ORGANISER) {
         return (
@@ -31,7 +31,7 @@ class MySeminar extends Component {
         <FlatList
           data={this.props.mySeminar}
           renderItem={
-            ({item}) =>
+            ({ item }) =>
               <SeminarItem seminar={item} />
           }
           keyExtractor={(item, index) => index.toString()}
@@ -67,5 +67,5 @@ function mapStateToProps (state) {
   }
 }
 
-const MySeminarComponent = connect(mapStateToProps, {fetchMySeminar})(MySeminar)
+const MySeminarComponent = connect(mapStateToProps, { fetchMySeminar })(MySeminar)
 export { MySeminarComponent }

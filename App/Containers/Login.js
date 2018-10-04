@@ -53,7 +53,7 @@ class Login extends Component {
           </MessageText>
 
           <Text style={{ color: 'blue', fontSize: 15, alignItems: 'center', alignSelf: 'center' }}
-            onPress={() => LinkingIOS.openURL('')}>
+            onPress={() => this.props.navigation.navigate('RegisterInit')}>
             Are you new? Sign Up !
           </Text>
         </View>

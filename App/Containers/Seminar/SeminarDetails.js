@@ -24,7 +24,7 @@ class SeminarDetails extends Component {
 
   // TODO: Might not be a good idea to put it here. --> Put it in actions?
   renderEditAndCancelButton () {
-    const {myseminar} = this.props
+    const { myseminar } = this.props
     if (this.props.user != null) {
       const myseminararray = []
       Object.keys(myseminar).map(index => {
@@ -61,11 +61,11 @@ class SeminarDetails extends Component {
       <View>
         <TextField
           placeholder={'Name'}
-          onChangeText={(value) => this.setState({name: value})}
+          onChangeText={(value) => this.setState({ name: value })}
         />
         <TextField
           placeholder={'Email'}
-          onChangeText={(value) => this.setState({email: value})}
+          onChangeText={(value) => this.setState({ email: value })}
         />
         <MessageText>{this.props.message}</MessageText>
       </View>
@@ -108,11 +108,11 @@ class SeminarDetails extends Component {
         <Text>Abstract</Text>
         <Text>{this.props.seminar.abstract}</Text>
         <View>
-          <RoundedButton text='Join' onPress={() => this.setState({showModal: true})} />
+          <RoundedButton text='Join' onPress={() => this.setState({ showModal: true })} />
         </View>
         <ModalDialog
           onPressPositive={() => this.attendSeminar()}
-          onPressNegative={() => this.setState({showModal: false})} children={dialogContent}
+          onPressNegative={() => this.setState({ showModal: false })} children={dialogContent}
           title='Join a Seminar' isVisible={this.state.showModal} showLoading={this.props.isLoading} />
       </View>
     )

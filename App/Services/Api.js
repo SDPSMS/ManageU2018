@@ -34,9 +34,12 @@ const create = (baseURL = 'http:/localhost:3000/') => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
-  const getStaffs = () => api.get('staffs')
+  const checkStaffDatabaseForRegister = (email, password) => {
+    console.log(email, password)
+    return api.post('staffs', {email, password})
+  }
   const sendEmail = (email) => {
-    api.post('sendupdatemessage', { receiver: email })
+    api.post('sendupdatemessage', {receiver: email})
     console.log(email)
   }
   // ------
@@ -53,7 +56,7 @@ const create = (baseURL = 'http:/localhost:3000/') => {
   //
   return {
     // a list of the API functions from step 2
-    getStaffs: getStaffs,
+    checkStaffDatabaseForRegister: checkStaffDatabaseForRegister,
     sendEmail: sendEmail
   }
 }
