@@ -33,6 +33,18 @@ class Login extends Component {
     return (
       <View style={styles.mainContainer}>
         <View>
+          <Text> </Text>
+          <Text> </Text>
+          <Text> </Text>
+          <Text> </Text>
+          <Text style={styles.sectionText}>ManageU</Text>
+          <Text> </Text>
+          <Text> </Text>
+        
+          
+          <TextField placeholder='Email Address' value={this.state.email} onChangeText={(email) => this.setState({ email })} />
+          <TextField placeholder='Password' value={this.state.password} onChangeText={(password) => this.setState({ password })} secure />
+          {this.renderLoad()}
             <View style={{marginLeft:35,marginTop:40}}>
               <Text style={styles.sectionText}>Sign in</Text>
             </View>

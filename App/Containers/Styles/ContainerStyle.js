@@ -28,14 +28,19 @@ export default StyleSheet.create({
     fontSize: 20
   },
   sectionText: {
-    fontSize: 20,
-    color: Colors.primaryTextColour
+    color: Colors.primaryTextColour,
+    padding: Metrics.baseMargin,
+    alignItems: 'center',
+    alignSelf: 'center',
+    fontWeight: 'bold',
+    fontSize: 50
   },
   subtitleText: {
     color: Colors.primaryTextColour,
     fontWeight: 'bold'
   },
-  formStyle: {
+  
+    formStyle: {
     margin: 40
   }
 })
