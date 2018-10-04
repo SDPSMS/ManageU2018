@@ -37,29 +37,23 @@ class Login extends Component {
           <Text> </Text>
           <Text> </Text>
           <Text> </Text>
+          <Text> </Text>
           <Text style={styles.sectionText}>ManageU</Text>
           <Text> </Text>
           <Text> </Text>
-        
+          <TextField placeholder='  Email Address' value={this.state.email} onChangeText={(email) => this.setState({ email })} />
+          <TextField placeholder='  Password' value={this.state.password} onChangeText={(password) => this.setState({ password })} secure />
           
-          <TextField placeholder='Email Address' value={this.state.email} onChangeText={(email) => this.setState({ email })} />
-          <TextField placeholder='Password' value={this.state.password} onChangeText={(password) => this.setState({ password })} secure />
+          <Text> </Text>
           {this.renderLoad()}
-            <View style={{marginLeft:35,marginTop:40}}>
-              <Text style={styles.sectionText}>Sign in</Text>
-            </View>
-          
-          <TextField placeholder='Email Address' value={this.state.email} onChangeText={(email) => this.setState({ email })} />
-          <TextField placeholder='Password' value={this.state.password} onChangeText={(password) => this.setState({ password })} secure />
           <AlertText>
-            {this.props.error}
+          {this.props.error}
           </AlertText>
-          {this.renderLoad()}
           
-          <RoundedButton onPress={() => this.props.navigation.push('RegisterInit')}>
-            Sign Up
-          </RoundedButton>
-          
+          <Text style={{color: 'blue', fontSize: 15, alignItems: 'center', alignSelf: 'center', }}
+          onPress={() => LinkingIOS.openURL('')}>
+          Are you new? Sign Up !
+          </Text>
         </View>
       </View>
     )

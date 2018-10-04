@@ -4,14 +4,12 @@ import { Metrics, Colors, Fonts } from '../../Themes'
 export default {
   container: {
     padding: Metrics.baseMargin,
-    width: 375,
+    width: 355,
     alignItems: 'center',
     alignSelf: 'center',
-
- textinputstyle
-    margin: 4,
+    margin: 5,
     borderWidth: 5,
-    borderRadius: 12,
+    borderRadius: 50,
     borderColor: 'white',
     backgroundColor: '#E7E6E8'
   }
