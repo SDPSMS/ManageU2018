@@ -28,6 +28,7 @@ export default StyleSheet.create({
     fontSize: 20
   },
   sectionText: {
+    fontSize: 20,
     color: Colors.primaryTextColour
   },
   subtitleText: {

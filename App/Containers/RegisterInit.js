@@ -54,7 +54,12 @@ export default class RegisterInit extends Component {
     return (
       <View style={styles.mainContainer}>
         <View>
-          <Text style={styles.sectionText}>Please Enter your UTS Staff Email and Password Note that only UTS Staff can create an account with our apps</Text>
+          <View style={{marginTop:35,marginLeft:35}}>
+            <Text style={styles.sectionText}>Authenticate your UTS Email and password to sign up</Text>
+          </View>
+          <View style={{marginLeft:35,marginTop:5,marginBottom:5}}>
+            <Text style={styles.subtitleText}>*Please note that only UTS Staff may sign up</Text>
+          </View>
           <TextField placeholder='Email' value={this.state.email}
             onChangeText={(email) => this.setState({ email })} />
           <TextField placeholder='Password' value={this.state.password}

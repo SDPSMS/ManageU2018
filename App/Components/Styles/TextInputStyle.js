@@ -9,8 +9,8 @@ export default {
     alignSelf: 'center',
 
     margin: 10,
-    borderWidth: 5,
-    borderRadius: 10,
+    borderWidth: 1,
+    
     borderColor: '#A1A8EE',
     backgroundColor: 'white'
   }
