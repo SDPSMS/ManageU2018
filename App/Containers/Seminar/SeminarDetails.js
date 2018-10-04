@@ -10,6 +10,7 @@ import RoundedButton from '../../Components/RoundedButton'
 import TextField from '../../Components/TextField'
 import styles from '../Styles/ContainerStyle'
 import _ from 'lodash'
+import MessageText from '../../Components/MessageText'
 
 class SeminarDetails extends Component {
   constructor (props) {
@@ -21,6 +22,7 @@ class SeminarDetails extends Component {
     }
   }
 
+  // TODO: Might not be a good idea to put it here. --> Put it in actions?
   renderEditAndCancelButton () {
     const {myseminar} = this.props
     if (this.props.user != null) {
@@ -51,7 +53,6 @@ class SeminarDetails extends Component {
 
   attendSeminar () {
     this.props.attendSeminar(this.state.name, this.state.email, this.props.seminar.id)
-    this.setState({showModal: false})
   }
 
   // TODO: The Display attendees button should not have that function when clicked (should only move the screen).
@@ -66,6 +67,7 @@ class SeminarDetails extends Component {
           placeholder={'Email'}
           onChangeText={(value) => this.setState({email: value})}
         />
+        <MessageText>{this.props.message}</MessageText>
       </View>
     )
 
@@ -82,10 +84,10 @@ class SeminarDetails extends Component {
         <Text style={styles.titleText}>{this.props.seminar.label}</Text>
 
         {/* Seminar details */}
-        <Text style={styles.sectionText}>Duration</Text>
+        <Text>Duration</Text>
         <Text>{this.props.seminar.duration}</Text>
 
-        <Text style={styles.sectionText}>Speaker</Text>
+        <Text>Speaker</Text>
         <Text>{this.props.seminar.speaker}</Text>
 
         {/* TODO: Insert dividers between different sections.
@@ -93,17 +95,17 @@ class SeminarDetails extends Component {
           details */}
 
         {/* Seminar date */}
-        <Text style={styles.sectionText}>Date</Text>
+        <Text>Date</Text>
         <Text>{this.props.seminar.date}</Text>
         {/* Seminar time */}
-        <Text style={styles.sectionText}>Time</Text>
+        <Text>Time</Text>
         <Text>{this.props.seminar.time}</Text>
 
-        <Text style={styles.sectionText}>Venue</Text>
+        <Text>Venue</Text>
         <Text>{this.props.seminar.venue}</Text>
 
         {/* Abstract text */}
-        <Text style={styles.sectionText}>Abstract</Text>
+        <Text>Abstract</Text>
         <Text>{this.props.seminar.abstract}</Text>
         <View>
           <RoundedButton text='Join' onPress={() => this.setState({showModal: true})} />
@@ -111,7 +113,7 @@ class SeminarDetails extends Component {
         <ModalDialog
           onPressPositive={() => this.attendSeminar()}
           onPressNegative={() => this.setState({showModal: false})} children={dialogContent}
-          title='Join a Seminar' isVisible={this.state.showModal} />
+          title='Join a Seminar' isVisible={this.state.showModal} showLoading={this.props.isLoading} />
       </View>
     )
   }
@@ -135,7 +137,9 @@ const
     return {
       seminar: state.seminar.seminarSelected,
       user: state.user.user,
-      myseminar: state.user.myseminar
+      myseminar: state.user.myseminar,
+      message: state.attendee.message,
+      isLoading: state.attendee.isLoading
     }
   }
 

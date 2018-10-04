@@ -5,11 +5,24 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import SeminarItem from './SeminarItem'
+import RoundedButton from '../../Components/RoundedButton'
+import * as types from '../../Types/userType'
 
 /**
  * Display the lists owned by a seminar hosts.
  */
 class MySeminar extends Component {
+  renderAddSeminarButton () {
+    const {user} = this.props
+    if (user != null) {
+      if (user.role === types.ORGANISER) {
+        return (
+          <RoundedButton text='Add Seminar' onPress={() => this.props.navigation.navigate('AddSeminar')} />
+        )
+      }
+    }
+  }
+
   renderInitialView () {
     return (
       // Return the list view
@@ -18,11 +31,12 @@ class MySeminar extends Component {
         <FlatList
           data={this.props.mySeminar}
           renderItem={
-            ({ item }) =>
+            ({item}) =>
               <SeminarItem seminar={item} />
           }
           keyExtractor={(item, index) => index.toString()}
         />
+        {this.renderAddSeminarButton()}
       </View>
     )
   }
@@ -53,5 +67,5 @@ function mapStateToProps (state) {
   }
 }
 
-const MySeminarComponent = connect(mapStateToProps, { fetchMySeminar })(MySeminar)
+const MySeminarComponent = connect(mapStateToProps, {fetchMySeminar})(MySeminar)
 export { MySeminarComponent }

@@ -1,9 +1,25 @@
 import NavigationActions from '../Services/NavigationService'
 import firebase from 'firebase'
 import _ from 'lodash'
+import * as types from '../Types/actionType'
+
+function attendSeminarError () {
+  return {
+    type: types.SEMINAR_ATTEND_ERROR,
+    message: 'You are already registered to this seminar'
+  }
+}
+
+function attendSeminarSuccess () {
+  return {
+    type: types.SEMINAR_ATTEND_SUCCESS,
+    message: 'Successfully registered, now you can close this registration!'
+  }
+}
 
 export function attendSeminar (name, email, seminarid) {
   return (dispatch) => {
+    dispatch({type: types.SEMINAR_ATTEND_START})
     const useridlists = []
     const emaillists = []
     // TODO: Dispatch what state and navigation?
@@ -22,10 +38,11 @@ export function attendSeminar (name, email, seminarid) {
       .then(() => {
         if (_.includes(emaillists, email)) {
           // TODO: Dispatch error message.
-          console.log('cant add')
+          dispatch(attendSeminarError())
         } else {
           const newAttendee = firebase.database().ref('attendees').push({ name, email })
           firebase.database().ref(`attendeelist/${seminarid}`).push(newAttendee.getKey())
+            .then(() => dispatch(attendSeminarSuccess()))
         }
       })
   }

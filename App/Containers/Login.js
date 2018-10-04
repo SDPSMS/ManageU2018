@@ -7,7 +7,7 @@ import styles from './Styles/ContainerStyle'
 import RoundedButton from '../Components/RoundedButton'
 import TextField from '../Components/TextField'
 import Loader from '../Components/Loader'
-import AlertText from '../Components/AlertText'
+import MessageText from '../Components/MessageText'
 
 class Login extends Component {
   constructor (props) {
@@ -48,9 +48,9 @@ class Login extends Component {
 
           <Text />
           {this.renderLoad()}
-          <AlertText>
+          <MessageText>
             {this.props.error}
-          </AlertText>
+          </MessageText>
 
           <Text style={{ color: 'blue', fontSize: 15, alignItems: 'center', alignSelf: 'center' }}
             onPress={() => LinkingIOS.openURL('')}>
