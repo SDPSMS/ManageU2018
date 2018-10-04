@@ -29,7 +29,7 @@ class SeminarList extends Component {
 
     let filterDialogContent = (
       <View>
-        <Text text='Sort by:'/>
+        <Text text='Sort by:' />
         <RoundedButton text='Sort Seminar By Date' onPress={() => this.props.sortSeminarByDate()} />
         <CustomDropdown label='Venue List' data={dataObj} onChangeText={(venue) => this.setState({venue})} />
         <RoundedButton text='Sort Seminar By Venue' onPress={() => this.props.sortSeminarByVenue(this.state.venue)} />
@@ -37,15 +37,15 @@ class SeminarList extends Component {
     )
 
     return (
-      <View style={ styles.container }>
+      <View style={styles.container}>
         {/* Filter area, it does not scroll */}
         <TextField placeholder='Search seminars...' value={this.state.search} onChangeText={(email) => this.setState({email})} />
-        <RoundedButton text='Filter' onPress={() => this.setState({ showFilterModal: true }) } />
+        <RoundedButton text='Filter' onPress={() => this.setState({ showFilterModal: true })} />
         <Text style={styles.titleText}>Seminars List</Text>
 
         {/* Modal diaglog for setting filters */}
         <ModalDialog
-          //onPressPositive={() => this.attendSeminar()}
+          // onPressPositive={() => this.attendSeminar()}
           onPressNegative={() => this.setState({ showFilterModal: false })} children={filterDialogContent}
           title='Filters' isVisible={this.state.showFilterModal} />
 
