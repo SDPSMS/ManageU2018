@@ -8,6 +8,7 @@ export default {
     alignItems: 'center',
     alignSelf: 'center',
 
+ textinputstyle
     margin: 4,
     borderWidth: 5,
     borderRadius: 12,

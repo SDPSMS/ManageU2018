@@ -10,25 +10,47 @@ import CustomDropdown from '../../Components/Dropdown'
 import venueData from './UpdateAndAddSeminarStack/venueData'
 import ConvertToObject from '../../Transforms/ConvertToArrayOfObject'
 import AlertText from '../../Components/AlertText'
+import TextField from '../../Components/TextField';
+import ModalDialog from '../../Components/ModalDialog'
+
 
 class SeminarList extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      venue: ''
+      venue: '',
+      search: '',
+      showFilterModal: false
     }
   }
 
   renderLoad () {
     const dataObj = ConvertToObject(venueData)
-    return (
+
+    let filterDialogContent = (
       <View>
+        <Text text='Sort by:'/>
+        <RoundedButton text='Sort Seminar By Date' onPress={() => this.props.sortSeminarByDate()} />
+        <CustomDropdown label='Venue List' data={dataObj} onChangeText={(venue) => this.setState({venue})} />
+        <RoundedButton text='Sort Seminar By Venue' onPress={() => this.props.sortSeminarByVenue(this.state.venue)} />
+      </View>
+    )
+
+    return (
+      <View style={ styles.container }>
+        {/* Filter area, it does not scroll */}
+        <TextField placeholder='Search seminars...' value={this.state.search} onChangeText={(email) => this.setState({email})} />
+        <RoundedButton text='Filter' onPress={() => this.setState({ showFilterModal: true }) } />
+        <Text style={styles.titleText}>Seminars List</Text>
+
+        {/* Modal diaglog for setting filters */}
+        <ModalDialog
+          //onPressPositive={() => this.attendSeminar()}
+          onPressNegative={() => this.setState({ showFilterModal: false })} children={filterDialogContent}
+          title='Filters' isVisible={this.state.showFilterModal} />
+
         <ScrollView style={styles.container}>
-          <RoundedButton text='Sort Seminar By Date' onPress={() => this.props.sortSeminarByDate()} />
-          <CustomDropdown label='Venue List' data={dataObj} onChangeText={(venue) => this.setState({venue})} />
-          <RoundedButton text='Sort Seminar By Venue' onPress={() => this.props.sortSeminarByVenue(this.state.venue)} />
           <View>
-            <Text style={styles.titleText}>Seminars List</Text>
             <FlatList
               data={this.props.seminarsList}
               renderItem={
