@@ -14,6 +14,7 @@ import Help from '../Containers/Help'
 import OrganiserHome from './OrganiserNavigation'
 import Abstract from '../Containers/Seminar/UpdateAndAddSeminarStack/Abstract'
 import DateTime from '../Containers/Seminar/UpdateAndAddSeminarStack/DateTime'
+import Print from '../Containers/Print'
 
 const AuthenticationStack = StackNavigator(
   {
@@ -138,6 +139,9 @@ const LoggedInDrawerNav = DrawerNavigator(
         title: 'Help',
         drawerLabel: 'Help'
       }
+    },
+    Print: {
+      screen: Print
     }
   },
   {
