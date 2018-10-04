@@ -12,7 +12,7 @@ export default StyleSheet.create({
     marginVertical: 3,
     backgroundColor: Colors.defaultPrimaryColour,
     justifyContent: 'center'
-    
+
   },
   buttonText: {
     color: Colors.snow,

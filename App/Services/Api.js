@@ -36,7 +36,7 @@ const create = (baseURL = 'http:/localhost:3000/') => {
   //
   const getStaffs = () => api.get('staffs')
   const sendEmail = (email) => {
-    api.post('sendupdatemessage', {receiver: email})
+    api.post('sendupdatemessage', { receiver: email })
     console.log(email)
   }
   // ------

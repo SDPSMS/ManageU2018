@@ -15,7 +15,7 @@ export default StyleSheet.create({
   },
   title: {
     fontFamily: Fonts.type.bold,
-    fontSize: Fonts.size.regular,
+    fontSize: Fonts.size.regular
 
   },
   message: {
@@ -24,11 +24,11 @@ export default StyleSheet.create({
     textAlign: 'center',
     fontFamily: Fonts.type.base,
     fontSize: Fonts.size.small,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
-  textInput:{
+  textInput: {
     width: null,
     alignItems: 'flex-start',
-    alignSelf: "flex-start",
+    alignSelf: 'flex-start'
   }
 })

@@ -47,17 +47,17 @@ export default class RegisterInit extends Component {
         this.props.navigation.push('Register')
       }
     })
-    this.setState({message: 'Please enter a correct UTS Staff Email and Password'})
+    this.setState({ message: 'Please enter a correct UTS Staff Email and Password' })
   }
 
   render () {
     return (
       <View style={styles.mainContainer}>
         <View>
-          <View style={{marginTop:35,marginLeft:35}}>
+          <View style={{ marginTop: 35, marginLeft: 35 }}>
             <Text style={styles.sectionText}>Authenticate your UTS Email and password to sign up</Text>
           </View>
-          <View style={{marginLeft:35,marginTop:5,marginBottom:5}}>
+          <View style={{ marginLeft: 35, marginTop: 5, marginBottom: 5 }}>
             <Text style={styles.subtitleText}>*Please note that only UTS Staff may sign up</Text>
           </View>
           <TextField placeholder='Email' value={this.state.email}

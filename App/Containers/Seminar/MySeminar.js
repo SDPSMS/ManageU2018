@@ -10,10 +10,6 @@ import SeminarItem from './SeminarItem'
  * Display the lists owned by a seminar hosts.
  */
 class MySeminar extends Component {
-  componentDidMount () {
-    this.props.fetchMySeminar()
-  }
-
   renderInitialView () {
     return (
       // Return the list view

@@ -1,4 +1,4 @@
-import { StackNavigator, DrawerNavigator, SwitchNavigator } from 'react-navigation'
+import { StackNavigator, DrawerNavigator, SwitchNavigator, TabNavigator } from 'react-navigation'
 import SeminarList from '../Containers/Seminar/SeminarList'
 
 import Login from '../Containers/Login'
@@ -13,17 +13,11 @@ import EditUser from '../Containers/User/EditUser'
 import SeminarItem from '../Containers/Seminar/SeminarItem'
 import SeminarDetails from '../Containers/Seminar/SeminarDetails'
 import EditSeminar from '../Containers/Seminar/UpdateAndAddSeminarStack/EditSeminar'
-import Print from '../Containers/Print'
-
-import { MySeminarComponent } from '../Containers/'
-import AddSeminar from '../Containers/Seminar/UpdateAndAddSeminarStack/AddSeminar'
-
-// Refactor EDITSEMINAR TO USE THIS AS WELL.
-import Abstract from '../Containers/Seminar/UpdateAndAddSeminarStack/Abstract'
-import DateTime from '../Containers/Seminar/UpdateAndAddSeminarStack/DateTime'
-import AttendeeList from '../Containers/Attendees/AttendeeList'
 import Register from '../Containers/Register'
 import Help from '../Containers/Help'
+
+import AdminHome from './AdminNavigation'
+import OrganiserHome from './OrganiserNavigation'
 
 const AuthenticationStack = StackNavigator(
   {
@@ -109,89 +103,12 @@ const LoggedOutNav = StackNavigator(
     })
   })
 
-// ADMIN ONLY LOGGED IN UTILITY
-// TODO: Only show this if user role when logged in is checked as admin.
-const UserManagementStack = StackNavigator(
-  {
-    UsersList: {
-      screen: UserList,
-      navigationOptions: {
-        drawerLabel: 'Users List'
-      }
-    },
-    AddUser: {
-      screen: AddUser,
-      navigationOptions: {
-        drawerLabel: null
-      }
-    },
-    EditUser: {
-      screen: EditUser,
-      navigationOptions: {
-        drawerLabel: null
-      }
-    }
-  },
-  {
-    initialRouteName: 'UsersList',
-    headerMode: 'none',
-    navigationOptions: {
-      headerVisible: false
-    }
-  }
-)
-
-const AddSeminarStack = StackNavigator(
-  {
-    Abstract: {
-      screen: Abstract
-    },
-    DateTime: {
-      screen: DateTime
-    }
-  },
-  {
-    initialRouteName: 'Abstract',
-    headerMode: 'none',
-    navigationOptions: {
-      headerVisible: false
-    }
-  }
-)
-
-const MySeminarStack = StackNavigator(
-  {
-    MySeminar: {
-      screen: MySeminarComponent
-    },
-    SeminarAttendeesView: {
-      screen: AttendeeList
-    },
-    SeminarItem: {
-      screen: SeminarItem
-    },
-    SeminarDetails: {
-      screen: SeminarDetails
-    },
-    EditSeminar: {
-      screen: EditSeminar
-    }
-  },
-  {
-    initialRouteName: 'MySeminar',
-    headerMode: 'none',
-    navigationOptions: {
-      headerVisible: false
-    }
-  }
-)
-
 // TODO: Check user type, if they are seminar host, then make them see their seminars list, if they are admin, they should see users list.
 // TODO: We probably need to refactor this, because an admin or an organiser might not even need to see a seminar list at all
 const LoggedInDrawerNav = DrawerNavigator(
   {
     Home: {
-      screen: SeminarStack,
+      screen: OrganiserHome,
       navigationOptions: {
         title: 'Home',
         drawerLabel: 'Home'
@@ -203,30 +120,6 @@ const LoggedInDrawerNav = DrawerNavigator(
         drawerLabel: 'Logout'
       }
     },
-    UserManagement: {
-      screen: UserManagementStack,
-      navigationOptions: {
-        drawerLabel: 'User Management'
-      }
-    },
-    AddSeminar: {
-      screen: AddSeminarStack,
-      navigationOptions: {
-        drawerLabel: 'Add Seminar'
-      }
-    },
-    MySeminar: {
-      screen: MySeminarStack,
-      navigationOptions: {
-        drawerLabel: 'My Seminar'
-      }
-    },
-    Print: {
-      screen: Print,
-      navigationOptions: {
-        drawerLabel: 'Print Example'
-      }
-    },
     Help: {
       screen: Help,
       navigationOptions: {
@@ -234,6 +127,9 @@ const LoggedInDrawerNav = DrawerNavigator(
         drawerLabel: 'Help'
       }
     }
+  },
+  {
+    initialRouteName: 'Home'
   })
 
 const LoggedInNav = StackNavigator(
@@ -249,7 +145,7 @@ const LoggedInNav = StackNavigator(
     })
   })
 
-export default SwitchNavigator(
+const rootNavigation = SwitchNavigator(
   {
     AuthLoading: { screen: AuthLoadingScreen },
     RootLoggedInNavigation: { screen: LoggedInNav },
@@ -257,5 +153,17 @@ export default SwitchNavigator(
   },
   {
     initialRouteName: 'AuthLoading'
-  }
-)
+  })
+
+// export default SwitchNavigator(
+//   {
+//     AuthLoading: { screen: AuthLoadingScreen },
+//     RootLoggedInNavigation: { screen: LoggedInNav },
+//     RootLoggedOutNavigation: { screen: LoggedOutNav }
+//   },
+//   {
+//     initialRouteName: 'AuthLoading'
+//   }
+// )
+
+export default rootNavigation

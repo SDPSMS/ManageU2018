@@ -143,6 +143,7 @@ export function checkAuthenticated () {
     dispatch(startAuthentication())
     firebase.auth().onAuthStateChanged((user) => {
       if (user != null) {
+        dispatch(fetchMySeminar())
         firebase.database().ref(`users/${user.uid}`).on('value', (snapshot) => {
           dispatch({ type: 'CHECK_AUTHENTICATED', payload: snapshot.val() })
           dispatch(NavigationActions.navigate('RootLoggedInNavigation'))
