@@ -9,9 +9,10 @@ import RoundedButton from '../../Components/RoundedButton'
 import CustomDropdown from '../../Components/Dropdown'
 import venueData from './UpdateAndAddSeminarStack/venueData'
 import ConvertToObject from '../../Transforms/ConvertToArrayOfObject'
-import AlertText from '../../Components/AlertText'
+import MessageText from '../../Components/MessageText'
 import TextField from '../../Components/TextField'
 import ModalDialog from '../../Components/ModalDialog'
+import * as types from '../../Types/userType'
 
 class SeminarList extends Component {
   constructor (props) {
@@ -20,6 +21,17 @@ class SeminarList extends Component {
       venue: '',
       search: '',
       showFilterModal: false
+    }
+  }
+
+  renderAddSeminarButton () {
+    const { user } = this.props
+    if (user != null) {
+      if (user.role === types.ORGANISER) {
+        return (
+          <RoundedButton text='Add Seminar' onPress={() => this.props.navigation.navigate('AddSeminar')} />
+        )
+      }
     }
   }
 
@@ -58,11 +70,12 @@ class SeminarList extends Component {
               }
               keyExtractor={(item, index) => index.toString()}
             />
-            <AlertText>
+            <MessageText>
               {this.props.message}
-            </AlertText>
+            </MessageText>
           </View>
         </ScrollView>
+        {this.renderAddSeminarButton()}
       </View>
     )
   }
@@ -85,7 +98,8 @@ function mapStateToProps (state) {
   })
   return {
     seminarsList: seminar,
-    message: state.seminar.message
+    message: state.seminar.message,
+    user: state.user.user
   }
 }
 

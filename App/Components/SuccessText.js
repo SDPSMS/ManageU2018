@@ -6,7 +6,7 @@ import styles from './Styles/MessageTextStyles'
 // TODO: Add font styling here, so it can be used anywhere.
 // size refer to the activity indicator's size.
 
-export default class MessageText extends Component {
+export default class AlertText extends Component {
   render () {
     return (
       <Text style={styles.container}>
@@ -16,6 +16,6 @@ export default class MessageText extends Component {
   }
 }
 
-MessageText.propTypes = {
+AlertText.propTypes = {
 
 }

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Metrics, Colors, Fonts } from '../../Themes'
+import { Metrics, Colors } from '../../Themes'
 
 export default {
   container: {
@@ -8,5 +8,4 @@ export default {
     alignSelf: 'center',
     color: Colors.error
   }
-
 }

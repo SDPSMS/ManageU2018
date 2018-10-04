@@ -7,7 +7,8 @@ import { register } from '../Action/UserAction'
 import connect from 'react-redux/es/connect/connect'
 import CustomDropdown from '../Components/Dropdown'
 import Loader from '../Components/Loader'
-import AlertText from '../Components/AlertText'
+import MessageText from '../Components/MessageText'
+import * as types from '../Types/userType'
 
 class Register extends Component {
   constructor (props) {
@@ -47,12 +48,12 @@ class Register extends Component {
             onChangeText={(password) => this.setState({ password })} />
           <CustomDropdown
             label='Role' value={this.state.role} onChangeText={(role) => this.setState({ role })}
-            data={[{ value: 'Organiser' }, { value: 'Host' }]}
+            data={[{ value: types.ORGANISER }]}
           />
           {this.renderLoad()}
-          <AlertText>
+          <MessageText>
             {this.state.error}
-          </AlertText>
+          </MessageText>
         </View>
       </View>
     )

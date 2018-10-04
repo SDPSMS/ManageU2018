@@ -1,6 +1,9 @@
+import * as types from '../Types/actionType'
+
 const initialState = {
   seminarAttendees: [],
-  isLoading: false
+  isLoading: false,
+  message: ''
 }
 
 export default (state = initialState, action) => {
@@ -15,6 +18,23 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoading: true
+      }
+    case types.SEMINAR_ATTEND_START:
+      return {
+        ...state,
+        isLoading: true
+      }
+    case types.SEMINAR_ATTEND_ERROR:
+      return {
+        ...state,
+        message: action.message,
+        isLoading: false
+      }
+    case types.SEMINAR_ATTEND_SUCCESS:
+      return {
+        ...state,
+        message: action.message,
+        isLoading: false
       }
 
     default:

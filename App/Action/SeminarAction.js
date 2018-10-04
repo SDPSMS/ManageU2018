@@ -1,6 +1,7 @@
 import firebase from 'firebase'
 import NavigationActions from '../Services/NavigationService'
 import API from '../Services/Api'
+import * as types from '../Types/actionType'
 
 function loadSeminarStart () {
   return {
@@ -50,6 +51,9 @@ export function saveSeminar ({ abstract, date, time, duration, label, speaker, v
         // SAVE SEMINAR IN THE DATABASE
         dispatch({ type: 'SAVE_SEMINAR' })
         dispatch(NavigationActions.navigate('SeminarList'))
+      })
+      .catch(() => {
+        dispatch({ type: types.SEMINAR_SAVE_FAILED })
       })
     // handle catch as well.
   }
@@ -184,7 +188,7 @@ export function sendUpdateEmailNotif (seminarid) {
             })
             .then(() => {
               console.log(attendeesListAndDetails)
-              // TODO: Handle error and success!
+              // TODO: Handle error and success! --> Probably do not need to because it is automatically after a seminar is updated
               sendEmail(attendeesListAndDetails).then(() => {
                 console.log('success')
               })

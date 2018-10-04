@@ -5,19 +5,15 @@ import Login from '../Containers/Login'
 import RegisterInit from '../Containers/RegisterInit'
 import DrawerButton from '../Components/DrawerButton'
 import Logout from '../Containers/Logout'
-
 import AuthLoadingScreen from '../Containers/AuthLoadingScreen'
-import UserList from '../Containers/User/UserList'
-import AddUser from '../Containers/User/AddUser'
-import EditUser from '../Containers/User/EditUser'
 import SeminarItem from '../Containers/Seminar/SeminarItem'
 import SeminarDetails from '../Containers/Seminar/SeminarDetails'
 import EditSeminar from '../Containers/Seminar/UpdateAndAddSeminarStack/EditSeminar'
 import Register from '../Containers/Register'
 import Help from '../Containers/Help'
-
-import AdminHome from './AdminNavigation'
 import OrganiserHome from './OrganiserNavigation'
+import Abstract from '../Containers/Seminar/UpdateAndAddSeminarStack/Abstract'
+import DateTime from '../Containers/Seminar/UpdateAndAddSeminarStack/DateTime'
 
 const AuthenticationStack = StackNavigator(
   {
@@ -103,8 +99,24 @@ const LoggedOutNav = StackNavigator(
     })
   })
 
-// TODO: Check user type, if they are seminar host, then make them see their seminars list, if they are admin, they should see users list.
-// TODO: We probably need to refactor this, because an admin or an organiser might not even need to see a seminar list at all
+const AddSeminarStack = StackNavigator(
+  {
+    Abstract: {
+      screen: Abstract
+    },
+    DateTime: {
+      screen: DateTime
+    }
+  },
+  {
+    initialRouteName: 'Abstract',
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false
+    }
+  }
+)
+
 const LoggedInDrawerNav = DrawerNavigator(
   {
     Home: {
@@ -135,7 +147,8 @@ const LoggedInDrawerNav = DrawerNavigator(
 const LoggedInNav = StackNavigator(
   {
     // TODO: Drawer Change in here instead of creating two nav.
-    LoggedInNav: { screen: LoggedInDrawerNav }
+    LoggedInNav: { screen: LoggedInDrawerNav },
+    AddSeminar: { screen: AddSeminarStack }
   }, {
     navigationOptions: ({ navigation }) => ({
       headerStyle: { backgroundColor: '#6495ed' },
@@ -154,16 +167,5 @@ const rootNavigation = SwitchNavigator(
   {
     initialRouteName: 'AuthLoading'
   })
-
-// export default SwitchNavigator(
-//   {
-//     AuthLoading: { screen: AuthLoadingScreen },
-//     RootLoggedInNavigation: { screen: LoggedInNav },
-//     RootLoggedOutNavigation: { screen: LoggedOutNav }
-//   },
-//   {
-//     initialRouteName: 'AuthLoading'
-//   }
-// )
 
 export default rootNavigation

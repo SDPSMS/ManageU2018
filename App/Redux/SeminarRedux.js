@@ -1,3 +1,5 @@
+import * as types from '../Types/actionType'
+
 const initialState = {
   seminars: [],
   seminarSelected: null,
@@ -111,6 +113,11 @@ export default (state = initialState, action) => {
         ...state,
         seminars: action.payload,
         message: action.message
+      }
+    case types.SEMINAR_SAVE_FAILED:
+      return {
+        ...state
+        // TODO: Show error? Redirect back to home and alert that there is an internal error?
       }
 
     default:

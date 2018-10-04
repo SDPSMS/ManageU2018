@@ -37,24 +37,6 @@ const SeminarStack = StackNavigator(
   }
 )
 
-const AddSeminarStack = StackNavigator(
-  {
-    Abstract: {
-      screen: Abstract
-    },
-    DateTime: {
-      screen: DateTime
-    }
-  },
-  {
-    initialRouteName: 'Abstract',
-    headerMode: 'none',
-    navigationOptions: {
-      headerVisible: false
-    }
-  }
-)
-
 const MySeminarStack = StackNavigator(
   {
     MySeminar: {

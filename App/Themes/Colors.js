@@ -28,7 +28,8 @@ const colors = {
   accentColour: '#00BCD4',
   primaryTextColour: '#212121',
   secondaryTextColour: '#757575',
-  dividerColour: '#BDBDBD'
+  dividerColour: '#BDBDBD',
+  success: '#4BB543'
 }
 
 export default colors
