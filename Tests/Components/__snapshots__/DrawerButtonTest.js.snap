@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Drawer button renders correcty 1`] = `
+<Text
+  accessible={true}
+  allowFontScaling={false}
+  ellipsizeMode="tail"
+  onPress={[Function]}
+  style={
+    Array [
+      Object {
+        "color": undefined,
+        "fontSize": 20,
+      },
+      Object {
+        "color": "white",
+        "marginLeft": 10,
+      },
+      Object {
+        "fontFamily": "Material Icons",
+        "fontStyle": "normal",
+        "fontWeight": "normal",
+      },
+    ]
+  }
+>
+  
+</Text>
+`;

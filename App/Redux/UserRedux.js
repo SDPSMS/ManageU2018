@@ -55,7 +55,10 @@ export default (state = initialState, action) => {
     case 'LOGOUT_SUCCESS':
       return {
         ...state,
-        user: null
+        user: null,
+        myseminar: [],
+        selectedUser: null,
+        userslist: []
       }
 
     case 'LOGOUT_ERROR':

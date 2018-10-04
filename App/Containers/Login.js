@@ -33,26 +33,28 @@ class Login extends Component {
     return (
       <View style={styles.mainContainer}>
         <View>
-          <Text> </Text>
-          <Text> </Text>
-          <Text> </Text>
-          <Text> </Text>
-          <Text> </Text>
+          <Text />
+          <Text />
+          <Text />
+          <Text />
+          <Text />
           <Text style={styles.sectionText}>ManageU</Text>
-          <Text> </Text>
-          <Text> </Text>
-          <TextField placeholder='  Email Address' value={this.state.email} onChangeText={(email) => this.setState({ email })} />
-          <TextField placeholder='  Password' value={this.state.password} onChangeText={(password) => this.setState({ password })} secure />
-          
-          <Text> </Text>
+          <Text />
+          <Text />
+          <TextField placeholder='  Email Address' value={this.state.email}
+            onChangeText={(email) => this.setState({ email })} />
+          <TextField placeholder='  Password' value={this.state.password}
+            onChangeText={(password) => this.setState({ password })} secure />
+
+          <Text />
           {this.renderLoad()}
           <AlertText>
-          {this.props.error}
+            {this.props.error}
           </AlertText>
-          
-          <Text style={{color: 'blue', fontSize: 15, alignItems: 'center', alignSelf: 'center', }}
-          onPress={() => LinkingIOS.openURL('')}>
-          Are you new? Sign Up !
+
+          <Text style={{ color: 'blue', fontSize: 15, alignItems: 'center', alignSelf: 'center' }}
+            onPress={() => LinkingIOS.openURL('')}>
+            Are you new? Sign Up !
           </Text>
         </View>
       </View>

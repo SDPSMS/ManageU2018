@@ -23,9 +23,9 @@ class Register extends Component {
 
   // TODO: Handling register should be in the backend.
   handleRegister () {
-    this.setState({error: ''})
+    this.setState({ error: '' })
     this.props.register(this.state.email, this.state.password, this.state.role)
-    this.setState({error: 'Please enter a valid email and password to register'})
+    this.setState({ error: 'Please enter a valid email and password to register' })
   }
 
   renderLoad () {
@@ -42,12 +42,12 @@ class Register extends Component {
           <Text style={styles.sectionText}>You have been authenticated, Enter the email and password you want to use for
             the apps.</Text>
           <TextField placeholder='Email' value={this.state.email}
-                     onChangeText={(email) => this.setState({email})} />
+            onChangeText={(email) => this.setState({ email })} />
           <TextField placeholder='Password' value={this.state.password}
-                     onChangeText={(password) => this.setState({password})} />
+            onChangeText={(password) => this.setState({ password })} />
           <CustomDropdown
-            label='Role' value={this.state.role} onChangeText={(role) => this.setState({role})}
-            data={[{value: 'Organiser'}, {value: 'Host'}]}
+            label='Role' value={this.state.role} onChangeText={(role) => this.setState({ role })}
+            data={[{ value: 'Organiser' }, { value: 'Host' }]}
           />
           {this.renderLoad()}
           <AlertText>
@@ -65,4 +65,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, {register})(Register)
+export default connect(mapStateToProps, { register })(Register)

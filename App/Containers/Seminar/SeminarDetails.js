@@ -9,6 +9,7 @@ import ModalDialog from '../../Components/ModalDialog'
 import RoundedButton from '../../Components/RoundedButton'
 import TextField from '../../Components/TextField'
 import styles from '../Styles/ContainerStyle'
+import _ from 'lodash'
 
 class SeminarDetails extends Component {
   constructor (props) {
@@ -20,15 +21,14 @@ class SeminarDetails extends Component {
     }
   }
 
-  attendSeminar () {
-    this.props.attendSeminar(this.state.name, this.state.email, this.props.seminar.id)
-    this.setState({ showModal: false })
-  }
-
-  renderOrganiserOnlyContent () {
-    const { user } = this.props
+  renderEditAndCancelButton () {
+    const {myseminar} = this.props
     if (this.props.user != null) {
-      if (user.role === 'Organiser' || user.role === 'Host') {
+      const myseminararray = []
+      Object.keys(myseminar).map(index => {
+        myseminararray.push(myseminar[index].id)
+      })
+      if (_.includes(myseminararray, this.props.seminar.id)) {
         return (
           <View>
             <SimpleIcon
@@ -49,66 +49,68 @@ class SeminarDetails extends Component {
     }
   }
 
+  attendSeminar () {
+    this.props.attendSeminar(this.state.name, this.state.email, this.props.seminar.id)
+    this.setState({showModal: false})
+  }
+
   // TODO: The Display attendees button should not have that function when clicked (should only move the screen).
   renderDetails () {
     let dialogContent = (
       <View>
         <TextField
           placeholder={'Name'}
-          onChangeText={(value) => this.setState({ name: value })}
+          onChangeText={(value) => this.setState({name: value})}
         />
         <TextField
           placeholder={'Email'}
-          onChangeText={(value) => this.setState({ email: value })}
+          onChangeText={(value) => this.setState({email: value})}
         />
       </View>
     )
 
     return (
-      <View style={ styles.container } >
+      <View style={styles.container}>
         <SimpleIcon
           name={'close'}
           size={30}
           onPress={() => this.props.unselectSeminar()}
         />
-        {this.renderOrganiserOnlyContent()}
+        {this.renderEditAndCancelButton()}
 
         {/* Title of Seminar */}
-        <Text style={ styles.titleText }>{this.props.seminar.label}</Text>
+        <Text style={styles.titleText}>{this.props.seminar.label}</Text>
 
-        
         {/* Seminar details */}
-        <Text style={ styles.sectionText }>Duration</Text>
+        <Text style={styles.sectionText}>Duration</Text>
         <Text>{this.props.seminar.duration}</Text>
 
-        <Text style={ styles.sectionText }>Speaker</Text>
+        <Text style={styles.sectionText}>Speaker</Text>
         <Text>{this.props.seminar.speaker}</Text>
 
         {/* TODO: Insert dividers between different sections.
           Look to use a table view or equivalent for seminar
-          details*/}
+          details */}
 
         {/* Seminar date */}
-        <Text style={ styles.sectionText }>Date</Text>
+        <Text style={styles.sectionText}>Date</Text>
         <Text>{this.props.seminar.date}</Text>
         {/* Seminar time */}
-        <Text style={ styles.sectionText }>Time</Text>
+        <Text style={styles.sectionText}>Time</Text>
         <Text>{this.props.seminar.time}</Text>
 
-        <Text style={ styles.sectionText }>Venue</Text>
+        <Text style={styles.sectionText}>Venue</Text>
         <Text>{this.props.seminar.venue}</Text>
 
         {/* Abstract text */}
-        <Text style={ styles.sectionText }>Abstract</Text>
+        <Text style={styles.sectionText}>Abstract</Text>
         <Text>{this.props.seminar.abstract}</Text>
-
-
         <View>
-          <RoundedButton text='Join' onPress={() => this.setState({ showModal: true })} />
+          <RoundedButton text='Join' onPress={() => this.setState({showModal: true})} />
         </View>
         <ModalDialog
           onPressPositive={() => this.attendSeminar()}
-          onPressNegative={() => this.setState({ showModal: false })} children={dialogContent}
+          onPressNegative={() => this.setState({showModal: false})} children={dialogContent}
           title='Join a Seminar' isVisible={this.state.showModal} />
       </View>
     )
@@ -132,7 +134,8 @@ const
   mapStateToProps = (state) => {
     return {
       seminar: state.seminar.seminarSelected,
-      user: state.user.user
+      user: state.user.user,
+      myseminar: state.user.myseminar
     }
   }
 

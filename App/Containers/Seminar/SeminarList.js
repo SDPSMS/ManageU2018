@@ -10,9 +10,8 @@ import CustomDropdown from '../../Components/Dropdown'
 import venueData from './UpdateAndAddSeminarStack/venueData'
 import ConvertToObject from '../../Transforms/ConvertToArrayOfObject'
 import AlertText from '../../Components/AlertText'
-import TextField from '../../Components/TextField';
+import TextField from '../../Components/TextField'
 import ModalDialog from '../../Components/ModalDialog'
-
 
 class SeminarList extends Component {
   constructor (props) {
@@ -31,7 +30,7 @@ class SeminarList extends Component {
       <View>
         <Text text='Sort by:' />
         <RoundedButton text='Sort Seminar By Date' onPress={() => this.props.sortSeminarByDate()} />
-        <CustomDropdown label='Venue List' data={dataObj} onChangeText={(venue) => this.setState({venue})} />
+        <CustomDropdown label='Venue List' data={dataObj} onChangeText={(venue) => this.setState({ venue })} />
         <RoundedButton text='Sort Seminar By Venue' onPress={() => this.props.sortSeminarByVenue(this.state.venue)} />
       </View>
     )
@@ -39,7 +38,7 @@ class SeminarList extends Component {
     return (
       <View style={styles.container}>
         {/* Filter area, it does not scroll */}
-        <TextField placeholder='Search seminars...' value={this.state.search} onChangeText={(email) => this.setState({email})} />
+        <TextField placeholder='Search seminars...' value={this.state.search} onChangeText={(email) => this.setState({ email })} />
         <RoundedButton text='Filter' onPress={() => this.setState({ showFilterModal: true })} />
         <Text style={styles.titleText}>Seminars List</Text>
 
@@ -54,7 +53,7 @@ class SeminarList extends Component {
             <FlatList
               data={this.props.seminarsList}
               renderItem={
-                ({item}) =>
+                ({ item }) =>
                   <SeminarItem seminar={item} />
               }
               keyExtractor={(item, index) => index.toString()}
@@ -90,4 +89,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, {sortSeminarByDate, sortSeminarByVenue})(SeminarList)
+export default connect(mapStateToProps, { sortSeminarByDate, sortSeminarByVenue })(SeminarList)

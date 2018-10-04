@@ -24,7 +24,7 @@ export function attendSeminar (name, email, seminarid) {
           // TODO: Dispatch error message.
           console.log('cant add')
         } else {
-          const newAttendee = firebase.database().ref('attendees').push({name, email})
+          const newAttendee = firebase.database().ref('attendees').push({ name, email })
           firebase.database().ref(`attendeelist/${seminarid}`).push(newAttendee.getKey())
         }
       })

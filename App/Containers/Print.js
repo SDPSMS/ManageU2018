@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import {
   Text,
   TouchableHighlight,
-  View,
+  View
 } from 'react-native'
 
 import RNHTMLtoPDF from 'react-native-html-to-pdf'
