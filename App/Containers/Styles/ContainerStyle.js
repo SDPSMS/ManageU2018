@@ -39,7 +39,7 @@ export default StyleSheet.create({
     color: Colors.primaryTextColour,
     fontWeight: 'bold'
   },
-  
+
     formStyle: {
     margin: 40
   }
