@@ -13,7 +13,7 @@ export default (app) => {
       const dataSource = JSON.parse(data)
 
       for (let staff of dataSource.staffs) {
-        if (staff.name === req.body.password && staff.email === req.body.email) {
+        if (staff.password === req.body.password && staff.email === req.body.email) {
           res.send('Yes')
           return
         }
@@ -31,7 +31,7 @@ export default (app) => {
       const dataSource = JSON.parse(data)
 
       for (let student of dataSource.students) {
-        if (student.password === req.body.password && student.email === req.body.email) {
+        if (student.email === req.body.email) {
           res.send('Yes')
           return
         }

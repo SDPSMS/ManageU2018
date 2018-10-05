@@ -28,29 +28,22 @@
   ],
   "students": [
     {
-      "email": "12739929@student.uts.edu.au",
-      "password": "limyandi"
+      "email": "12739929@student.uts.edu.au"
     },
     {
-      "email": "moiya_san@student.uts.edu.au",
-      "password": "sanmoiya"
+      "email": "moiya_san@student.uts.edu.au"
     },
     {
-      "email": "jadenyuki@student.uts.edu.au",
-      "password": "yuki"
+      "email": "jadenyuki@student.uts.edu.au"
     },
     {
-      "email": "12349129@student.uts.edu.au",
-      "password": "kimjun"
-
+      "email": "12349129@student.uts.edu.au"
     },
     {
-      "email": "chen.long@student.uts.edu.au",
-      "password": "longchen"
+      "email": "chen.long@student.uts.edu.au"
     },
     {
-      "email": "Student",
-      "password": "Student"
+      "email": "Student"
     }
   ]
 }

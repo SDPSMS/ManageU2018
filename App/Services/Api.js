@@ -38,6 +38,10 @@ const create = (baseURL = 'http:/localhost:3000/') => {
     console.log(email, password)
     return api.post('staffs', {email, password})
   }
+  const checkStudentDatabaseForRegister = (email) => {
+    console.log(email)
+    return api.post('students', {email})
+  }
   const sendEmail = (email) => {
     api.post('sendupdatemessage', {receiver: email})
     console.log(email)
@@ -57,6 +61,7 @@ const create = (baseURL = 'http:/localhost:3000/') => {
   return {
     // a list of the API functions from step 2
     checkStaffDatabaseForRegister: checkStaffDatabaseForRegister,
+    checkStudentDatabaseForRegister,
     sendEmail: sendEmail
   }
 }
