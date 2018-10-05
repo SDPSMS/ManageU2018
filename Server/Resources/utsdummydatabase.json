@@ -1,0 +1,56 @@
+{
+  "staffs": [
+    {
+      "email": "jason.james@staff.uts.edu.au",
+      "password": "Jason James"
+    },
+    {
+      "email": "Sasaki.rina@staff.uts.edu.au",
+      "password": "Sasaki Rina"
+    },
+    {
+      "email": "guedes.james@staff.uts.edu.au",
+      "password": "James Guedes"
+    },
+    {
+      "email": "li.chun@staff.uts.edu.au",
+      "password": "chunLi"
+
+    },
+    {
+      "email": "keep.alissa@staff.uts.edu.au",
+      "password": "keep.alissa"
+    },
+    {
+      "email": "Staff",
+      "password": "Staff"
+    }
+  ],
+  "students": [
+    {
+      "email": "12739929@student.uts.edu.au",
+      "password": "limyandi"
+    },
+    {
+      "email": "moiya_san@student.uts.edu.au",
+      "password": "sanmoiya"
+    },
+    {
+      "email": "jadenyuki@student.uts.edu.au",
+      "password": "yuki"
+    },
+    {
+      "email": "12349129@student.uts.edu.au",
+      "password": "kimjun"
+
+    },
+    {
+      "email": "chen.long@student.uts.edu.au",
+      "password": "longchen"
+    },
+    {
+      "email": "Student",
+      "password": "Student"
+    }
+  ]
+}

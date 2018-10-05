@@ -5,7 +5,7 @@ const fs = require('fs')
 export default (app) => {
   app.post('/sendupdatemessage', sendMessage)
   app.post('/staffs', (req, res) => {
-    fs.readFile('./Server/init/staffs.json', function read (err, data) {
+    fs.readFile('./Server/Resources/utsdummydatabase.json', function read (err, data) {
       if (err) {
         console.log('Register error!')
         return err
@@ -14,6 +14,24 @@ export default (app) => {
 
       for (let staff of dataSource.staffs) {
         if (staff.name === req.body.password && staff.email === req.body.email) {
+          res.send('Yes')
+          return
+        }
+      }
+      res.status(401)
+      res.send('None shall pass')
+    })
+  })
+  app.post('/students', (req, res) => {
+    fs.readFile('./Server/Resources/utsdummydatabase.json', function read (err, data) {
+      if (err) {
+        console.log('Register error!')
+        return err
+      }
+      const dataSource = JSON.parse(data)
+
+      for (let student of dataSource.students) {
+        if (student.password === req.body.password && student.email === req.body.email) {
           res.send('Yes')
           return
         }
