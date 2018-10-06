@@ -33,7 +33,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     fontWeight: 'bold',
-    fontSize: 50
+    fontSize: 30
   },
   subtitleText: {
     color: Colors.primaryTextColour,
