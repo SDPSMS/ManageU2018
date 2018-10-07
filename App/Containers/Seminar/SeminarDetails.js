@@ -27,26 +27,28 @@ class SeminarDetails extends Component {
     const { myseminar } = this.props
     if (this.props.user != null) {
       const myseminararray = []
-      Object.keys(myseminar).map(index => {
-        myseminararray.push(myseminar[index].id)
-      })
-      if (_.includes(myseminararray, this.props.seminar.id)) {
-        return (
-          <View>
-            <SimpleIcon
-              name={'settings'}
-              size={30}
-              onPress={() => this.props.editSeminar(this.props.seminar)}
-            />
+      if (myseminar != null) {
+        Object.keys(myseminar).map(index => {
+          myseminararray.push(myseminar[index].id)
+        })
+        if (_.includes(myseminararray, this.props.seminar.id)) {
+          return (
+            <View>
+              <SimpleIcon
+                name={'settings'}
+                size={30}
+                onPress={() => this.props.editSeminar(this.props.seminar)}
+              />
 
-            <SimpleIcon
-              name={'minus'}
-              size={30}
-              onPress={() => this.props.deleteSeminar(this.props.seminar.id)}
-            />
-            <Button title='Display Attendees' onPress={() => this.props.loadAttendees(this.props.seminar.id)} />
-          </View>
-        )
+              <SimpleIcon
+                name={'minus'}
+                size={30}
+                onPress={() => this.props.deleteSeminar(this.props.seminar.id)}
+              />
+              <Button title='Display Attendees' onPress={() => this.props.loadAttendees(this.props.seminar.id)} />
+            </View>
+          )
+        }
       }
     }
   }
