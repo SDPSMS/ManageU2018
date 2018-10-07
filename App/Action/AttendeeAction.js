@@ -18,6 +18,13 @@ function attendSeminarSuccess () {
   }
 }
 
+function attendSeminarFailed () {
+  return {
+    type: types.SEMINAR_ATTEND_FAILED,
+    message: 'Failed to register because your email is not a UTS Student Email, You need to contact ... to register'
+  }
+}
+
 function checkStudentsDatabaseForRegister (email) {
   return API.create().checkStudentDatabaseForRegister(email)
 }
@@ -54,7 +61,7 @@ export function attendSeminar (name, email, seminarid) {
           })
       } else {
         // TODO: Dispatch a message saying that this email is not a trusted UTS email so they need to contact the Organiser
-        console.log('Your details is not known.')
+        dispatch(attendSeminarFailed())
       }
     })
   }

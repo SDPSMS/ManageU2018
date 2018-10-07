@@ -36,6 +36,12 @@ export default (state = initialState, action) => {
         message: action.message,
         isLoading: false
       }
+    case types.SEMINAR_ATTEND_FAILED:
+      return {
+        ...state,
+        message: action.message,
+        isLoading: false
+      }
 
     default:
       return state
