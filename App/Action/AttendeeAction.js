@@ -36,7 +36,7 @@ export function attendSeminar (name, email, seminarid) {
       if (response.ok) {
         const useridlists = []
         const emaillists = []
-        // TODO: Dispatch what state and navigation?
+        // TODO: Problem with firebase navigation here.
         firebase.database().ref(`attendeelist/${seminarid}`).once('value')
           .then((snapshot) => {
             Object.keys(snapshot.val()).map((k) => useridlists.push(snapshot.val()[k]))
@@ -55,6 +55,9 @@ export function attendSeminar (name, email, seminarid) {
               dispatch(attendSeminarError())
             } else {
               const newAttendee = firebase.database().ref('attendees').push({name, email})
+                .then((snapshot) => {
+                  firebase.database().ref('attendees').child(snapshot.getKey()).update({id: snapshot.getKey()})
+                })
               firebase.database().ref(`attendeelist/${seminarid}`).push(newAttendee.getKey())
                 .then(() => dispatch(attendSeminarSuccess()))
             }
@@ -64,5 +67,19 @@ export function attendSeminar (name, email, seminarid) {
         dispatch(attendSeminarFailed())
       }
     })
+  }
+}
+
+export function deleteAttendee (seminarId, attendeeId) {
+  return (dispatch) => {
+    console.log(seminarId, attendeeId)
+    firebase.database().ref(`attendees/${attendeeId}`)
+      .remove()
+      .then(() => {
+        firebase.database().ref(`attendeelist/${seminarId}/${attendeeId}`).remove()
+          .then(() => {
+            dispatch(NavigationActions.navigate('SeminarAttendeesView'))
+          })
+      })
   }
 }
