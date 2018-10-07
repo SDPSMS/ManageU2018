@@ -4,7 +4,6 @@ import SeminarList from '../Containers/Seminar/SeminarList'
 import Login from '../Containers/Login'
 import RegisterInit from '../Containers/RegisterInit'
 import DrawerButton from '../Components/DrawerButton'
-import Logout from '../Containers/Logout'
 import AuthLoadingScreen from '../Containers/AuthLoadingScreen'
 import SeminarItem from '../Containers/Seminar/SeminarItem'
 import SeminarDetails from '../Containers/Seminar/SeminarDetails'
@@ -12,9 +11,7 @@ import EditSeminar from '../Containers/Seminar/UpdateAndAddSeminarStack/EditSemi
 import Register from '../Containers/Register'
 import Help from '../Containers/Help'
 import OrganiserHome from './OrganiserNavigation'
-import Abstract from '../Containers/Seminar/UpdateAndAddSeminarStack/Abstract'
-import DateTime from '../Containers/Seminar/UpdateAndAddSeminarStack/DateTime'
-import Print from '../Containers/Print'
+import AdminNavigation from './AdminNavigation'
 
 const AuthenticationStack = StackNavigator(
   {
@@ -100,72 +97,11 @@ const LoggedOutNav = StackNavigator(
     })
   })
 
-const AddSeminarStack = StackNavigator(
-  {
-    Abstract: {
-      screen: Abstract
-    },
-    DateTime: {
-      screen: DateTime
-    }
-  },
-  {
-    initialRouteName: 'Abstract',
-    headerMode: 'none',
-    navigationOptions: {
-      headerVisible: false
-    }
-  }
-)
-
-const LoggedInDrawerNav = DrawerNavigator(
-  {
-    Home: {
-      screen: OrganiserHome,
-      navigationOptions: {
-        title: 'Home',
-        drawerLabel: 'Home'
-      }
-    },
-    Logout: {
-      screen: Logout,
-      navigationOptions: {
-        drawerLabel: 'Logout'
-      }
-    },
-    Help: {
-      screen: Help,
-      navigationOptions: {
-        title: 'Help',
-        drawerLabel: 'Help'
-      }
-    },
-    Print: {
-      screen: Print
-    }
-  },
-  {
-    initialRouteName: 'Home'
-  })
-
-const LoggedInNav = StackNavigator(
-  {
-    // TODO: Drawer Change in here instead of creating two nav.
-    LoggedInNav: { screen: LoggedInDrawerNav },
-    AddSeminar: { screen: AddSeminarStack }
-  }, {
-    navigationOptions: ({ navigation }) => ({
-      headerStyle: { backgroundColor: '#6495ed' },
-      title: 'ManageU',
-      gesturesEnabled: false,
-      headerLeft: DrawerButton(navigation)
-    })
-  })
-
 const rootNavigation = SwitchNavigator(
   {
     AuthLoading: { screen: AuthLoadingScreen },
-    RootLoggedInNavigation: { screen: LoggedInNav },
+    RootAdminNavigation: { screen: AdminNavigation },
+    RootOrganiserNavigation: { screen: OrganiserHome },
     RootLoggedOutNavigation: { screen: LoggedOutNav }
   },
   {

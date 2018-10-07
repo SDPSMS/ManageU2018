@@ -12,6 +12,9 @@ import { MySeminarComponent } from '../Containers/'
 import Abstract from '../Containers/Seminar/UpdateAndAddSeminarStack/Abstract'
 import DateTime from '../Containers/Seminar/UpdateAndAddSeminarStack/DateTime'
 import AttendeeList from '../Containers/Attendees/AttendeeList'
+import Logout from '../Containers/Logout'
+import Help from '../Containers/Help'
+import DrawerButton from '../Components/DrawerButton'
 
 const SeminarStack = StackNavigator(
   {
@@ -85,4 +88,72 @@ const OrganiserHomeNav = TabNavigator(
   }
 )
 
-export default OrganiserHomeNav
+const AddSeminarStack = StackNavigator(
+  {
+    Abstract: {
+      screen: Abstract
+    },
+    DateTime: {
+      screen: DateTime
+    }
+  },
+  {
+    initialRouteName: 'Abstract',
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false
+    }
+  }
+)
+
+const OrganiserNav = DrawerNavigator(
+  {
+    Home: {
+      screen: OrganiserHomeNav,
+      navigationOptions: {
+        title: 'Home',
+        drawerLabel: 'Home'
+      }
+    },
+    Logout: {
+      screen: Logout,
+      navigationOptions: {
+        drawerLabel: 'Logout'
+      }
+    },
+    Help: {
+      screen: Help,
+      navigationOptions: {
+        title: 'Help',
+        drawerLabel: 'Help'
+      }
+    },
+    Print: {
+      screen: Print
+    },
+    AddSeminar: {
+      screen: AddSeminarStack,
+      navigationOptions: {
+        title: null,
+        drawerLabel: null
+      }
+    }
+  },
+  {
+    initialRouteName: 'Home'
+  })
+
+const OrganiserRootNav = StackNavigator(
+  {
+    // TODO: Drawer Change in here instead of creating two nav.
+    OrganiserNav: {screen: OrganiserNav}
+  }, {
+    navigationOptions: ({navigation}) => ({
+      headerStyle: {backgroundColor: '#6495ed'},
+      title: 'ManageU',
+      gesturesEnabled: false,
+      headerLeft: DrawerButton(navigation)
+    })
+  })
+
+export default OrganiserRootNav

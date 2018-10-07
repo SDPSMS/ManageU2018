@@ -3,6 +3,7 @@ import API from '../Services/Api'
 import firebase from 'firebase'
 import NavigationActions from '../Services/NavigationService'
 import * as types from '../Types/actionType'
+import * as userTypes from '../Types/userType'
 
 function startAuthentication () {
   return {
@@ -148,7 +149,13 @@ export function checkAuthenticated () {
         dispatch(fetchMySeminar())
         firebase.database().ref(`users/${user.uid}`).on('value', (snapshot) => {
           dispatch({type: 'CHECK_AUTHENTICATED', payload: snapshot.val()})
-          dispatch(NavigationActions.navigate('RootLoggedInNavigation'))
+          if (snapshot.val().role === userTypes.ORGANISER) {
+            dispatch(NavigationActions.navigate('RootOrganiserNavigation'))
+          } else if (snapshot.val().role === userTypes.ADMIN) {
+            dispatch(NavigationActions.navigate('RootAdminNavigation'))
+          } else {
+            dispatch(NavigationActions.navigate('RootLoggedOutNavigation'))
+          }
         })
       } else {
         dispatch({type: 'CHECK_AUTHENTICATED', payload: null})
