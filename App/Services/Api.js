@@ -36,14 +36,14 @@ const create = (baseURL = 'http:/localhost:3000/') => {
   //
   const checkStaffDatabaseForRegister = (email, password) => {
     console.log(email, password)
-    return api.post('staffs', {email, password})
+    return api.post('staffs', { email, password })
   }
   const checkStudentDatabaseForRegister = (email) => {
     console.log(email)
-    return api.post('students', {email})
+    return api.post('students', { email })
   }
   const sendEmail = (email) => {
-    api.post('sendupdatemessage', {receiver: email})
+    api.post('sendupdatemessage', { receiver: email })
     console.log(email)
   }
   // ------
