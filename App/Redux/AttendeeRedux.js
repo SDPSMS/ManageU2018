@@ -3,7 +3,10 @@ import * as types from '../Types/actionType'
 const initialState = {
   seminarAttendees: [],
   isLoading: false,
-  message: ''
+  message: '',
+  showModal: false,
+  name: '',
+  email: ''
 }
 
 export default (state = initialState, action) => {
@@ -22,7 +25,7 @@ export default (state = initialState, action) => {
     case types.SEMINAR_ATTEND_START:
       return {
         ...state,
-        isLoading: true
+        message: ''
       }
     case types.SEMINAR_ATTEND_ERROR:
       return {
@@ -45,7 +48,20 @@ export default (state = initialState, action) => {
 
     case types.DELETE_ATTENDEE_SUCCESS:
       return {
-        ...state
+        ...state,
+        showModal: false
+      }
+
+    case 'EDIT_ATTENDEE_SUCCESS':
+      return {
+        ...state,
+        showModal: false
+      }
+
+    case types.OPEN_MODAL:
+      return {
+        ...state,
+        showModal: true
       }
 
     default:

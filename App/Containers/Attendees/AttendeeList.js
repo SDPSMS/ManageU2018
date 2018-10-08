@@ -13,7 +13,7 @@ import ModalDialog from '../../Components/ModalDialog'
 import TextField from '../../Components/TextField'
 import MessageText from '../../Components/MessageText'
 import { loadAttendees } from '../../Action/SeminarAction'
-import { deleteAttendee } from '../../Action/AttendeeAction'
+import { deleteAttendee, editAttendee } from '../../Action/AttendeeAction'
 
 class AttendeeList extends Component {
   componentDidMount () {
@@ -24,24 +24,78 @@ class AttendeeList extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      showModal: false,
-      id: ''
+      id: '',
+      mode: '',
+      selectedUser: null,
+      name: '',
+      email: ''
+    }
+  }
+
+  editAttendees () {
+    const { name, email, selectedUser } = this.state
+    if (this.state.name === '' || this.state.email === '') {
+      console.log('pleasechange something!')
+    } else {
+      const {editAttendee} = this.props
+      editAttendee(selectedUser.id, name, email)
+      this.setState({showModal: false})
     }
   }
 
   deleteAttendees (attendeeId) {
-    const { deleteAttendee, seminarId } = this.props
+    const {deleteAttendee, seminarId} = this.props
     deleteAttendee(seminarId, attendeeId)
-    this.setState({ showModal: false })
+    this.setState({showModal: false})
+  }
+
+  renderDialog () {
+    const { selectedUser, id } = this.state
+
+    let dialogContent
+    let onPressPositive
+    let title
+    switch (this.state.mode) {
+      case 'edit':
+        title = 'Edit an Attendee'
+        onPressPositive = () => this.editAttendees()
+        dialogContent = (
+          <View>
+            <TextField
+              placeholder={'name'}
+              value={selectedUser.name}
+              onChangeText={(name) => this.setState({ name })}
+            />
+            <TextField
+              placeholder={'email'}
+              value={selectedUser.email}
+              onChangeText={(email) => this.setState({ email })}
+            />
+          </View>
+        )
+        break
+      case 'delete':
+        title = 'Delete an Attendee'
+        onPressPositive = () => this.deleteAttendees(id)
+        dialogContent = (
+          <View>
+            <Text style={{verticalAlign: 'middle'}}>Are you sure you want to delete this attendee?</Text>
+          </View>
+        )
+        break
+      default:
+    }
+    return (
+      <ModalDialog
+        confirmText='Confirm'
+        negativeText='Cancel'
+        onPressPositive={onPressPositive}
+        onPressNegative={() => this.setState({showModal: false})} children={dialogContent}
+        title={title} isVisible={this.state.showModal} />
+    )
   }
 
   render () {
-    let dialogContent = (
-      <View>
-        <Text style={{ verticalAlign: 'middle' }}>Are you sure you want to delete this attendee?</Text>
-      </View>
-    )
-
     return (
       <View>
         <SimpleIcon
@@ -53,31 +107,27 @@ class AttendeeList extends Component {
         <FlatList
           data={this.props.attendeeLists}
           renderItem={
-            ({ item }) =>
-              <View style={{ flexDirection: 'row', margin: 10, borderBottomWidth: 3, borderBottomColor: Colors.cloud }}>
-                <View style={{ flex: 2, marginLeft: 10, marginTop: 5 }}>
+            ({item}) =>
+              <View style={{flexDirection: 'row', margin: 10, borderBottomWidth: 3, borderBottomColor: Colors.cloud}}>
+                <View style={{flex: 2, marginLeft: 10, marginTop: 5}}>
                   <Text>Email: {item.email}</Text>
                   <Text>Name: {item.name}</Text>
                 </View>
-                <View style={{ flex: 1, marginRight: 10 }}>
-                  <View style={{ marginBottom: 10 }}>
-                    <Button title='Edit' />
+                <View style={{flex: 1, marginRight: 10}}>
+                  <View style={{marginBottom: 10}}>
+                    <Button title='Edit' onPress={() => this.setState({showModal: true, selectedUser: item, mode: 'edit'})} />
                   </View>
-                  <View style={{ marginBottom: 10 }}>
+                  <View style={{marginBottom: 10}}>
                     <Button title='Delete' color={Colors.fire}
-                      onPress={() => this.setState({ showModal: true, id: item.id })} />
+                            onPress={() => this.setState({showModal: true, id: item.id, mode: 'delete'})} />
                   </View>
                 </View>
               </View>
           }
           keyExtractor={(item, index) => index.toString()}
         />
-        <ModalDialog
-          confirmText='Confirm'
-          negativeText='Cancel'
-          onPressPositive={() => this.deleteAttendees(this.state.id)}
-          onPressNegative={() => this.setState({ showModal: false })} children={dialogContent}
-          title='Delete an attendee' isVisible={this.state.showModal} />
+        {this.renderDialog()}
+
       </View>
     )
   }
@@ -90,8 +140,9 @@ AttendeeList.propTypes = {
 function mapStateToProps (state) {
   return {
     attendeeLists: state.attendee.seminarAttendees,
-    seminarId: state.seminar.seminarSelected.id
+    seminarId: state.seminar.seminarSelected.id,
+    showModal: state.attendee.showModal
   }
 }
 
-export default connect(mapStateToProps, { deleteAttendee, loadAttendees })(AttendeeList)
+export default connect(mapStateToProps, {deleteAttendee, loadAttendees, editAttendee})(AttendeeList)

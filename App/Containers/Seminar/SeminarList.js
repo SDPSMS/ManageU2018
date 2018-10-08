@@ -25,7 +25,7 @@ class SeminarList extends Component {
   }
 
   renderAddSeminarButton () {
-    const { user } = this.props
+    const {user} = this.props
     if (user != null) {
       if (user.role === types.ORGANISER) {
         return (
@@ -42,13 +42,17 @@ class SeminarList extends Component {
       <View>
         <Text text='Sort by:' />
         <RoundedButton text='Sort Seminar By Date' onPress={() => this.props.sortSeminarByDate()} />
-        <CustomDropdown label='Venue List' data={dataObj} onChangeText={(venue) => this.setState({ venue })} />
+        <CustomDropdown label='Venue List' data={dataObj} onChangeText={(venue) => this.setState({venue})} />
         <RoundedButton text='Sort Seminar By Venue' onPress={() => this.props.sortSeminarByVenue(this.state.venue)} />
       </View>
     )
 
+    const style = {
+      flex: 1
+    }
+
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, style]}>
         {/* Filter area, it does not scroll */}
         <Text style={styles.seminarText}>Seminars List</Text>
         <TextField placeholder='  SEARCH HERE!' value={this.state.search} onChangeText={(email) => this.setState({ email })} />
@@ -57,7 +61,7 @@ class SeminarList extends Component {
         {/* Modal diaglog for setting filters */}
         <ModalDialog
           // onPressPositive={() => this.attendSeminar()}
-          onPressNegative={() => this.setState({ showFilterModal: false })} children={filterDialogContent}
+          onPressNegative={() => this.setState({showFilterModal: false})} children={filterDialogContent}
           title='Filters' isVisible={this.state.showFilterModal} />
         <Text />
         <Text />
@@ -104,4 +108,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, { sortSeminarByDate, sortSeminarByVenue })(SeminarList)
+export default connect(mapStateToProps, {sortSeminarByDate, sortSeminarByVenue})(SeminarList)

@@ -13,13 +13,12 @@ class EditUser extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      name: '',
-      role: ''
+      name: props.selectedUser.name,
+      role: props.selectedUser.role
     }
   }
 
   onUpdatePressed () {
-    const { selectedUser } = this.props
     const { email, id } = this.props.selectedUser
     const { name, role } = this.state
     // The actions.
