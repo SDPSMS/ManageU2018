@@ -78,6 +78,7 @@ export function deleteAttendee (seminarId, attendeeId) {
       .then(() => {
         firebase.database().ref(`attendeelist/${seminarId}/${attendeeId}`).remove()
           .then(() => {
+            dispatch({type: types.DELETE_ATTENDEE_SUCCESS})
             dispatch(NavigationActions.navigate('SeminarAttendeesView'))
           })
       })

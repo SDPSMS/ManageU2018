@@ -43,6 +43,11 @@ export default (state = initialState, action) => {
         isLoading: false
       }
 
+    case types.DELETE_ATTENDEE_SUCCESS:
+      return {
+        ...state
+      }
+
     default:
       return state
   }
