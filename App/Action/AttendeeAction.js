@@ -43,26 +43,30 @@ export function attendSeminar (name, email, seminarid) {
             Object.keys(snapshot.val()).map((k) => useridlists.push(snapshot.val()[k]))
           })
           .then(async () => {
-            let id
-            for (id in useridlists) {
-              await firebase.database().ref(`attendees/${useridlists[id]}`).once('value').then((snapshot) => {
-                emaillists.push(snapshot.val().email)
-              })
-            }
-          })
-          .then(() => {
-            if (_.includes(emaillists, email)) {
-              // TODO: Dispatch error message.
-              dispatch(attendSeminarError())
-            } else {
-              const newAttendee = firebase.database().ref('attendees').push({name, email})
+            if (useridlists.length === 0) {
+              const newAttendee = await firebase.database().ref('attendees').push({name, email})
                 .then((snapshot) => {
                   firebase.database().ref('attendees').child(snapshot.getKey()).update({id: snapshot.getKey()})
                 })
               firebase.database().ref(`attendeelist/${seminarid}`).push(newAttendee.getKey())
                 .then(() => dispatch(attendSeminarSuccess()))
+            } else {
+              let id
+              for (id in useridlists) {
+                firebase.database().ref(`attendees/${useridlists[id]}`).once('value').then((snapshot) => {
+                  emaillists.push(snapshot.val().email)
+                })
+                  .then(() => {
+                    if (_.includes(emaillists, email)) {
+                      // TODO: Dispatch error message.
+                      dispatch(attendSeminarError())
+                    } else {
+
+                    }
+                  })
+              }
             }
-          })
+           })
       } else {
         // TODO: Dispatch a message saying that this email is not a trusted UTS email so they need to contact the Organiser
         dispatch(attendSeminarFailed())
@@ -84,7 +88,6 @@ export function deleteAttendee (seminarId, attendeeId) {
       .then(() => {
         firebase.database().ref(`attendees/${attendeeId}`).remove()
           .then(() => {
-            dispatch({type: types.DELETE_ATTENDEE_SUCCESS})
             const attendeesListAndDetails = []
             firebase.database().ref('attendeelist').child(seminarId)
               .once('value').then((snapshot) => {
@@ -99,14 +102,21 @@ export function deleteAttendee (seminarId, attendeeId) {
               .then(() => {
                 dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
                 dispatch(loadAttendeeFinish())
+                dispatch({type: types.DELETE_ATTENDEE_SUCCESS})
               })
           })
       })
   }
 }
 
-export function editAttendee (seminarId, attendeeId) {
+export function editAttendee (attendeeId, name, email) {
   return (dispatch) => {
-
+    firebase.database().ref(`attendees/${attendeeId}`)
+      .update({ name, email })
+      .then(() => {
+        // SAVE USER IN THE DATABASE
+        dispatch({ type: 'EDIT_ATTENDEE_SUCCESS' })
+        dispatch(NavigationActions.navigate('SeminarAttendeesView'))
+      })
   }
 }
