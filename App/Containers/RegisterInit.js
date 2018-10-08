@@ -26,17 +26,16 @@ class RegisterInit extends Component {
     return (
       <View style={styles.mainContainer}>
         <View>
-          <View style={{ marginTop: 35, marginLeft: 35 }}>
-            <Text style={styles.sectionText}>Authenticate your UTS Email and password to sign up</Text>
-          </View>
-          <View style={{ marginLeft: 35, marginTop: 5, marginBottom: 5 }}>
-            <Text style={styles.subtitleText}>*Please note that only UTS Staff may sign up</Text>
-          </View>
-          <TextField placeholder='Email' value={this.state.email}
+          <Text style={styles.sectionText}>REGISTER</Text>
+          <Text style={styles.subtitleText1}>Authenticate your UTS Email and password to sign up</Text>
+          <TextField placeholder=' Email' value={this.state.email}
             onChangeText={(email) => this.setState({ email })} />
-          <TextField placeholder='Password' value={this.state.password}
+          <TextField placeholder=' Password' value={this.state.password}
             onChangeText={(password) => this.setState({ password })} />
           <MessageText>{this.props.error}</MessageText>
+          <View style={{ marginLeft: 65, marginTop: 5, marginBottom: 10 }}>
+            <Text style={styles.subtitleText2}>Please note that only UTS Staff may sign up</Text>
+          </View>
           <RoundedButton text='Continue' onPress={this.handleRegister.bind(this)} />
         </View>
       </View>
