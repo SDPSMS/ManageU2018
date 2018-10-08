@@ -16,6 +16,24 @@ import Logout from '../Containers/Logout'
 import Help from '../Containers/Help'
 import DrawerButton from '../Components/DrawerButton'
 
+const AddSeminarStack = StackNavigator(
+  {
+    Abstract: {
+      screen: Abstract
+    },
+    DateTime: {
+      screen: DateTime
+    }
+  },
+  {
+    initialRouteName: 'Abstract',
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false
+    }
+  }
+)
+
 const SeminarStack = StackNavigator(
   {
     SeminarList: {
@@ -29,6 +47,10 @@ const SeminarStack = StackNavigator(
     },
     EditSeminar: {
       screen: EditSeminar
+    },
+    AddSeminar: {
+      screen: AddSeminarStack,
+      drawerLabel: null
     }
   },
   {
@@ -88,24 +110,6 @@ const OrganiserHomeNav = TabNavigator(
   }
 )
 
-const AddSeminarStack = StackNavigator(
-  {
-    Abstract: {
-      screen: Abstract
-    },
-    DateTime: {
-      screen: DateTime
-    }
-  },
-  {
-    initialRouteName: 'Abstract',
-    headerMode: 'none',
-    navigationOptions: {
-      headerVisible: false
-    }
-  }
-)
-
 const OrganiserNav = DrawerNavigator(
   {
     Home: {
@@ -131,25 +135,19 @@ const OrganiserNav = DrawerNavigator(
     Print: {
       screen: Print
     },
-    AddSeminar: {
-      screen: AddSeminarStack,
-      navigationOptions: {
-        title: null,
-        drawerLabel: null
-      }
-    }
   },
   {
     initialRouteName: 'Home'
-  })
+  }
+)
 
 const OrganiserRootNav = StackNavigator(
   {
     // TODO: Drawer Change in here instead of creating two nav.
-    OrganiserNav: { screen: OrganiserNav }
+    OrganiserNav: {screen: OrganiserNav}
   }, {
-    navigationOptions: ({ navigation }) => ({
-      headerStyle: { backgroundColor: '#6495ed' },
+    navigationOptions: ({navigation}) => ({
+      headerStyle: {backgroundColor: '#6495ed'},
       title: 'ManageU',
       gesturesEnabled: false,
       headerLeft: DrawerButton(navigation)

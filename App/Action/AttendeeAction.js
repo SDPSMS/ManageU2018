@@ -3,6 +3,7 @@ import firebase from 'firebase'
 import _ from 'lodash'
 import * as types from '../Types/actionType'
 import API from '../Services/Api'
+import { loadAttendees } from './SeminarAction'
 
 function attendSeminarError () {
   return {
@@ -70,16 +71,42 @@ export function attendSeminar (name, email, seminarid) {
   }
 }
 
+function loadAttendeeFinish () {
+  return {
+    type: 'LIST_ATTENDEE_FINISH'
+  }
+}
+
 export function deleteAttendee (seminarId, attendeeId) {
   return (dispatch) => {
     console.log(seminarId, attendeeId)
-    firebase.database().ref(`attendees/${attendeeId}`)
-      .remove()
+    firebase.database().ref(`attendeelist/${seminarId}/${attendeeId}`).remove()
       .then(() => {
-        firebase.database().ref(`attendeelist/${seminarId}/${attendeeId}`).remove()
+        firebase.database().ref(`attendees/${attendeeId}`).remove()
           .then(() => {
-            dispatch(NavigationActions.navigate('SeminarAttendeesView'))
+            dispatch({type: types.DELETE_ATTENDEE_SUCCESS})
+            const attendeesListAndDetails = []
+            firebase.database().ref('attendeelist').child(seminarId)
+              .once('value').then((snapshot) => {
+                snapshot.forEach((attendeeid) => {
+                  firebase.database().ref('attendees').child(attendeeid.val())
+                    .once('value')
+                    .then((snapshot) => {
+                      attendeesListAndDetails.push(snapshot.val())
+                    })
+                })
+              })
+              .then(() => {
+                dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
+                dispatch(loadAttendeeFinish())
+              })
           })
       })
+  }
+}
+
+export function editAttendee (seminarId, attendeeId) {
+  return (dispatch) => {
+
   }
 }
