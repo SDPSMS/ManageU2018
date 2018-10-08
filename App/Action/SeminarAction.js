@@ -111,14 +111,14 @@ function loadAttendeeFinish () {
 
 export function loadAttendees (seminarId) {
   return (dispatch) => {
-    dispatch(loadAttendeeStart())
     let attendeesListAndDetails = []
     // orderBy equalTo
     firebase.database().ref('attendeelist').child(seminarId)
       .once('value').then((snapshot) => {
         snapshot.forEach((attendeeid) => {
           firebase.database().ref('attendees').child(attendeeid.val())
-            .once('value').then((snapshot) => {
+            .once('value')
+            .then((snapshot) => {
               attendeesListAndDetails.push(snapshot.val())
             })
             .then(() => {

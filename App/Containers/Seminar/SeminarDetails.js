@@ -45,7 +45,6 @@ class SeminarDetails extends Component {
                 size={30}
                 onPress={() => this.props.deleteSeminar(this.props.seminar.id)}
               />
-              <Button title='Display Attendees' onPress={() => this.props.loadAttendees(this.props.seminar.id)} />
             </View>
           )
         }
@@ -111,6 +110,7 @@ class SeminarDetails extends Component {
         <Text>{this.props.seminar.abstract}</Text>
         <View>
           <RoundedButton text='Join' onPress={() => this.setState({ showModal: true })} />
+          <Button title='Display Attendees' onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
         </View>
         <ModalDialog
           onPressPositive={() => this.attendSeminar()}

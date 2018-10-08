@@ -12,9 +12,15 @@ import 'core-js/fn/symbol/iterator'
 import ModalDialog from '../../Components/ModalDialog'
 import TextField from '../../Components/TextField'
 import MessageText from '../../Components/MessageText'
-import {deleteAttendee} from '../../Action/AttendeeAction'
+import { loadAttendees } from '../../Action/SeminarAction'
+import { deleteAttendee } from '../../Action/AttendeeAction'
 
 class AttendeeList extends Component {
+  componentDidMount () {
+    console.log(this.props.seminarId)
+    this.props.loadAttendees(this.props.seminarId)
+  }
+
   constructor (props) {
     super(props)
     this.state = {
@@ -25,9 +31,8 @@ class AttendeeList extends Component {
 
   deleteAttendees (attendeeId) {
     const { deleteAttendee, seminarId } = this.props
-    console.log(seminarId)
     deleteAttendee(seminarId, attendeeId)
-    this.setState({showModal: false})
+    this.setState({ showModal: false })
   }
 
   render () {
@@ -51,7 +56,6 @@ class AttendeeList extends Component {
             ({ item }) =>
               <View style={{ flexDirection: 'row', margin: 10, borderBottomWidth: 3, borderBottomColor: Colors.cloud }}>
                 <View style={{ flex: 2, marginLeft: 10, marginTop: 5 }}>
-                  <Text>Attendee</Text>
                   <Text>Email: {item.email}</Text>
                   <Text>Name: {item.name}</Text>
                 </View>
@@ -60,7 +64,8 @@ class AttendeeList extends Component {
                     <Button title='Edit' />
                   </View>
                   <View style={{ marginBottom: 10 }}>
-                    <Button title='Delete' color={Colors.fire} onPress={() => this.setState({ showModal: true, id: item.id })} />
+                    <Button title='Delete' color={Colors.fire}
+                      onPress={() => this.setState({ showModal: true, id: item.id })} />
                   </View>
                 </View>
               </View>
@@ -89,4 +94,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, {deleteAttendee})(AttendeeList)
+export default connect(mapStateToProps, { deleteAttendee, loadAttendees })(AttendeeList)
