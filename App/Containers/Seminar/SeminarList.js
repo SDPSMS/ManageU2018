@@ -54,28 +54,31 @@ class SeminarList extends Component {
     return (
       <View style={[styles.container, style]}>
         {/* Filter area, it does not scroll */}
-        <TextField placeholder='Search seminars...' value={this.state.search}
-                   onChangeText={(email) => this.setState({email})} />
-        <RoundedButton text='Filter' onPress={() => this.setState({showFilterModal: true})} />
-        <Text style={styles.titleText}>Seminars List</Text>
-
+        <Text style={styles.seminarText}>Seminars List</Text>
+        <TextField placeholder='  SEARCH HERE!' value={this.state.search} onChangeText={(email) => this.setState({ email })} />
+        <RoundedButton text='Filter' onPress={() => this.setState({ showFilterModal: true })} />
+        
         {/* Modal diaglog for setting filters */}
         <ModalDialog
           // onPressPositive={() => this.attendSeminar()}
           onPressNegative={() => this.setState({showFilterModal: false})} children={filterDialogContent}
           title='Filters' isVisible={this.state.showFilterModal} />
-        <MessageText>
-          {this.props.message}
-        </MessageText>
-        <ScrollView>
-          <FlatList
-            data={this.props.seminarsList}
-            renderItem={
-              ({item}) =>
-                <SeminarItem seminar={item} />
-            }
-            keyExtractor={(item, index) => index.toString()}
-          />
+        <Text />
+        <Text />
+        <ScrollView style={styles.container}>
+          <View>
+            <FlatList
+              data={this.props.seminarsList}
+              renderItem={
+                ({ item }) =>
+                  <SeminarItem seminar={item} />
+              }
+              keyExtractor={(item, index) => index.toString()}
+            />
+            <MessageText>
+              {this.props.message}
+            </MessageText>
+          </View>
         </ScrollView>
         {this.renderAddSeminarButton()}
       </View>

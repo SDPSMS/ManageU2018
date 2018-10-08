@@ -7,7 +7,7 @@ export default class Help extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.sectionText}>Help</Text>
+          <Text style={styles.sectionText}>Need A Help?</Text>
           <Text style={styles.titleText}>Getting Started</Text>
           <Text>
           Use the navigation menu on the top left corner of the screen to access the various menus of ManageU.

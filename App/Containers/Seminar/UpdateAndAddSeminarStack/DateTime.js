@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { View } from 'react-native'
 import RoundedButton from '../../../Components/RoundedButton'
 import * as actions from '../../../Action/SeminarAction'
+import MyDatePicker from '../../../Components/DatePicker'
+import MyTimePicker from '../../../Components/TimePicker'
 
 class DateTime extends Component {
   onAddPressed () {
@@ -32,6 +34,13 @@ class DateTime extends Component {
           value={duration}
           onChangeText={(value) => this.props.formUpdate({ prop: 'duration', value })}
         />
+        <MyDatePicker>
+        </MyDatePicker>
+
+        <MyTimePicker>
+
+        </MyTimePicker>
+        
         <RoundedButton
           text={'Add'}
           onPress={this.onAddPressed.bind(this)}
