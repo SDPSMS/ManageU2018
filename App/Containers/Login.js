@@ -33,28 +33,23 @@ class Login extends Component {
     return (
       <View style={styles.mainContainer}>
         <View>
-          <Text />
-          <Text />
-          <Text />
-          <Text />
-          <Text />
-          <Text style={styles.sectionText}>ManageU</Text>
-          <Text />
-          <Text />
+          <Text style={styles.loginText}>ManageU</Text>
           <TextField placeholder='  Email Address' value={this.state.email}
             onChangeText={(email) => this.setState({ email })} />
           <TextField placeholder='  Password' value={this.state.password}
             onChangeText={(password) => this.setState({ password })} secure />
-
+          <Text />
+          <Text />
+          <Text />
           <Text />
           {this.renderLoad()}
           <MessageText>
             {this.props.error}
           </MessageText>
 
-          <Text style={{ color: 'blue', fontSize: 15, alignItems: 'center', alignSelf: 'center' }}
+          <Text style={styles.registerLinkText}
             onPress={() => this.props.navigation.navigate('RegisterInit')}>
-            Are you new? Sign Up !
+            Are you new? Click Here !
           </Text>
         </View>
       </View>
