@@ -3,7 +3,13 @@ export default {
   getStaffs: () => {
     return {
       ok: true,
-      data: require('../Fixtures/staffs.json')
+      data: require('../Fixtures/utsdummydatabase.json')
+    }
+  },
+  getStudents: () => {
+    return {
+      ok: true,
+      data: require('../Fixtures/utsdummydatabase.json')
     }
   }
 }

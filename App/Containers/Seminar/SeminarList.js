@@ -13,6 +13,8 @@ import MessageText from '../../Components/MessageText'
 import TextField from '../../Components/TextField'
 import ModalDialog from '../../Components/ModalDialog'
 import * as types from '../../Types/userType'
+import MyDatePicker from '../../Components/DatePicker'
+import moment from 'moment'
 
 class SeminarList extends Component {
   constructor (props) {
@@ -20,7 +22,10 @@ class SeminarList extends Component {
     this.state = {
       venue: '',
       search: '',
-      showFilterModal: false
+      showFilterModal: false,
+      startDate: moment().format('L'),
+      // Adding a day today.
+      endDate: moment().add('1', 'days').format('L')
     }
   }
 
@@ -37,11 +42,14 @@ class SeminarList extends Component {
 
   renderLoad () {
     const dataObj = ConvertToObject(venueData)
+    const { startDate, endDate } = this.state
 
     let filterDialogContent = (
       <View>
         <Text text='Sort by:' />
-        <RoundedButton text='Sort Seminar By Date' onPress={() => this.props.sortSeminarByDate()} />
+        <MyDatePicker date={startDate} onDateChange={(startDate) => this.setState({startDate})} />
+        <MyDatePicker date={endDate} onDateChange={(endDate) => this.setState({endDate})} />
+        <RoundedButton text='Sort Seminar By Date' onPress={() => this.props.sortSeminarByDate(startDate, endDate)} />
         <CustomDropdown label='Venue List' data={dataObj} onChangeText={(venue) => this.setState({ venue })} />
         <RoundedButton text='Sort Seminar By Venue' onPress={() => this.props.sortSeminarByVenue(this.state.venue)} />
       </View>
