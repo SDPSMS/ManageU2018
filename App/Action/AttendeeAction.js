@@ -32,7 +32,7 @@ function checkStudentsDatabaseForRegister (email) {
 
 export function attendSeminar (name, email, seminarid) {
   return (dispatch) => {
-    dispatch({type: types.SEMINAR_ATTEND_START})
+    dispatch({ type: types.SEMINAR_ATTEND_START })
     checkStudentsDatabaseForRegister(email).then((response) => {
       if (response.ok) {
         const useridlists = []
@@ -44,9 +44,9 @@ export function attendSeminar (name, email, seminarid) {
           })
           .then(async () => {
             if (useridlists.length === 0) {
-              const newAttendee = await firebase.database().ref('attendees').push({name, email})
+              const newAttendee = await firebase.database().ref('attendees').push({ name, email })
                 .then((snapshot) => {
-                  firebase.database().ref('attendees').child(snapshot.getKey()).update({id: snapshot.getKey()})
+                  firebase.database().ref('attendees').child(snapshot.getKey()).update({ id: snapshot.getKey() })
                 })
               firebase.database().ref(`attendeelist/${seminarid}`).push(newAttendee.getKey())
                 .then(() => dispatch(attendSeminarSuccess()))
@@ -66,7 +66,7 @@ export function attendSeminar (name, email, seminarid) {
                   })
               }
             }
-           })
+          })
       } else {
         // TODO: Dispatch a message saying that this email is not a trusted UTS email so they need to contact the Organiser
         dispatch(attendSeminarFailed())
@@ -100,9 +100,9 @@ export function deleteAttendee (seminarId, attendeeId) {
                 })
               })
               .then(() => {
-                dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
+                dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
                 dispatch(loadAttendeeFinish())
-                dispatch({type: types.DELETE_ATTENDEE_SUCCESS})
+                dispatch({ type: types.DELETE_ATTENDEE_SUCCESS })
               })
           })
       })

@@ -1,24 +1,31 @@
 import React, { Component } from 'react'
 import DatePicker from 'react-native-datepicker'
- 
+import moment from 'moment'
+import PropTypes from 'prop-types'
+
 export default class MyDatePicker extends Component {
-  constructor(props){
-    super(props)
-    this.state = {date:"2018-01-01"}
+  static propTypes = {
+    format: PropTypes.string
   }
- 
-  render(){
+  static defaultProps = {
+    format: 'YYYY-MM-DD'
+  }
+
+  render () {
+    const {date, onDateChange, format} = this.props
+    const minimumDate = moment().format(format)
+
     return (
       <DatePicker
         style={{width: 200}}
-        date={this.state.date}
-        mode="date"
-        placeholder="select date"
-        format="YYYY-MM-DD"
+        date={date}
+        mode='date'
+        placeholder='Select Date'
+        format={format}
         // Will need to set this to current date
-        minDate="2018-01-01"
-        confirmBtnText="Confirm"
-        cancelBtnText="Cancel"
+        minDate={minimumDate}
+        confirmBtnText='Confirm'
+        cancelBtnText='Cancel'
         customStyles={{
           dateIcon: {
             position: 'absolute',
@@ -29,9 +36,9 @@ export default class MyDatePicker extends Component {
           dateInput: {
             marginLeft: 36
           }
-          
+
         }}
-        onDateChange={(date) => {this.setState({date: date})}}
+        onDateChange={onDateChange}
       />
     )
   }

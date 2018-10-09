@@ -9,6 +9,7 @@ import ModalDialog from '../../Components/ModalDialog'
 import RoundedButton from '../../Components/RoundedButton'
 import TextField from '../../Components/TextField'
 import styles from '../Styles/ContainerStyle'
+import ConvertToDate from '../../Transforms/ConvertTimestampToDate'
 import _ from 'lodash'
 import MessageText from '../../Components/MessageText'
 
@@ -58,6 +59,11 @@ class SeminarDetails extends Component {
 
   // TODO: The Display attendees button should not have that function when clicked (should only move the screen).
   renderDetails () {
+    const {endDate, startDate} = this.props.seminar
+    const date = ConvertToDate(endDate, 'LL')
+    const endTime = ConvertToDate(endDate, 'LT')
+    const startTime = ConvertToDate(startDate, 'LT')
+
     let dialogContent = (
       <View>
         <TextField
@@ -85,9 +91,6 @@ class SeminarDetails extends Component {
         <Text style={styles.titleText}>{this.props.seminar.label}</Text>
 
         {/* Seminar details */}
-        <Text>Duration</Text>
-        <Text>{this.props.seminar.duration}</Text>
-
         <Text>Speaker</Text>
         <Text>{this.props.seminar.speaker}</Text>
 
@@ -97,10 +100,10 @@ class SeminarDetails extends Component {
 
         {/* Seminar date */}
         <Text>Date</Text>
-        <Text>{this.props.seminar.date}</Text>
+        <Text>{date}</Text>
         {/* Seminar time */}
         <Text>Time</Text>
-        <Text>{this.props.seminar.time}</Text>
+        <Text>{startTime} - {endTime}</Text>
 
         <Text>Venue</Text>
         <Text>{this.props.seminar.venue}</Text>

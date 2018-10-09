@@ -5,6 +5,7 @@ import { formUpdate } from '../../../Action/SeminarAction'
 import CustomDropdown from '../../../Components/Dropdown'
 import { connect } from 'react-redux'
 import { View } from 'react-native'
+import venueData from './venueData'
 
 class UpdateAndAddForm extends Component {
   static defaultProps = {
@@ -12,6 +13,10 @@ class UpdateAndAddForm extends Component {
   }
 
   render () {
+    const dataObj = []
+    venueData.forEach((element) => {
+      dataObj.push(JSON.parse(JSON.stringify({ value: element })))
+    })
     const { abstract, date, time, duration, label, speaker, venue } = this.props
 
     return (
@@ -47,13 +52,7 @@ class UpdateAndAddForm extends Component {
           onChangeText={(value) => this.props.formUpdate({ prop: 'speaker', value })}
         />
         <CustomDropdown
-          data={[{
-            value: 'Banana'
-          }, {
-            value: 'Mango'
-          }, {
-            value: 'Pear'
-          }]}
+          data={dataObj}
           label={'Venue'}
           value={venue}
           onChangeText={(value) => this.props.formUpdate({ prop: 'venue', value })}
