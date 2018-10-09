@@ -8,14 +8,14 @@ import styles from '../../Styles/ContainerStyle'
 
 class EditSeminar extends Component {
   onUpdatePressed () {
-    const { abstract, date, time, duration, label, speaker, venue, id } = this.props
+    const { abstract, date, startTime, endTime, label, speaker, venue, id } = this.props
     // The actions.
     this.props.sendUpdateEmailNotif(id)
-    this.props.saveSeminar({ abstract, date, time, duration, label, speaker, venue, id })
+    this.props.saveSeminar({ abstract, date, startTime, endTime, label, speaker, venue, id })
   }
 
   render () {
-    const { abstract, date, time, duration, label, speaker, venue } = this.props
+    const { abstract, date, startTime, endTime, label, speaker, venue } = this.props
 
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -23,8 +23,8 @@ class EditSeminar extends Component {
         <UpdateSeminarForm
           abstract={abstract}
           date={date}
-          time={time}
-          duration={duration}
+          startTime={startTime}
+          endTime={endTime}
           label={label}
           speaker={speaker}
           venue={venue}
@@ -40,10 +40,10 @@ class EditSeminar extends Component {
 
 // the redux function.
 const mapStateToProps = (state) => {
-  const { abstract, date, time, duration, label, speaker, venue } = state.seminar
+  const { abstract, date, startTime, endTime, label, speaker, venue } = state.seminar
   const { id } = state.seminar.seminarSelected
   return {
-    abstract, date, time, duration, label, speaker, venue, id
+    abstract, date, startTime, endTime, label, speaker, venue, id
   }
 }
 

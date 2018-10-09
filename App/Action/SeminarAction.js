@@ -45,9 +45,11 @@ export function editSeminar (seminar) {
 // TODO: Instead of using this, wrap everything in one object called details
 export function saveSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, id }) {
   const { currentUser } = firebase.auth()
+  const startDate = ConvertToTimestamp(date, startTime)
+  const endDate = ConvertToTimestamp(date, endTime)
   return (dispatch) => {
     firebase.database().ref(`seminars/${id}`)
-      .set({ id, abstract, dateStart, dateEnd, label, speaker, venue, ownerid: currentUser.uid })
+      .set({ id, abstract, startDate, endDate, label, speaker, venue, ownerid: currentUser.uid })
       .then(() => {
         // SAVE SEMINAR IN THE DATABASE
         dispatch({ type: 'SAVE_SEMINAR' })
