@@ -7,8 +7,8 @@ const initialState = {
   message: '',
   abstract: '',
   date: '',
-  time: '',
-  duration: '',
+  endTime: '',
+  startTime: '',
   label: '',
   speaker: '',
   venue: ''
@@ -48,8 +48,8 @@ export default (state = initialState, action) => {
         // after finish reset all the current state.
         abstract: '',
         date: '',
-        time: '',
-        duration: '',
+        startTime: '',
+        endTime: '',
         label: '',
         speaker: '',
         venue: ''
@@ -72,8 +72,8 @@ export default (state = initialState, action) => {
         ...state,
         abstract: action.payload.abstract,
         date: action.payload.date,
-        time: action.payload.time,
-        duration: action.payload.duration,
+        endTime: action.payload.endTime,
+        startTime: action.payload.startTime,
         label: action.payload.label,
         speaker: action.payload.speaker,
         venue: action.payload.venue,
@@ -89,8 +89,8 @@ export default (state = initialState, action) => {
         // seminarSelected: null,
         abstract: '',
         date: '',
-        time: '',
-        duration: '',
+        startTime: '',
+        endTime: '',
         label: '',
         speaker: '',
         venue: ''

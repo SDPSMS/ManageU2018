@@ -35,18 +35,18 @@ class AttendeeList extends Component {
   editAttendees () {
     const { name, email, selectedUser } = this.state
     if (this.state.name === '' || this.state.email === '') {
-      console.log('pleasechange something!')
+      console.log('please change something!')
     } else {
-      const {editAttendee} = this.props
+      const { editAttendee } = this.props
       editAttendee(selectedUser.id, name, email)
-      this.setState({showModal: false})
+      this.setState({ showModal: false })
     }
   }
 
   deleteAttendees (attendeeId) {
-    const {deleteAttendee, seminarId} = this.props
+    const { deleteAttendee, seminarId } = this.props
     deleteAttendee(seminarId, attendeeId)
-    this.setState({showModal: false})
+    this.setState({ showModal: false })
   }
 
   renderDialog () {
@@ -79,7 +79,7 @@ class AttendeeList extends Component {
         onPressPositive = () => this.deleteAttendees(id)
         dialogContent = (
           <View>
-            <Text style={{verticalAlign: 'middle'}}>Are you sure you want to delete this attendee?</Text>
+            <Text style={{ verticalAlign: 'middle' }}>Are you sure you want to delete this attendee?</Text>
           </View>
         )
         break
@@ -90,7 +90,7 @@ class AttendeeList extends Component {
         confirmText='Confirm'
         negativeText='Cancel'
         onPressPositive={onPressPositive}
-        onPressNegative={() => this.setState({showModal: false})} children={dialogContent}
+        onPressNegative={() => this.setState({ showModal: false })} children={dialogContent}
         title={title} isVisible={this.state.showModal} />
     )
   }
@@ -107,19 +107,19 @@ class AttendeeList extends Component {
         <FlatList
           data={this.props.attendeeLists}
           renderItem={
-            ({item}) =>
-              <View style={{flexDirection: 'row', margin: 10, borderBottomWidth: 3, borderBottomColor: Colors.cloud}}>
-                <View style={{flex: 2, marginLeft: 10, marginTop: 5}}>
+            ({ item }) =>
+              <View style={{ flexDirection: 'row', margin: 10, borderBottomWidth: 3, borderBottomColor: Colors.cloud }}>
+                <View style={{ flex: 2, marginLeft: 10, marginTop: 5 }}>
                   <Text>Email: {item.email}</Text>
                   <Text>Name: {item.name}</Text>
                 </View>
-                <View style={{flex: 1, marginRight: 10}}>
-                  <View style={{marginBottom: 10}}>
-                    <Button title='Edit' onPress={() => this.setState({showModal: true, selectedUser: item, mode: 'edit'})} />
+                <View style={{ flex: 1, marginRight: 10 }}>
+                  <View style={{ marginBottom: 10 }}>
+                    <Button title='Edit' onPress={() => this.setState({ showModal: true, selectedUser: item, mode: 'edit' })} />
                   </View>
-                  <View style={{marginBottom: 10}}>
+                  <View style={{ marginBottom: 10 }}>
                     <Button title='Delete' color={Colors.fire}
-                            onPress={() => this.setState({showModal: true, id: item.id, mode: 'delete'})} />
+                      onPress={() => this.setState({ showModal: true, id: item.id, mode: 'delete' })} />
                   </View>
                 </View>
               </View>
@@ -145,4 +145,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, {deleteAttendee, loadAttendees, editAttendee})(AttendeeList)
+export default connect(mapStateToProps, { deleteAttendee, loadAttendees, editAttendee })(AttendeeList)

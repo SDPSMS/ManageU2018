@@ -1,25 +1,29 @@
 import React, { Component } from 'react'
 import DatePicker from 'react-native-datepicker'
- 
+import moment from 'moment'
+
 export default class MyTimePicker extends Component {
-  constructor(props){
-    super(props)
-    this.state = {date:"00:00"}
+  static defaultProps = {
+    placeholder: 'select time',
+    format: 'HH:mm'
   }
- 
-  render(){
+
+  render () {
+    const { placeholder, time, format, onDateChange, minDate, disabled } = this.props
+    const minTime = moment().format(format)
     return (
       <DatePicker
         style={{width: 200}}
-        date={this.state.time}
-        
-        mode="time"
-        placeholder="select time"
-        format="HH:mm"
+        date={time}
+        mode='time'
+        placeholder={placeholder}
+        format={format}
+        minDate={minTime || minDate}
+        disabled={disabled}
         // Will need to set this to current date
-        confirmBtnText="Confirm"
+        confirmBtnText='Confirm'
         minuteInterval={30}
-        cancelBtnText="Cancel"
+        cancelBtnText='Cancel'
         customStyles={{
           dateIcon: {
             position: 'absolute',
@@ -30,9 +34,9 @@ export default class MyTimePicker extends Component {
           dateInput: {
             marginLeft: 36
           }
-          
+
         }}
-        onDateChange={(time) => {this.setState({time: time})}}
+        onDateChange={onDateChange}
       />
     )
   }

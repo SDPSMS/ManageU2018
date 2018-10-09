@@ -54,7 +54,7 @@ export default StyleSheet.create({
     fontSize: 50
   },
 
-  loginText:{
+  loginText: {
     color: Colors.primaryTextColour,
     padding: Metrics.baseMargin,
     alignItems: 'center',
@@ -82,10 +82,10 @@ export default StyleSheet.create({
     margin: 40
   },
 
-  registerLinkText:{
-    color: 'blue', 
+  registerLinkText: {
+    color: 'blue',
     fontSize: 20,
-    alignItems: 'center', 
-    alignSelf: 'center' 
-  },
+    alignItems: 'center',
+    alignSelf: 'center'
+  }
 })
