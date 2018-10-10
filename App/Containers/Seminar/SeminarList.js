@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, FlatList, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash'
-import { sortSeminarByDate, sortSeminarByVenue } from '../../Action/SeminarAction'
+import { sortSeminarByDate, sortSeminarByVenue, getSeminarBySpeaker, getSeminarByOrganiserName } from '../../Action/SeminarAction'
 import styles from '../Styles/ContainerStyle'
 import SeminarItem from './SeminarItem'
 import RoundedButton from '../../Components/RoundedButton'
@@ -25,7 +25,9 @@ class SeminarList extends Component {
       showFilterModal: false,
       startDate: moment().format('L'),
       // Adding a day today.
-      endDate: moment().add('1', 'days').format('L')
+      endDate: moment().add('1', 'days').format('L'),
+      speaker: '',
+      organiser: ''
     }
   }
 
@@ -52,6 +54,10 @@ class SeminarList extends Component {
         <RoundedButton text='Sort Seminar By Date' onPress={() => this.props.sortSeminarByDate(startDate, endDate)} />
         <CustomDropdown label='Venue List' data={dataObj} onChangeText={(venue) => this.setState({ venue })} />
         <RoundedButton text='Sort Seminar By Venue' onPress={() => this.props.sortSeminarByVenue(this.state.venue)} />
+        <TextField placeholder='Search By Speaker' value={this.state.speaker} onChangeText={(speaker) => this.setState({speaker})} />
+        <RoundedButton text='Get Seminar By Speaker' onPress={() => this.props.getSeminarBySpeaker(this.state.speaker)} />
+        <TextField placeholder='Search By Organiser Name' value={this.state.organiser} onChangeText={(organiser) => this.setState({organiser})} />
+        <RoundedButton text='Get Seminar By Organiser Name' onPress={() => this.props.getSeminarByOrganiserName(this.state.organiser)} />
       </View>
     )
 
@@ -116,4 +122,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, { sortSeminarByDate, sortSeminarByVenue })(SeminarList)
+export default connect(mapStateToProps, { sortSeminarByDate, sortSeminarByVenue, getSeminarBySpeaker, getSeminarByOrganiserName })(SeminarList)

@@ -3,6 +3,7 @@ import NavigationActions from '../Services/NavigationService'
 import API from '../Services/Api'
 import * as types from '../Types/actionType'
 import ConvertToTimestamp from '../Transforms/ConvertDateToTimestamp'
+import moment from 'moment'
 
 function loadSeminarStart () {
   return {
@@ -25,7 +26,7 @@ export function loadAllSeminars () {
     //   .then(() => dispatch({type: 'LOAD_ALL_SEMINAR', payload: seminars}))
 
     const seminarRef = firebase.database().ref('seminars')
-    seminarRef.on('value', (snapshot) => {
+    seminarRef.orderByChild('endDate').startAt(moment().valueOf()).on('value', (snapshot) => {
       dispatch({type: 'LOAD_ALL_SEMINAR', payload: snapshot.val()})
     })
   }
@@ -128,22 +129,18 @@ export function loadAttendees (seminarId) {
     // orderBy equalTo
     firebase.database().ref('attendeelist').child(seminarId)
       .once('value').then((snapshot) => {
-      snapshot.forEach((attendeeid) => {
-        firebase.database().ref('attendees').child(attendeeid.val())
-          .once('value')
-          .then((snapshot) => {
-            attendeesListAndDetails.push(snapshot.val())
-          })
-          .then(() => {
-            dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
-            dispatch(loadAttendeeFinish())
-          })
+        snapshot.forEach((attendeeid) => {
+          firebase.database().ref('attendees').child(attendeeid.val())
+            .once('value')
+            .then((snapshot) => {
+              attendeesListAndDetails.push(snapshot.val())
+            })
+            .then(() => {
+              dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
+              dispatch(loadAttendeeFinish())
+            })
+        })
       })
-    })
-    // .then(() => {
-    //   dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
-    //   dispatch(loadAttendeeFinish())
-    // })
   }
 }
 
@@ -167,20 +164,14 @@ export function loadAttendees (seminarId) {
 
 export function sortSeminarByDate (startDate, endDate) {
   return (dispatch) => {
-    const sorted = []
     const startDateTS = ConvertToTimestamp(startDate)
     const endDateTS = ConvertToTimestamp(endDate)
     // Sort by date.
-    firebase.database().ref('seminars').orderByChild('startDate').startAt(startDateTS).endAt(endDateTS).once('value').then((snapshot) => {
-      snapshot.forEach((snap) => {
-        sorted.push(snap.val())
-        console.log(sorted)
-      })
-    }).then(() => {
-      if (sorted.length !== 0) {
-        dispatch({type: 'SORT_SEMINAR_DATE', payload: sorted})
+    firebase.database().ref('seminars').orderByChild('startDate').startAt(startDateTS).endAt(endDateTS).on('value', (snapshot) => {
+      if (snapshot.val() != null && snapshot.val().length !== 0) {
+        dispatch({type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val()})
       } else {
-        dispatch({type: 'SORT_SEMINAR_DATE', message: 'No Seminar in the given date found!'})
+        dispatch({type: types.SORT_SEMINAR_ERROR, message: 'No Seminar in the given date range found!'})
       }
     })
   }
@@ -188,18 +179,57 @@ export function sortSeminarByDate (startDate, endDate) {
 
 export function sortSeminarByVenue (venue) {
   return (dispatch) => {
-    const filtered = []
-    firebase.database().ref('seminars').orderByChild('venue').equalTo(venue).once('value').then((snapshot) => {
-      snapshot.forEach((snap) => {
-        filtered.push(snap.val())
-      })
-    }).then(() => {
-      if (filtered.length !== 0) {
-        dispatch({type: 'SORT_SEMINAR_VENUE', payload: filtered})
+    // Sort by date.
+    firebase.database().ref('seminars').orderByChild('venue').equalTo(venue).on('value', (snapshot) => {
+      if (snapshot.val() != null && snapshot.val().length !== 0) {
+        dispatch({type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val()})
       } else {
-        dispatch({type: 'SORT_SEMINAR_DATE', message: 'No Seminar in the given venue found!'})
+        dispatch({type: types.SORT_SEMINAR_ERROR, message: `No Seminar in the room ${venue} found!`})
       }
     })
+  }
+}
+
+export function getSeminarBySpeaker (speaker) {
+  return (dispatch) => {
+    // Sort by date.
+    firebase.database().ref('seminars').orderByChild('speaker').equalTo(speaker).on('value', (snapshot) => {
+      if (snapshot.val() != null && snapshot.val().length !== 0) {
+        dispatch({type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val()})
+      } else {
+        dispatch({type: types.SORT_SEMINAR_ERROR, message: `No Seminar with name ${speaker} found!`})
+      }
+    })
+  }
+}
+
+// There should only be one organiser for a seminar, therefore, an organiser name should be unique?
+export function getSeminarByOrganiserName (organiserName) {
+  return (dispatch) => {
+    firebase.database().ref('users').orderByChild('name').equalTo(organiserName).once('value').then((snapshot) => {
+      let id = 0
+      const data = snapshot.val() || null
+      if (data) {
+        id = Object.keys(data)[0]
+      }
+      return id
+    })
+      .then((id) => {
+        if (id !== 0) {
+          firebase.database().ref('seminars').orderByChild('ownerid').equalTo(id).on('value', (snapshot) => {
+            if (snapshot.val() != null) {
+              dispatch({type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val()})
+            } else {
+              dispatch({
+                type: types.SORT_SEMINAR_ERROR,
+                message: `${organiserName} exists but does not have any seminar`
+              })
+            }
+          })
+        } else {
+          dispatch({type: types.SORT_SEMINAR_ERROR, message: `No seminars with Organiser name ${organiserName} found.`})
+        }
+      })
   }
 }
 
