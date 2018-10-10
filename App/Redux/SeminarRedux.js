@@ -101,18 +101,17 @@ export default (state = initialState, action) => {
         ...state
         // seminarSelected: null
       }
-    case 'SORT_SEMINAR_DATE':
+    case types.SORT_SEMINAR_SUCCESS:
       return {
         ...state,
-        seminars: action.payload,
-        message: action.message
+        message: '',
+        seminars: action.payload
       }
-
-    case 'SORT_SEMINAR_VENUE':
+    case types.SORT_SEMINAR_ERROR:
       return {
         ...state,
-        seminars: action.payload,
-        message: action.message
+        message: action.message,
+        seminars: []
       }
     case types.SEMINAR_SAVE_FAILED:
       return {
