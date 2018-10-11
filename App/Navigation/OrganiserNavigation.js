@@ -39,6 +39,9 @@ const SeminarStack = StackNavigator(
     SeminarList: {
       screen: SeminarList
     },
+    SeminarAttendeesView: {
+      screen: AttendeeList
+    },
     SeminarItem: {
       screen: SeminarItem
     },

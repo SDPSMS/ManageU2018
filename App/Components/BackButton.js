@@ -18,11 +18,11 @@ export default class BackButton extends Component {
     const {onPress} = this.props
     // TODO: Change the back icons.
     return (
-        <SimpleIcon
-          name={'close'}
-          size={30}
-          onPress={onPress}
-        />
+      <SimpleIcon
+        name={'close'}
+        size={30}
+        onPress={onPress}
+      />
     )
   }
 }

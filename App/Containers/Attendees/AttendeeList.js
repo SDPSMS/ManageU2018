@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList, Button } from 'react-native'
+import { View, Text, FlatList, Button, TouchableHighlight } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Colors, Metrics, Fonts } from '../../Themes/'
@@ -14,10 +14,10 @@ import TextField from '../../Components/TextField'
 import MessageText from '../../Components/MessageText'
 import { loadAttendees } from '../../Action/SeminarAction'
 import { deleteAttendee, editAttendee } from '../../Action/AttendeeAction'
+import RNHTMLtoPDF from 'react-native-html-to-pdf'
 
 class AttendeeList extends Component {
-  componentDidMount () {
-    console.log(this.props.seminarId)
+  componentWillMount () {
     this.props.loadAttendees(this.props.seminarId)
   }
 
@@ -47,6 +47,40 @@ class AttendeeList extends Component {
     const { deleteAttendee, seminarId } = this.props
     deleteAttendee(seminarId, attendeeId)
     this.setState({ showModal: false })
+  }
+
+  // createPDF () {
+  //   const {attendeeLists} = this.props
+  //   console.log(attendeeLists)
+  // }
+
+  async createPDF () {
+    const {attendeeLists} = this.props
+    let text = ''
+
+    console.log(attendeeLists)
+
+    attendeeLists.forEach((attendee) => {
+      console.log(attendee)
+      text += `<div style="width:46%; height:15%; float:left; border: 1px solid black; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
+    })
+
+    const html = `
+                    <html style="height:100%;padding:0;margin:0;">
+                      <body style="height:100%;padding:0;margin: 0;">
+                      ${text}
+                      </body>
+                    </html>
+                  `
+
+    let options = {
+      html: html,
+      fileName: 'test',
+      directory: 'docs'
+    }
+
+    let file = await RNHTMLtoPDF.convert(options)
+    console.log(file.filePath)
   }
 
   renderDialog () {
@@ -101,7 +135,7 @@ class AttendeeList extends Component {
         <SimpleIcon
           name={'close'}
           size={30}
-          onPress={() => this.props.navigation.pop()}
+          onPress={() => this.props.navigation.popToTop()}
         />
         <Text style={styles.sectionText}>List of Attendees</Text>
         <FlatList
@@ -127,7 +161,7 @@ class AttendeeList extends Component {
           keyExtractor={(item, index) => index.toString()}
         />
         {this.renderDialog()}
-
+        <Button title='Create PDF' onPress={() => this.createPDF()} />
       </View>
     )
   }

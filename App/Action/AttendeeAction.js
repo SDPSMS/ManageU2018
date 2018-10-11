@@ -143,7 +143,7 @@ export function editAttendee (attendeeId, name, email) {
       .then(() => {
         // SAVE USER IN THE DATABASE
         dispatch({ type: 'EDIT_ATTENDEE_SUCCESS' })
-        dispatch(NavigationActions.navigate('SeminarAttendeesView'))
+        dispatch(NavigationActions.push('SeminarAttendeesView'))
       })
   }
 }
