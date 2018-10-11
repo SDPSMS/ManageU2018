@@ -12,6 +12,8 @@ import styles from '../Styles/ContainerStyle'
 import ConvertToDate from '../../Transforms/ConvertTimestampToDate'
 import _ from 'lodash'
 import MessageText from '../../Components/MessageText'
+import BackButton from '../../Components/BackButton'
+import Details from '../../Components/Details'
 
 class SeminarDetails extends Component {
   constructor (props) {
@@ -80,9 +82,7 @@ class SeminarDetails extends Component {
 
     return (
       <View style={styles.container}>
-        <SimpleIcon
-          name={'close'}
-          size={30}
+        <BackButton
           onPress={() => this.props.unselectSeminar()}
         />
         {this.renderEditAndCancelButton()}
@@ -91,8 +91,7 @@ class SeminarDetails extends Component {
         <Text style={styles.titleText}>{this.props.seminar.label}</Text>
 
         {/* Seminar details */}
-        <Text>Speaker</Text>
-        <Text>{this.props.seminar.speaker}</Text>
+        <Details placeholder='Speaker' detail={this.props.seminar.speaker} />
 
         {/* TODO: Insert dividers between different sections.
           Look to use a table view or equivalent for seminar

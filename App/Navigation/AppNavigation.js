@@ -12,6 +12,7 @@ import Register from '../Containers/Register'
 import Help from '../Containers/Help'
 import OrganiserHome from './OrganiserNavigation'
 import AdminNavigation from './AdminNavigation'
+import AttendeeList from '../Containers/Attendees/AttendeeList'
 
 const AuthenticationStack = StackNavigator(
   {
@@ -47,6 +48,9 @@ const SeminarStack = StackNavigator(
     },
     EditSeminar: {
       screen: EditSeminar
+    },
+    SeminarAttendeesView: {
+      screen: AttendeeList
     }
   },
   {
