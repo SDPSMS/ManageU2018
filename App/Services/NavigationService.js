@@ -24,8 +24,17 @@ function goBack () {
   )
 }
 
+function replace (routeName) {
+  return (
+    NavigationActions.replace({
+      routeName
+    })
+  )
+}
+
 export default {
   navigate,
   push,
-  goBack
+  goBack,
+  replace
 }

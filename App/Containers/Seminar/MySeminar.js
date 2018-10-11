@@ -12,6 +12,9 @@ import * as types from '../../Types/userType'
  * Display the lists owned by a seminar hosts.
  */
 class MySeminar extends Component {
+  componentDidMount () {
+    this.props.fetchMySeminar()
+  }
   renderAddSeminarButton () {
     const { user } = this.props
     if (user != null) {
