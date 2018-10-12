@@ -30,41 +30,43 @@ function checkStudentsDatabaseForRegister (email) {
   return API.create().checkStudentDatabaseForRegister(email)
 }
 
+export function attendSeminarFinish () {
+  return {
+    type: types.SEMINAR_ATTEND_FINISH
+  }
+}
+
 export function attendSeminar (name, email, seminarid) {
   return (dispatch) => {
-    dispatch({ type: types.SEMINAR_ATTEND_START })
+    dispatch({type: types.SEMINAR_ATTEND_START})
     checkStudentsDatabaseForRegister(email).then((response) => {
       if (response.ok) {
-        // TODO: Problem with firebase navigation here.
+        const useridlists = []
+        const emaillists = []
+        // TODO: Dispatch what state and navigation?
         firebase.database().ref(`attendeelist/${seminarid}`).once('value')
           .then((snapshot) => {
-            const useridlists = []
             Object.keys(snapshot.val()).map((k) => useridlists.push(snapshot.val()[k]))
-            return useridlists
           })
-          .then(async (useridlists) => {
-            if (useridlists.length === 0) {
-              const newAttendee = await firebase.database().ref('attendees').push({ name, email })
-                .then((snapshot) => {
-                  firebase.database().ref('attendees').child(snapshot.getKey()).update({ id: snapshot.getKey() })
-                })
+          .then(async () => {
+            let id
+            for (id in useridlists) {
+              await firebase.database().ref(`attendees/${useridlists[id]}`).once('value').then((snapshot) => {
+                emaillists.push(snapshot.val().email)
+              })
+            }
+          })
+          .catch(() => {
+            console.log('failed!')
+          })
+          .then(() => {
+            if (_.includes(emaillists, email)) {
+              // TODO: Dispatch error message.
+              dispatch(attendSeminarError())
+            } else {
+              const newAttendee = firebase.database().ref('attendees').push({name, email})
               firebase.database().ref(`attendeelist/${seminarid}`).push(newAttendee.getKey())
                 .then(() => dispatch(attendSeminarSuccess()))
-            } else {
-              let id
-              const emaillists = []
-              for (id in useridlists) {
-                firebase.database().ref(`attendees/${useridlists[id]}`).once('value').then((snapshot) => {
-                  emaillists.push(snapshot.val().email)
-                })
-                  .then(() => {
-                    if (_.includes(emaillists, email)) {
-                      // TODO: Dispatch error message.
-                      dispatch(attendSeminarError())
-                    } else {
-                    }
-                  })
-              }
             }
           })
       } else {
@@ -72,6 +74,8 @@ export function attendSeminar (name, email, seminarid) {
         dispatch(attendSeminarFailed())
       }
     })
+      .catch(() => { console.log('failed!') }
+      )
   }
   //   dispatch({type: types.SEMINAR_ATTEND_START})
   //   const useridlists = []
@@ -118,18 +122,18 @@ export function deleteAttendee (seminarId, attendeeId) {
             const attendeesListAndDetails = []
             firebase.database().ref('attendeelist').child(seminarId)
               .once('value').then((snapshot) => {
-                snapshot.forEach((attendeeid) => {
-                  firebase.database().ref('attendees').child(attendeeid.val())
-                    .once('value')
-                    .then((snapshot) => {
-                      attendeesListAndDetails.push(snapshot.val())
-                    })
-                })
+              snapshot.forEach((attendeeid) => {
+                firebase.database().ref('attendees').child(attendeeid.val())
+                  .once('value')
+                  .then((snapshot) => {
+                    attendeesListAndDetails.push(snapshot.val())
+                  })
               })
+            })
               .then(() => {
-                dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
+                dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
                 dispatch(loadAttendeeFinish())
-                dispatch({ type: types.DELETE_ATTENDEE_SUCCESS })
+                dispatch({type: types.DELETE_ATTENDEE_SUCCESS})
               })
           })
       })
@@ -139,10 +143,10 @@ export function deleteAttendee (seminarId, attendeeId) {
 export function editAttendee (attendeeId, name, email) {
   return (dispatch) => {
     firebase.database().ref(`attendees/${attendeeId}`)
-      .update({ name, email })
+      .update({name, email})
       .then(() => {
         // SAVE USER IN THE DATABASE
-        dispatch({ type: 'EDIT_ATTENDEE_SUCCESS' })
+        dispatch({type: 'EDIT_ATTENDEE_SUCCESS'})
         dispatch(NavigationActions.push('SeminarAttendeesView'))
       })
   }
