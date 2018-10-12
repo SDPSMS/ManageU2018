@@ -32,74 +32,74 @@ function checkStudentsDatabaseForRegister (email) {
 
 export function attendSeminar (name, email, seminarid) {
   return (dispatch) => {
-  //   dispatch({ type: types.SEMINAR_ATTEND_START })
-  //   checkStudentsDatabaseForRegister(email).then((response) => {
-  //     if (response.ok) {
-  //       const useridlists = []
-  //       const emaillists = []
-  //       // TODO: Problem with firebase navigation here.
-  //       firebase.database().ref(`attendeelist/${seminarid}`).once('value')
-  //         .then((snapshot) => {
-  //           Object.keys(snapshot.val()).map((k) => useridlists.push(snapshot.val()[k]))
-  //         })
-  //         .then(async () => {
-  //           if (useridlists.length === 0) {
-  //             const newAttendee = await firebase.database().ref('attendees').push({ name, email })
-  //               .then((snapshot) => {
-  //                 firebase.database().ref('attendees').child(snapshot.getKey()).update({ id: snapshot.getKey() })
-  //               })
-  //             firebase.database().ref(`attendeelist/${seminarid}`).push(newAttendee.getKey())
-  //               .then(() => dispatch(attendSeminarSuccess()))
-  //           } else {
-  //             let id
-  //             for (id in useridlists) {
-  //               firebase.database().ref(`attendees/${useridlists[id]}`).once('value').then((snapshot) => {
-  //                 emaillists.push(snapshot.val().email)
-  //               })
-  //                 .then(() => {
-  //                   if (_.includes(emaillists, email)) {
-  //                     // TODO: Dispatch error message.
-  //                     dispatch(attendSeminarError())
-  //                   } else {
-  //
-  //                   }
-  //                 })
-  //             }
-  //           }
-  //         })
-  //     } else {
-  //       // TODO: Dispatch a message saying that this email is not a trusted UTS email so they need to contact the Organiser
-  //       dispatch(attendSeminarFailed())
-  //     }
-  //   })
-  // }
-    dispatch({type: types.SEMINAR_ATTEND_START})
-    const useridlists = []
-    const emaillists = []
-    // TODO: Dispatch what state and navigation?
-    firebase.database().ref(`attendeelist/${seminarid}`).once('value')
-      .then((snapshot) => {
-        Object.keys(snapshot.val()).map((k) => useridlists.push(snapshot.val()[k]))
-      })
-      .then(async () => {
-        let id
-        for (id in useridlists) {
-          await firebase.database().ref(`attendees/${useridlists[id]}`).once('value').then((snapshot) => {
-            emaillists.push(snapshot.val().email)
+    dispatch({ type: types.SEMINAR_ATTEND_START })
+    checkStudentsDatabaseForRegister(email).then((response) => {
+      if (response.ok) {
+        // TODO: Problem with firebase navigation here.
+        firebase.database().ref(`attendeelist/${seminarid}`).once('value')
+          .then((snapshot) => {
+            const useridlists = []
+            Object.keys(snapshot.val()).map((k) => useridlists.push(snapshot.val()[k]))
+            return useridlists
           })
-        }
-      })
-      .then(() => {
-        if (_.includes(emaillists, email)) {
-          // TODO: Dispatch error message.
-          dispatch(attendSeminarError())
-        } else {
-          const newAttendee = firebase.database().ref('attendees').push({ name, email })
-          firebase.database().ref(`attendeelist/${seminarid}`).push(newAttendee.getKey())
-            .then(() => dispatch(attendSeminarSuccess()))
-        }
-      })
+          .then(async (useridlists) => {
+            if (useridlists.length === 0) {
+              const newAttendee = await firebase.database().ref('attendees').push({ name, email })
+                .then((snapshot) => {
+                  firebase.database().ref('attendees').child(snapshot.getKey()).update({ id: snapshot.getKey() })
+                })
+              firebase.database().ref(`attendeelist/${seminarid}`).push(newAttendee.getKey())
+                .then(() => dispatch(attendSeminarSuccess()))
+            } else {
+              let id
+              const emaillists = []
+              for (id in useridlists) {
+                firebase.database().ref(`attendees/${useridlists[id]}`).once('value').then((snapshot) => {
+                  emaillists.push(snapshot.val().email)
+                })
+                  .then(() => {
+                    if (_.includes(emaillists, email)) {
+                      // TODO: Dispatch error message.
+                      dispatch(attendSeminarError())
+                    } else {
+                    }
+                  })
+              }
+            }
+          })
+      } else {
+        // TODO: Dispatch a message saying that this email is not a trusted UTS email so they need to contact the Organiser
+        dispatch(attendSeminarFailed())
+      }
+    })
   }
+  //   dispatch({type: types.SEMINAR_ATTEND_START})
+  //   const useridlists = []
+  //   const emaillists = []
+  //   // TODO: Dispatch what state and navigation?
+  //   firebase.database().ref(`attendeelist/${seminarid}`).once('value')
+  //     .then((snapshot) => {
+  //       Object.keys(snapshot.val()).map((k) => useridlists.push(snapshot.val()[k]))
+  //     })
+  //     .then(async () => {
+  //       let id
+  //       for (id in useridlists) {
+  //         await firebase.database().ref(`attendees/${useridlists[id]}`).once('value').then((snapshot) => {
+  //           emaillists.push(snapshot.val().email)
+  //         })
+  //       }
+  //     })
+  //     .then(() => {
+  //       if (_.includes(emaillists, email)) {
+  //         // TODO: Dispatch error message.
+  //         dispatch(attendSeminarError())
+  //       } else {
+  //         const newAttendee = firebase.database().ref('attendees').push({ name, email })
+  //         firebase.database().ref(`attendeelist/${seminarid}`).push(newAttendee.getKey())
+  //           .then(() => dispatch(attendSeminarSuccess()))
+  //       }
+  //     })
+  // }
 }
 
 function loadAttendeeFinish () {
