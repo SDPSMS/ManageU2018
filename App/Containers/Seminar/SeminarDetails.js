@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons'
 import { editSeminar, deleteSeminar, unselectSeminar, loadAttendees } from '../../Action/SeminarAction'
-import { attendSeminar } from '../../Action/AttendeeAction'
+import { attendSeminar, attendSeminarFinish } from '../../Action/AttendeeAction'
 import ModalDialog from '../../Components/ModalDialog'
 import RoundedButton from '../../Components/RoundedButton'
 import TextField from '../../Components/TextField'
@@ -57,6 +57,11 @@ class SeminarDetails extends Component {
 
   attendSeminar () {
     this.props.attendSeminar(this.state.name, this.state.email, this.props.seminar.id)
+  }
+
+  finishAttendSeminar () {
+    this.setState({ showModal: false })
+    this.props.attendSeminarFinish()
   }
 
   // TODO: The Display attendees button should not have that function when clicked (should only move the screen).
@@ -116,7 +121,7 @@ class SeminarDetails extends Component {
         </View>
         <ModalDialog
           onPressPositive={() => this.attendSeminar()}
-          onPressNegative={() => this.setState({ showModal: false })} children={dialogContent}
+          onPressNegative={() => this.finishAttendSeminar()} children={dialogContent}
           title='Join a Seminar' isVisible={this.state.showModal} showLoading={this.props.isLoading} />
       </View>
     )
@@ -152,5 +157,6 @@ export default connect(mapStateToProps, {
   deleteSeminar,
   unselectSeminar,
   loadAttendees,
-  attendSeminar
+  attendSeminar,
+  attendSeminarFinish
 })(SeminarDetails)

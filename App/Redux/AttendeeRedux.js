@@ -25,6 +25,13 @@ export default (state = initialState, action) => {
     case types.SEMINAR_ATTEND_START:
       return {
         ...state,
+        message: '',
+        isLoading: true
+      }
+
+    case types.SEMINAR_ATTEND_FINISH:
+      return {
+        ...state,
         message: ''
       }
     case types.SEMINAR_ATTEND_ERROR:

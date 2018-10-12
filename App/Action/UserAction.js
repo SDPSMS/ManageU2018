@@ -134,19 +134,9 @@ export function fetchMySeminar () {
   return (dispatch) => {
     dispatch(viewSeminar())
     // TODO: If we do this here now, we will have to update two entities when updating it.
-    firebase.database().ref('seminars').orderByChild('endDate').startAt(moment().valueOf())
-      .once('value').then((snapshot) => {
-        let seminarslist = []
-        snapshot.forEach((snap) => {
-          if (snap.val() != null && (snap.val().ownerid === currentUser.uid)) {
-            seminarslist.push(snap.val())
-          }
-        })
-        console.log(seminarslist)
-        return seminarslist
-      })
-      .then((seminarslist) => {
-        dispatch({type: 'LOAD_MY_SEMINAR', payload: seminarslist})
+    firebase.database().ref('seminars').orderByChild('ownerid').equalTo(currentUser.uid)
+      .on('value', (snapshot) => {
+        dispatch({ type: 'LOAD_MY_SEMINAR', payload: snapshot.val() })
       })
   }
 }
