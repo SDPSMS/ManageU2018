@@ -14,6 +14,7 @@ import _ from 'lodash'
 import MessageText from '../../Components/MessageText'
 import BackButton from '../../Components/BackButton'
 import Details from '../../Components/Details'
+import CustomDropdown from '../../Components/Dropdown'
 
 class SeminarDetails extends Component {
   constructor (props) {
@@ -21,13 +22,13 @@ class SeminarDetails extends Component {
     this.state = {
       showModal: false,
       name: '',
-      email: ''
+      status: ''
     }
   }
 
   // TODO: Might not be a good idea to put it here. --> Put it in actions?
   renderEditAndCancelButton () {
-    const { myseminar } = this.props
+    const {myseminar} = this.props
     if (this.props.user != null) {
       const myseminararray = []
       if (myseminar != null) {
@@ -56,11 +57,11 @@ class SeminarDetails extends Component {
   }
 
   attendSeminar () {
-    this.props.attendSeminar(this.state.name, this.state.email, this.props.seminar.id)
+    this.props.attendSeminar(this.state.name, this.state.email, this.state.status, this.props.seminar.id)
   }
 
   finishAttendSeminar () {
-    this.setState({ showModal: false })
+    this.setState({showModal: false})
     this.props.attendSeminarFinish()
   }
 
@@ -70,17 +71,25 @@ class SeminarDetails extends Component {
     const date = ConvertToDate(endDate, 'LL')
     const endTime = ConvertToDate(endDate, 'LT')
     const startTime = ConvertToDate(startDate, 'LT')
+    const dropDownMenu = [
+      {value: 'going'},
+      {value: 'interested'}
+    ]
 
     let dialogContent = (
       <View>
         <TextField
           placeholder={'Name'}
-          onChangeText={(value) => this.setState({ name: value })}
+          onChangeText={(value) => this.setState({name: value})}
         />
         <TextField
           placeholder={'Email'}
-          onChangeText={(value) => this.setState({ email: value })}
+          onChangeText={(value) => this.setState({email: value})}
         />
+        <CustomDropdown data={dropDownMenu}
+                        label={'Status'}
+                        value={this.state.status}
+                        onChangeText={(status) => this.setState({status})} />
         <MessageText>{this.props.message}</MessageText>
       </View>
     )
@@ -116,7 +125,7 @@ class SeminarDetails extends Component {
         <Text>Abstract</Text>
         <Text>{this.props.seminar.abstract}</Text>
         <View>
-          <RoundedButton text='Join' onPress={() => this.setState({ showModal: true })} />
+          <RoundedButton text='Join' onPress={() => this.setState({showModal: true})} />
           <Button title='Display Attendees' onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
         </View>
         <ModalDialog
