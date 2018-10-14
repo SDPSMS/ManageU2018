@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { addNewUser } from '../../Action/UserAction'
 import AccentButton from '../../Components/RoundedButton'
 import TextField from '../../Components/TextField'
+import * as types from '../../Types/userType'
+import CustomDropdown from '../../Components/Dropdown'
 
 class AddUser extends Component {
   constructor (props) {
@@ -30,10 +32,9 @@ class AddUser extends Component {
           placeholder='Name'
           onChangeText={(name) => this.setState({ name })}
         />
-        <TextField
-          value={role}
-          placeholder='Role'
-          onChangeText={(role) => this.setState({ role })}
+        <CustomDropdown
+          label='Role' value={this.state.role} onChangeText={(role) => this.setState({role})}
+          data={[{value: types.ORGANISER}]}
         />
         <View>
           <AccentButton text='Add' onPress={() => this.props.addNewUser(email, name, role)} />

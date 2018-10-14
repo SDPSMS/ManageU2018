@@ -18,15 +18,14 @@ class Register extends Component {
       email: '',
       password: '',
       role: '',
-      error: ''
+      error: '',
+      name: ''
     }
   }
 
   // TODO: Handling register should be in the backend.
   handleRegister () {
-    this.setState({ error: '' })
-    this.props.register(this.state.email, this.state.password, this.state.role)
-    this.setState({ error: 'Please enter a valid email and password to register' })
+    this.props.register(this.state.email, this.state.name, this.state.password, this.state.role)
   }
 
   renderLoad () {
@@ -40,19 +39,22 @@ class Register extends Component {
     return (
       <View style={styles.mainContainer}>
         <View>
-          <Text style={styles.subtitleText1}>You have been authenticated, Enter the email and password you want to use for
+          <Text style={styles.subtitleText1}>You have been authenticated, Enter the email and password you want to use
+            for
             the apps.</Text>
           <TextField placeholder=' Email' value={this.state.email}
-            onChangeText={(email) => this.setState({ email })} />
+                     onChangeText={(email) => this.setState({email})} />
+          <TextField placeholder=' Name' value={this.state.name}
+                     onChangeText={(name) => this.setState({name})} />
           <TextField placeholder=' Password' value={this.state.password} secure
-            onChangeText={(password) => this.setState({ password })} />
+                     onChangeText={(password) => this.setState({password})} />
           <CustomDropdown
-            label='Role' value={this.state.role} onChangeText={(role) => this.setState({ role })}
-            data={[{ value: types.ORGANISER }]}
+            label='Role' value={this.state.role} onChangeText={(role) => this.setState({role})}
+            data={[{value: types.ORGANISER}]}
           />
           {this.renderLoad()}
           <MessageText>
-            {this.state.error}
+            {this.props.error}
           </MessageText>
         </View>
       </View>
@@ -62,8 +64,9 @@ class Register extends Component {
 
 function mapStateToProps (state) {
   return {
-    isLoading: state.user.isLoading
+    isLoading: state.user.isLoading,
+    error: state.user.error
   }
 }
 
-export default connect(mapStateToProps, { register })(Register)
+export default connect(mapStateToProps, {register})(Register)
