@@ -29,7 +29,7 @@ function loginError () {
 function registerError () {
   return {
     type: 'REGISTER_ERROR',
-    message: 'Please enter a correct UTS Staff Email and Password!'
+    message: 'Account with this email already exists'
   }
 }
 
@@ -80,17 +80,17 @@ export function login (email, password) {
 
 export function saveUserToDatabase (email, uid, name, role) {
   return (dispatch) => {
-    firebase.database().child(`users/${uid}`).set({ email, name, role }).then(() => console.log(email))
+    firebase.database().child(`users/${uid}`).set({email, name, role}).then(() => console.log(email))
   }
 }
 
 // TODO: Make register function.
-export function register (email, password, role) {
+export function register (email, name, password, role) {
   return (dispatch) => {
     dispatch(startAuthentication())
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((user) => {
-        const newUser = { email, name: password, role, id: user.user.id }
+        const newUser = {email, name, role, id: user.user.uid}
         firebase.database().ref(`users/${user.user.uid}`).set(newUser).then(() => {
           dispatch(NavigationActions.navigate('RootLoggedInNavigation'))
           dispatch(registerSuccess(newUser))
@@ -129,14 +129,14 @@ export function checkUserType () {
 
 // TODO: Need to check everytime updated as well, maybe we can do onChildChanged or onChildAdded.
 export function fetchMySeminar () {
-  const { currentUser } = firebase.auth()
+  const {currentUser} = firebase.auth()
 
   return (dispatch) => {
     dispatch(viewSeminar())
     // TODO: If we do this here now, we will have to update two entities when updating it.
     firebase.database().ref('seminars').orderByChild('ownerid').equalTo(currentUser.uid)
       .on('value', (snapshot) => {
-        dispatch({ type: 'LOAD_MY_SEMINAR', payload: snapshot.val() })
+        dispatch({type: 'LOAD_MY_SEMINAR', payload: snapshot.val()})
       })
   }
 }
@@ -149,17 +149,17 @@ export function checkAuthenticated () {
       if (user != null) {
         dispatch(fetchMySeminar())
         firebase.database().ref(`users/${user.uid}`).on('value', (snapshot) => {
-          dispatch({ type: 'CHECK_AUTHENTICATED', payload: snapshot.val() })
-          if (snapshot.val().role === userTypes.ORGANISER) {
+          dispatch({type: 'CHECK_AUTHENTICATED', payload: snapshot.val()})
+          if (snapshot.val() != null && snapshot.val().role === userTypes.ORGANISER) {
             dispatch(NavigationActions.navigate('RootOrganiserNavigation'))
-          } else if (snapshot.val().role === userTypes.ADMIN) {
+          } else if (snapshot.val() != null && snapshot.val().role === userTypes.ADMIN) {
             dispatch(NavigationActions.navigate('RootAdminNavigation'))
           } else {
             dispatch(NavigationActions.navigate('RootLoggedOutNavigation'))
           }
         })
       } else {
-        dispatch({ type: 'CHECK_AUTHENTICATED', payload: null })
+        dispatch({type: 'CHECK_AUTHENTICATED', payload: null})
         dispatch(NavigationActions.navigate('RootLoggedOutNavigation'))
       }
     })
@@ -177,42 +177,42 @@ export function loadAllUser () {
           if (childSnapshot.val().role !== 'Admin') {
             const id = childSnapshot.key
             const value = childSnapshot.val()
-            const user = { id, ...value }
+            const user = {id, ...value}
 
             users.push(user)
           }
         })
       })
-      .then(() => dispatch({ type: 'FETCH_USERS_LIST', payload: users }))
+      .then(() => dispatch({type: 'FETCH_USERS_LIST', payload: users}))
   }
 }
 
 export function addNewUser (email, name, role) {
   return (dispatch) => {
-    firebase.database().ref('users').push({
-      email, name, role
-    }).then(() => {
-      dispatch({ type: 'ADD_NEW_USER', payload: { email, name, role } })
-    }).then(() => {
-      dispatch(NavigationActions.navigate('UsersList'))
-    }).catch(() => console.log('Failed!'))
+    const usersRef = firebase.database().ref('users').push()
+    firebase.database().ref(`users/${usersRef.getKey()}`).set({id: usersRef.getKey(), email, name, role})
+      .then(() => {
+        dispatch({type: 'ADD_NEW_USER', payload: {email, name, role}})
+      }).then(() => {
+        dispatch(NavigationActions.navigate('UsersList'))
+      }).catch(() => console.log('Failed!'))
   }
 }
 
 export function selectUser (userId) {
   return (dispatch) => {
-    dispatch({ type: 'USER_SELECTED', payload: userId })
+    dispatch({type: 'USER_SELECTED', payload: userId})
     dispatch(NavigationActions.push('EditUser'))
   }
 }
 
-export function saveUser ({ id, name, email, role }) {
+export function saveUser ({id, name, email, role}) {
   return (dispatch) => {
     firebase.database().ref(`users/${id}`)
-      .set({ name, email, role })
+      .set({id, name, email, role})
       .then(() => {
         // SAVE USER IN THE DATABASE
-        dispatch({ type: 'SAVE_USER' })
+        dispatch({type: 'SAVE_USER', payload: {name, role}})
         // Navigate because we want to retrieve data directly again.
         // TODO: Instead of navigate, maybe we can update the state instead?
         dispatch(NavigationActions.navigate('UsersList'))
@@ -225,8 +225,8 @@ export function deleteUser (userId) {
     firebase.database().ref(`users/${userId}`)
       .remove()
       .then(() => {
+        dispatch({type: types.DELETE_USER_SUCCESS, payload: userId})
         // after remove, we dispatch the actions so that the redux state can be updated.
-        dispatch(NavigationActions.navigate('UsersList'))
       })
   }
 }
@@ -240,10 +240,10 @@ export function registerInitialisation (email, password) {
     checkStaffsDatabaseForRegister(email, password)
       .then((response) => {
         if (response.ok) {
-          dispatch({ type: types.REGISTER_CHECK_DATABASE_SUCCESS })
+          dispatch({type: types.REGISTER_CHECK_DATABASE_SUCCESS})
           dispatch(NavigationActions.push('Register'))
         } else {
-          dispatch({ type: types.REGISTER_CHECK_DATABASE_FAILED, message: 'Incorrect UTS Staff Email or Password' })
+          dispatch({type: types.REGISTER_CHECK_DATABASE_FAILED, message: 'Incorrect UTS Staff Email or Password'})
         }
       })
   }

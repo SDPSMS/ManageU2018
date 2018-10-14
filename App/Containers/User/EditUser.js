@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 import { saveUser } from '../../Action/UserAction'
 import AccentButton from '../../Components/RoundedButton'
 import TextField from '../../Components/TextField'
+import CustomDropdown from '../../Components/Dropdown'
+import * as types from '../../Types/userType'
 
 /**
  * TODO: Redundant class, similar to AddSeminar, try checking guys and see what you guys can do about it.
@@ -35,10 +37,9 @@ class EditUser extends Component {
             value={selectedUser.name}
             onChangeText={(name) => this.setState({ name })}
           />
-          <TextField
-            placeholder={'role'}
-            value={selectedUser.role}
-            onChangeText={(role) => this.setState({ role })}
+          <CustomDropdown
+            label='Role' value={this.state.role} onChangeText={(role) => this.setState({role})}
+            data={[{value: types.ORGANISER}]}
           />
         </View>
         <AccentButton

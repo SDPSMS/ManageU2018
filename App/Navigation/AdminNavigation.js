@@ -61,9 +61,6 @@ const AdminNav = DrawerNavigator(
         title: 'Help',
         drawerLabel: 'Help'
       }
-    },
-    Print: {
-      screen: Print
     }
   },
   {

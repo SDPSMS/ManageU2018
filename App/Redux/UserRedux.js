@@ -100,6 +100,18 @@ export default (state = initialState, action) => {
         adminAddUserView: true
       }
 
+    case 'SAVE_USER':
+      return {
+        ...state,
+        userslist: state.userslist.map((item) => (
+          item.id === action.payload.id ? {
+            ...item,
+            name: action.payload.name,
+            role: action.payload.role
+          } : item
+        ))
+      }
+
     case 'ADD_NEW_USER':
       return {
         ...state,
@@ -124,6 +136,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: ''
+      }
+
+    case types.DELETE_USER_SUCCESS:
+      return {
+        ...state,
+        userslist: state.userslist.filter(item => action.payload !== item.id)
       }
     default:
       return state

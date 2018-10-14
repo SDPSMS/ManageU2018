@@ -18,6 +18,9 @@ const UserItem = (props) => {
           Email: {props.user.email}
         </Text>
         <Text>
+          Name: {props.user.name}
+        </Text>
+        <Text>
           Role: {props.user.role}
         </Text>
         <RoundedButton text='Delete user' onPress={() => props.deleteUser(props.user.id)} />
