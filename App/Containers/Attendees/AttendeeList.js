@@ -63,7 +63,6 @@ class AttendeeList extends Component {
   async createPDF () {
     const {attendeeLists} = this.props
     let text = ''
-
     attendeeLists.forEach((attendee) => {
       console.log(attendee)
       text += `<div style="width:46%; height:15%; float:left; border: 1px solid black; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`

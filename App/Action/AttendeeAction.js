@@ -3,7 +3,6 @@ import firebase from 'firebase'
 import _ from 'lodash'
 import * as types from '../Types/actionType'
 import API from '../Services/Api'
-import { loadAttendees } from './SeminarAction'
 
 function attendSeminarError () {
   return {
@@ -66,7 +65,7 @@ export function attendSeminar (name, email, status, seminarid) {
             } else {
               const newAttendee = firebase.database().ref('attendees').push({name, status, email})
               firebase.database().ref(`attendees/${newAttendee.getKey()}`).update({id: newAttendee.getKey()})
-              firebase.database().ref(`attendeelist/${seminarid}`).push(newAttendee.getKey())
+              firebase.database().ref(`attendeelist/${seminarid}/${newAttendee.getKey()}`).set({id: newAttendee.getKey()})
                 .then(() => dispatch(attendSeminarSuccess()))
                 // .then((snapshot) => {
                 //   console.log(snapshot.val())
@@ -115,36 +114,17 @@ export function attendSeminar (name, email, status, seminarid) {
   // }
 }
 
-function loadAttendeeFinish () {
-  return {
-    type: 'LIST_ATTENDEE_FINISH'
-  }
-}
-
 export function deleteAttendee (seminarId, attendeeId) {
   return (dispatch) => {
     console.log(seminarId, attendeeId)
     firebase.database().ref(`attendeelist/${seminarId}/${attendeeId}`).remove()
       .then(() => {
         firebase.database().ref(`attendees/${attendeeId}`).remove()
-          .then(() => {
-            const attendeesListAndDetails = []
-            firebase.database().ref('attendeelist').child(seminarId)
-              .once('value').then((snapshot) => {
-              snapshot.forEach((attendeeid) => {
-                firebase.database().ref('attendees').child(attendeeid.val())
-                  .once('value')
-                  .then((snapshot) => {
-                    attendeesListAndDetails.push(snapshot.val())
-                  })
-              })
-            })
-              .then(() => {
-                dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
-                dispatch(loadAttendeeFinish())
-                dispatch({type: types.DELETE_ATTENDEE_SUCCESS})
-              })
-          })
+      })
+      .then(() => {
+        dispatch({type: types.DELETE_ATTENDEE_SUCCESS, payload: attendeeId})
+      })
+      .catch(() => {
       })
   }
 }

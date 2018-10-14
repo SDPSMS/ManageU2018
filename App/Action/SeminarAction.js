@@ -130,7 +130,8 @@ export function loadAttendees (seminarId) {
     firebase.database().ref('attendeelist').child(seminarId)
       .once('value').then((snapshot) => {
         snapshot.forEach((attendeeid) => {
-          firebase.database().ref('attendees').child(attendeeid.val())
+          console.log(attendeeid.key)
+          firebase.database().ref('attendees').child(attendeeid.key)
             .once('value')
             .then((snapshot) => {
               attendeesListAndDetails.push(snapshot.val())
