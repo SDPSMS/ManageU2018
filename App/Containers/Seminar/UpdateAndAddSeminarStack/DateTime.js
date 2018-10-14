@@ -16,25 +16,25 @@ class DateTime extends Component {
   }
 
   onAddPressed () {
-    const {abstract, date, startTime, endTime, label, speaker, venue} = this.props
+    const { abstract, date, startTime, endTime, label, speaker, venue } = this.props
     // The actions.
-    this.props.addNewSeminar({abstract, date, startTime, endTime, label, speaker, venue})
+    this.props.addNewSeminar({ abstract, date, startTime, endTime, label, speaker, venue })
   }
 
   render () {
-    const {date, startTime, endTime} = this.props
+    const { date, startTime, endTime } = this.props
 
     return (
-      <View style={{marginLeft: 20, marginRight: 20}}>
-        <MyDatePicker date={date} onDateChange={(value) => this.props.formUpdate({prop: 'date', value})} />
+      <View style={{ marginLeft: 20, marginRight: 20 }}>
+        <MyDatePicker date={date} onDateChange={(value) => this.props.formUpdate({ prop: 'date', value })} />
 
         <MyTimePicker time={startTime} placeholder='Start Time'
-                      onDateChange={(value) => {
-                        this.props.formUpdate({prop: 'startTime', value})
-                        this.setState({disabled: false})
-                      }} />
+          onDateChange={(value) => {
+            this.props.formUpdate({ prop: 'startTime', value })
+            this.setState({ disabled: false })
+          }} />
         <MyTimePicker disabled={this.state.disabled} minDate={startTime} time={endTime} placeholder='End Time'
-                      onDateChange={(value) => this.props.formUpdate({prop: 'endTime', value})} />
+          onDateChange={(value) => this.props.formUpdate({ prop: 'endTime', value })} />
         <RoundedButton
           text={'Add'}
           onPress={this.onAddPressed.bind(this)}
@@ -45,7 +45,7 @@ class DateTime extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const {abstract, date, startTime, endTime, label, speaker, venue} = state.seminar
+  const { abstract, date, startTime, endTime, label, speaker, venue } = state.seminar
   return {
     abstract, date, startTime, endTime, label, speaker, venue
   }

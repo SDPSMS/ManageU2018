@@ -40,11 +40,11 @@ class Register extends Component {
     return (
       <View style={styles.mainContainer}>
         <View>
-          <Text style={styles.sectionText}>You have been authenticated, Enter the email and password you want to use for
+          <Text style={styles.subtitleText1}>You have been authenticated, Enter the email and password you want to use for
             the apps.</Text>
           <TextField placeholder=' Email' value={this.state.email}
             onChangeText={(email) => this.setState({ email })} />
-          <TextField placeholder=' Password' value={this.state.password}
+          <TextField placeholder=' Password' value={this.state.password} secure
             onChangeText={(password) => this.setState({ password })} />
           <CustomDropdown
             label='Role' value={this.state.role} onChangeText={(role) => this.setState({ role })}

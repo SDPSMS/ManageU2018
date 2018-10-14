@@ -12,12 +12,12 @@ export default class MyDatePicker extends Component {
   }
 
   render () {
-    const {date, onDateChange, format} = this.props
+    const { date, onDateChange, format } = this.props
     const minimumDate = moment().format(format)
 
     return (
       <DatePicker
-        style={{width: 200}}
+        style={{ width: 200 }}
         date={date}
         mode='date'
         placeholder='Select Date'

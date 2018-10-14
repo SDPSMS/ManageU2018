@@ -31,11 +31,10 @@ class RegisterInit extends Component {
           <Text style={styles.subtitleText2}>Please note that only UTS Staff may sign up</Text>
           <TextField placeholder=' Email' value={this.state.email}
             onChangeText={(email) => this.setState({ email })} />
-          <TextField placeholder=' Password' value={this.state.password}
+          <TextField placeholder=' Password' value={this.state.password} secure
             onChangeText={(password) => this.setState({ password })} />
           <MessageText>{this.props.error}</MessageText>
-          <View style={{ marginLeft: 65, marginTop: 5, marginBottom: 10 }}>
-          </View>
+          <View style={{ marginLeft: 65, marginTop: 5, marginBottom: 10 }} />
           <RoundedButton text='Continue' onPress={this.handleRegister.bind(this)} />
         </View>
       </View>

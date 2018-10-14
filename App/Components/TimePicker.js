@@ -13,7 +13,7 @@ export default class MyTimePicker extends Component {
     const minTime = moment().format(format)
     return (
       <DatePicker
-        style={{width: 200}}
+        style={{ width: 200 }}
         date={time}
         mode='time'
         placeholder={placeholder}

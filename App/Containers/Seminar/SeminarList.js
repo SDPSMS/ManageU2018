@@ -49,14 +49,14 @@ class SeminarList extends Component {
     let filterDialogContent = (
       <View>
         <Text text='Sort by:' />
-        <MyDatePicker date={startDate} onDateChange={(startDate) => this.setState({startDate})} />
-        <MyDatePicker date={endDate} onDateChange={(endDate) => this.setState({endDate})} />
+        <MyDatePicker date={startDate} onDateChange={(startDate) => this.setState({ startDate })} />
+        <MyDatePicker date={endDate} onDateChange={(endDate) => this.setState({ endDate })} />
         <RoundedButton text='Sort Seminar By Date' onPress={() => this.props.sortSeminarByDate(startDate, endDate)} />
         <CustomDropdown label='Venue List' data={dataObj} onChangeText={(venue) => this.setState({ venue })} />
         <RoundedButton text='Sort Seminar By Venue' onPress={() => this.props.sortSeminarByVenue(this.state.venue)} />
-        <TextField placeholder='Search By Speaker' value={this.state.speaker} onChangeText={(speaker) => this.setState({speaker})} />
+        <TextField placeholder='Search By Speaker' value={this.state.speaker} onChangeText={(speaker) => this.setState({ speaker })} />
         <RoundedButton text='Get Seminar By Speaker' onPress={() => this.props.getSeminarBySpeaker(this.state.speaker)} />
-        <TextField placeholder='Search By Organiser Name' value={this.state.organiser} onChangeText={(organiser) => this.setState({organiser})} />
+        <TextField placeholder='Search By Organiser Name' value={this.state.organiser} onChangeText={(organiser) => this.setState({ organiser })} />
         <RoundedButton text='Get Seminar By Organiser Name' onPress={() => this.props.getSeminarByOrganiserName(this.state.organiser)} />
       </View>
     )
