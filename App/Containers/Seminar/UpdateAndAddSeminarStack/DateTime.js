@@ -16,12 +16,12 @@ class DateTime extends Component {
   }
 
   onAddPressed () {
-    const { abstract, date, startTime, endTime, label, speaker, venue, organiserName } = this.props
+    const { abstract, date, startTime, endTime, label, speaker, venue, capacity, organiserName } = this.props
     // The actions.
     console.log(startTime)
     console.log(endTime)
     console.log(date)
-    this.props.addNewSeminar({ abstract, date, startTime, endTime, label, speaker, venue, organiserName })
+    this.props.addNewSeminar({ abstract, date, startTime, endTime, label, speaker, venue, capacity, organiserName })
   }
 
   render () {
@@ -48,9 +48,9 @@ class DateTime extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { abstract, date, startTime, endTime, label, speaker, venue } = state.seminar
+  const { abstract, date, startTime, endTime, label, speaker, venue, capacity } = state.seminar
   return {
-    abstract, date, startTime, endTime, label, speaker, venue, organiserName: state.user.user.name
+    abstract, date, startTime, endTime, label, speaker, venue, capacity, organiserName: state.user.user.name
   }
 }
 

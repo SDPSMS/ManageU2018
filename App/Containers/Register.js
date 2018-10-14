@@ -43,14 +43,14 @@ class Register extends Component {
             for
             the apps.</Text>
           <TextField placeholder=' Email' value={this.state.email}
-                     onChangeText={(email) => this.setState({email})} />
+            onChangeText={(email) => this.setState({ email })} />
           <TextField placeholder=' Name' value={this.state.name}
-                     onChangeText={(name) => this.setState({name})} />
+            onChangeText={(name) => this.setState({ name })} />
           <TextField placeholder=' Password' value={this.state.password} secure
-                     onChangeText={(password) => this.setState({password})} />
+            onChangeText={(password) => this.setState({ password })} />
           <CustomDropdown
-            label='Role' value={this.state.role} onChangeText={(role) => this.setState({role})}
-            data={[{value: types.ORGANISER}]}
+            label='Role' value={this.state.role} onChangeText={(role) => this.setState({ role })}
+            data={[{ value: types.ORGANISER }]}
           />
           {this.renderLoad()}
           <MessageText>
@@ -69,4 +69,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, {register})(Register)
+export default connect(mapStateToProps, { register })(Register)

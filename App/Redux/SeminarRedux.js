@@ -11,7 +11,8 @@ const initialState = {
   startTime: '',
   label: '',
   speaker: '',
-  venue: ''
+  venue: '',
+  venueCapacity: ''
 }
 
 export default (state = initialState, action) => {
@@ -52,7 +53,8 @@ export default (state = initialState, action) => {
         endTime: '',
         label: '',
         speaker: '',
-        venue: ''
+        venue: '',
+        venueCapacity: ''
       }
 
     case 'FORM_UPDATE':
@@ -77,6 +79,7 @@ export default (state = initialState, action) => {
         label: action.payload.label,
         speaker: action.payload.speaker,
         venue: action.payload.venue,
+        venueCapacity: action.payload.venueCapacity,
         id: action.payload.id
         // seminarSelected: null,
       }
@@ -93,7 +96,8 @@ export default (state = initialState, action) => {
         endTime: '',
         label: '',
         speaker: '',
-        venue: ''
+        venue: '',
+        venueCapacity: ''
       }
 
     case 'DELETE_SEMINAR':

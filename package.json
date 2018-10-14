@@ -45,6 +45,7 @@
     "react-native-html-to-pdf": "^0.6.0",
     "react-native-material-dropdown": "^0.11.1",
     "react-native-modal": "^6.5.0",
+    "react-native-searchable-dropdown": "^1.0.5",
     "react-native-vector-icons": "4.3.0",
     "react-navigation": "^1.5.11",
     "react-navigation-redux-helpers": "^1.0.4",
