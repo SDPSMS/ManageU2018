@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import TextField from '../../../Components/TextField'
 import { formUpdate } from '../../../Action/SeminarAction'
-import CustomDropdown from '../../../Components/Dropdown'
 import { connect } from 'react-redux'
 import { View } from 'react-native'
 import venueData from './venueData'
 import MyDatePicker from '../../../Components/DatePicker'
 import MyTimePicker from '../../../Components/TimePicker'
+import SearchDropdown from '../../../Components/SearchableDropdown'
 
 class UpdateAndAddForm extends Component {
   static defaultProps = {
@@ -22,13 +22,8 @@ class UpdateAndAddForm extends Component {
   }
 
   render () {
-    const dataObj = []
-    venueData.forEach((element) => {
-      dataObj.push(JSON.parse(JSON.stringify({ value: element })))
-    })
-
     const { abstract, date, startTime, endTime, label, speaker, venue } = this.props
-
+    console.log(venueData)
     return (
       <View>
         <TextField
@@ -55,11 +50,20 @@ class UpdateAndAddForm extends Component {
           value={speaker}
           onChangeText={(value) => this.props.formUpdate({ prop: 'speaker', value })}
         />
-        <CustomDropdown
-          data={dataObj}
-          label={'Venue'}
+        <SearchDropdown
+          data={venueData}
+          label='Venue'
           value={venue}
-          onChangeText={(value) => this.props.formUpdate({ prop: 'venue', value })}
+          onItemSelect={(item) => {
+            this.props.formUpdate({ prop: 'venue', value: item.name })
+            this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
+          }}
+          onChangeText={
+            (item) => {
+              this.props.formUpdate({ prop: 'venue', value: item.name })
+              this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
+            }
+          }
         />
       </View>
     )

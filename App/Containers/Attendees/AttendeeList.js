@@ -133,7 +133,7 @@ class AttendeeList extends Component {
 
   render () {
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <SimpleIcon
           name={'close'}
           size={30}

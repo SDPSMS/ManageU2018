@@ -4,8 +4,8 @@ import { formUpdate } from '../../../Action/SeminarAction'
 import { connect } from 'react-redux'
 import { View } from 'react-native'
 import venueData from './venueData'
-import CustomDropdown from '../../../Components/Dropdown'
 import RoundedButton from '../../../Components/RoundedButton'
+import SearchDropdown from '../../../Components/SearchableDropdown'
 
 class Abstract extends Component {
   static defaultProps = {
@@ -13,11 +13,6 @@ class Abstract extends Component {
   }
 
   render () {
-    const dataObj = []
-    venueData.forEach((element) => {
-      dataObj.push(JSON.parse(JSON.stringify({ value: element })))
-    })
-
     const { abstract, label, speaker, venue } = this.props
 
     return (
@@ -37,11 +32,20 @@ class Abstract extends Component {
           value={speaker}
           onChangeText={(value) => this.props.formUpdate({ prop: 'speaker', value })}
         />
-        <CustomDropdown
-          data={dataObj}
-          label={'Venue'}
+        <SearchDropdown
+          data={venueData}
+          label='Venue'
           value={venue}
-          onChangeText={(value) => this.props.formUpdate({ prop: 'venue', value })}
+          onItemSelect={(item) => {
+            this.props.formUpdate({ prop: 'venue', value: item.name })
+            this.props.formUpdate({ prop: 'capacity', value: item.capacity })
+          }}
+          onChangeText={
+            (item) => {
+              this.props.formUpdate({ prop: 'venue', value: item.name })
+              this.props.formUpdate({ prop: 'capacity', value: item.capacity })
+            }
+          }
         />
         <RoundedButton
           text={'Add'}
@@ -53,9 +57,9 @@ class Abstract extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { abstract, date, time, duration, label, speaker, venue } = state.seminar
+  const { abstract, date, time, duration, label, speaker, venue, capacity } = state.seminar
   return {
-    abstract, date, time, duration, label, speaker, venue
+    abstract, date, time, duration, label, speaker, venue, capacity
   }
 }
 

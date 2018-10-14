@@ -55,13 +55,13 @@ export function editSeminar (seminar) {
 }
 
 // TODO: Instead of using this, wrap everything in one object called details
-export function saveSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, id, organiserName }) {
+export function saveSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity }) {
   const { currentUser } = firebase.auth()
   const startDate = ConvertToTimestamp(date, startTime)
   const endDate = ConvertToTimestamp(date, endTime)
   return (dispatch) => {
     firebase.database().ref(`seminars/${id}`)
-      .set({ id, abstract, startDate, endDate, label, speaker, venue, ownerid: currentUser.uid, ownername: organiserName })
+      .update({ id, abstract, startDate, endDate, label, speaker, venue, ownerid: currentUser.uid, venueCapacity })
       .then(() => {
         // SAVE SEMINAR IN THE DATABASE
         dispatch({ type: 'SAVE_SEMINAR' })
@@ -86,20 +86,15 @@ export function deleteSeminar (seminarId) {
   }
 }
 
-export function addNewSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, organiserName }) {
+export function addNewSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, capacity, organiserName }) {
   const { currentUser } = firebase.auth()
   const startDate = ConvertToTimestamp(date, startTime)
   const endDate = ConvertToTimestamp(date, endTime)
-  console.log(date)
-  console.log(startTime)
-  console.log(endTime)
-  console.log(startDate)
-  console.log(endDate)
   return (dispatch) => {
     // setting the current user uid (who created the seminar) as a foreign key in the seminars entity.
     const ref = firebase.database().ref('seminars').push()
     const key = ref.getKey()
-    ref.set({ id: key, abstract, startDate, endDate, label, speaker, venue, ownerid: currentUser.uid, ownername: organiserName })
+    ref.set({ id: key, abstract, startDate, endDate, label, speaker, venue, venueCapacity: capacity, ownerid: currentUser.uid, ownername: organiserName })
       .then(() => {
         dispatch({ type: 'ADD_SEMINAR' })
         dispatch(NavigationActions.navigate('SeminarList'))

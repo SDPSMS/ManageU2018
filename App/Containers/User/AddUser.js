@@ -33,8 +33,8 @@ class AddUser extends Component {
           onChangeText={(name) => this.setState({ name })}
         />
         <CustomDropdown
-          label='Role' value={this.state.role} onChangeText={(role) => this.setState({role})}
-          data={[{value: types.ORGANISER}]}
+          label='Role' value={this.state.role} onChangeText={(role) => this.setState({ role })}
+          data={[{ value: types.ORGANISER }]}
         />
         <View>
           <AccentButton text='Add' onPress={() => this.props.addNewUser(email, name, role)} />
