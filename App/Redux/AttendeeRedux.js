@@ -1,4 +1,5 @@
 import * as types from '../Types/actionType'
+import _ from 'lodash'
 
 const initialState = {
   seminarAttendees: [],
@@ -56,13 +57,17 @@ export default (state = initialState, action) => {
     case types.DELETE_ATTENDEE_SUCCESS:
       return {
         ...state,
-        showModal: false
+        showModal: false,
+        seminarAttendees: state.seminarAttendees.filter(item => action.payload !== item.id)
       }
 
     case 'EDIT_ATTENDEE_SUCCESS':
       return {
         ...state,
-        showModal: false
+        showModal: false,
+        seminarAttendees: state.seminarAttendees.map((item) => (
+          item.id === action.payload.id ? { ...item, id: action.payload.id, email: action.payload.email, name: action.payload.name, status: action.payload.status } : item
+        ))
       }
 
     case types.OPEN_MODAL:

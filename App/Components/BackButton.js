@@ -15,7 +15,7 @@ export default class BackButton extends Component {
   }
 
   render () {
-    const {onPress} = this.props
+    const { onPress } = this.props
     // TODO: Change the back icons.
     return (
       <SimpleIcon

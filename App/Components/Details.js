@@ -11,11 +11,11 @@ export default class Details extends Component {
   }
 
   render () {
-    const {detail, placeholder} = this.props
+    const { detail, placeholder } = this.props
     return (
-      <View style={{flexDirection: 'row'}}>
-        <Text style={{marginRight: 50}}>{placeholder}</Text>
-        <Text style={{marginRight: 30}}>{detail} </Text>
+      <View style={{ flexDirection: 'row' }}>
+        <Text style={{ marginRight: 50 }}>{placeholder}</Text>
+        <Text style={{ marginRight: 30 }}>{detail} </Text>
       </View>
     )
   }

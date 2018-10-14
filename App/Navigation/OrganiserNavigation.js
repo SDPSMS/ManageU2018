@@ -134,9 +134,6 @@ const OrganiserNav = DrawerNavigator(
         title: 'Help',
         drawerLabel: 'Help'
       }
-    },
-    Print: {
-      screen: Print
     }
   },
   {

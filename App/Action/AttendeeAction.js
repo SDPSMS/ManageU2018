@@ -3,7 +3,6 @@ import firebase from 'firebase'
 import _ from 'lodash'
 import * as types from '../Types/actionType'
 import API from '../Services/Api'
-import { loadAttendees } from './SeminarAction'
 
 function attendSeminarError () {
   return {
@@ -38,7 +37,7 @@ export function attendSeminarFinish () {
 
 export function attendSeminar (name, email, status, seminarid) {
   return (dispatch) => {
-    dispatch({type: types.SEMINAR_ATTEND_START})
+    dispatch({ type: types.SEMINAR_ATTEND_START })
     checkStudentsDatabaseForRegister(email).then((response) => {
       if (response.ok) {
         const useridlists = []
@@ -46,7 +45,9 @@ export function attendSeminar (name, email, status, seminarid) {
         // TODO: Dispatch what state and navigation?
         firebase.database().ref(`attendeelist/${seminarid}`).once('value')
           .then((snapshot) => {
-            Object.keys(snapshot.val()).map((k) => useridlists.push(snapshot.val()[k]))
+            Object.keys(snapshot.val()).map((k) => {
+              useridlists.push(snapshot.val()[k].id)
+            })
           })
           .then(async () => {
             let id
@@ -64,19 +65,10 @@ export function attendSeminar (name, email, status, seminarid) {
               // TODO: Dispatch error message.
               dispatch(attendSeminarError())
             } else {
-              const newAttendee = firebase.database().ref('attendees').push({name, status, email})
-              firebase.database().ref(`attendees/${newAttendee.getKey()}`).update({id: newAttendee.getKey()})
-              firebase.database().ref(`attendeelist/${seminarid}`).push(newAttendee.getKey())
+              const newAttendee = firebase.database().ref('attendees').push({ name, status, email })
+              firebase.database().ref(`attendees/${newAttendee.getKey()}`).update({ id: newAttendee.getKey() })
+              firebase.database().ref(`attendeelist/${seminarid}/${newAttendee.getKey()}`).set({ id: newAttendee.getKey() })
                 .then(() => dispatch(attendSeminarSuccess()))
-                // .then((snapshot) => {
-                //   console.log(snapshot.val())
-                //   firebase.database().ref('attendees').child(snapshot.getKey()).update({ id: snapshot.getKey() })
-                //     .then(() => {
-                //       firebase.database().ref(`attendeelist/${seminarid}`).push(newAttendee.getKey())
-                //         .then(() => dispatch(attendSeminarSuccess()))
-                //         .catch(() => console.log('failed to attend!'))
-                //     })
-                // })
             }
           })
       } else {
@@ -115,36 +107,17 @@ export function attendSeminar (name, email, status, seminarid) {
   // }
 }
 
-function loadAttendeeFinish () {
-  return {
-    type: 'LIST_ATTENDEE_FINISH'
-  }
-}
-
 export function deleteAttendee (seminarId, attendeeId) {
   return (dispatch) => {
     console.log(seminarId, attendeeId)
     firebase.database().ref(`attendeelist/${seminarId}/${attendeeId}`).remove()
       .then(() => {
         firebase.database().ref(`attendees/${attendeeId}`).remove()
-          .then(() => {
-            const attendeesListAndDetails = []
-            firebase.database().ref('attendeelist').child(seminarId)
-              .once('value').then((snapshot) => {
-              snapshot.forEach((attendeeid) => {
-                firebase.database().ref('attendees').child(attendeeid.val())
-                  .once('value')
-                  .then((snapshot) => {
-                    attendeesListAndDetails.push(snapshot.val())
-                  })
-              })
-            })
-              .then(() => {
-                dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
-                dispatch(loadAttendeeFinish())
-                dispatch({type: types.DELETE_ATTENDEE_SUCCESS})
-              })
-          })
+      })
+      .then(() => {
+        dispatch({ type: types.DELETE_ATTENDEE_SUCCESS, payload: attendeeId })
+      })
+      .catch(() => {
       })
   }
 }
@@ -154,11 +127,10 @@ export function editAttendee (attendeeId, name, status, email) {
     console.log(email)
     console.log(attendeeId)
     firebase.database().ref(`attendees/${attendeeId}`)
-      .update({email, id: attendeeId, name, status})
+      .update({ email, id: attendeeId, name, status })
       .then(() => {
         // SAVE USER IN THE DATABASE
-        dispatch({type: 'EDIT_ATTENDEE_SUCCESS'})
-        dispatch(NavigationActions.push('SeminarAttendeesView'))
+        dispatch({ type: 'EDIT_ATTENDEE_SUCCESS', payload: ({ email, id: attendeeId, name, status }) })
       })
   }
 }

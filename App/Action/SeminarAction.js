@@ -27,14 +27,14 @@ export function loadAllSeminars () {
 
     const seminarRef = firebase.database().ref('seminars')
     seminarRef.orderByChild('endDate').startAt(moment().valueOf()).on('value', (snapshot) => {
-      dispatch({type: 'LOAD_ALL_SEMINAR', payload: snapshot.val()})
+      dispatch({ type: 'LOAD_ALL_SEMINAR', payload: snapshot.val() })
     })
   }
 }
 
 export function selectSeminar (seminarId) {
   return (dispatch) => {
-    dispatch({type: 'SELECTED_SEMINAR', payload: seminarId})
+    dispatch({ type: 'SELECTED_SEMINAR', payload: seminarId })
     dispatch(NavigationActions.push('SeminarDetails'))
   }
 }
@@ -42,32 +42,32 @@ export function selectSeminar (seminarId) {
 export function unselectSeminar () {
   return (dispatch) => {
     dispatch(NavigationActions.goBack())
-    dispatch({type: 'NONE_SELECTED'})
+    dispatch({ type: 'NONE_SELECTED' })
   }
 }
 
 export function editSeminar (seminar) {
   return (dispatch) => {
-    dispatch({type: 'EDIT_SEMINAR', payload: seminar})
+    dispatch({ type: 'EDIT_SEMINAR', payload: seminar })
     dispatch(NavigationActions.push('EditSeminar'))
   }
 }
 
 // TODO: Instead of using this, wrap everything in one object called details
-export function saveSeminar ({abstract, date, startTime, endTime, label, speaker, venue, id}) {
-  const {currentUser} = firebase.auth()
+export function saveSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, id }) {
+  const { currentUser } = firebase.auth()
   const startDate = ConvertToTimestamp(date, startTime)
   const endDate = ConvertToTimestamp(date, endTime)
   return (dispatch) => {
     firebase.database().ref(`seminars/${id}`)
-      .set({id, abstract, startDate, endDate, label, speaker, venue, ownerid: currentUser.uid})
+      .set({ id, abstract, startDate, endDate, label, speaker, venue, ownerid: currentUser.uid })
       .then(() => {
         // SAVE SEMINAR IN THE DATABASE
-        dispatch({type: 'SAVE_SEMINAR'})
+        dispatch({ type: 'SAVE_SEMINAR' })
         dispatch(NavigationActions.navigate('SeminarList'))
       })
       .catch(() => {
-        dispatch({type: types.SEMINAR_SAVE_FAILED})
+        dispatch({ type: types.SEMINAR_SAVE_FAILED })
       })
     // handle catch as well.
   }
@@ -79,29 +79,29 @@ export function deleteSeminar (seminarId) {
       .remove()
       .then(() => {
         // after remove, we dispatch the actions so that the redux state can be updated.
-        dispatch({type: 'DELETE_SEMINAR'})
+        dispatch({ type: 'DELETE_SEMINAR' })
         dispatch(NavigationActions.navigate('SeminarList'))
       })
   }
 }
 
-export function addNewSeminar ({abstract, date, startTime, endTime, label, speaker, venue}) {
-  const {currentUser} = firebase.auth()
+export function addNewSeminar ({ abstract, date, startTime, endTime, label, speaker, venue }) {
+  const { currentUser } = firebase.auth()
   const startDate = ConvertToTimestamp(date, startTime)
   const endDate = ConvertToTimestamp(date, endTime)
   return (dispatch) => {
     // setting the current user uid (who created the seminar) as a foreign key in the seminars entity.
     const ref = firebase.database().ref('seminars').push()
     const key = ref.getKey()
-    ref.set({id: key, abstract, startDate, endDate, label, speaker, venue, ownerid: currentUser.uid})
+    ref.set({ id: key, abstract, startDate, endDate, label, speaker, venue, ownerid: currentUser.uid })
       .then(() => {
-        dispatch({type: 'ADD_SEMINAR'})
+        dispatch({ type: 'ADD_SEMINAR' })
         dispatch(NavigationActions.navigate('SeminarList'))
       })
   }
 }
 
-export function formUpdate ({prop, value}) {
+export function formUpdate ({ prop, value }) {
   return {
     type: 'FORM_UPDATE',
     payload: {
@@ -112,7 +112,7 @@ export function formUpdate ({prop, value}) {
 
 export function loadAttendeeStart () {
   return (dispatch) => {
-    dispatch({type: 'LIST_ATTENDEE_START'})
+    dispatch({ type: 'LIST_ATTENDEE_START' })
     dispatch(NavigationActions.navigate('SeminarAttendeesView'))
   }
 }
@@ -130,13 +130,14 @@ export function loadAttendees (seminarId) {
     firebase.database().ref('attendeelist').child(seminarId)
       .once('value').then((snapshot) => {
         snapshot.forEach((attendeeid) => {
-          firebase.database().ref('attendees').child(attendeeid.val())
+          console.log(attendeeid.key)
+          firebase.database().ref('attendees').child(attendeeid.key)
             .once('value')
             .then((snapshot) => {
               attendeesListAndDetails.push(snapshot.val())
             })
             .then(() => {
-              dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails})
+              dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
               dispatch(loadAttendeeFinish())
             })
         })
@@ -169,9 +170,9 @@ export function sortSeminarByDate (startDate, endDate) {
     // Sort by date.
     firebase.database().ref('seminars').orderByChild('startDate').startAt(startDateTS).endAt(endDateTS).on('value', (snapshot) => {
       if (snapshot.val() != null && snapshot.val().length !== 0) {
-        dispatch({type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val()})
+        dispatch({ type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val() })
       } else {
-        dispatch({type: types.SORT_SEMINAR_ERROR, message: 'No Seminar in the given date range found!'})
+        dispatch({ type: types.SORT_SEMINAR_ERROR, message: 'No Seminar in the given date range found!' })
       }
     })
   }
@@ -182,9 +183,9 @@ export function sortSeminarByVenue (venue) {
     // Sort by date.
     firebase.database().ref('seminars').orderByChild('venue').equalTo(venue).on('value', (snapshot) => {
       if (snapshot.val() != null && snapshot.val().length !== 0) {
-        dispatch({type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val()})
+        dispatch({ type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val() })
       } else {
-        dispatch({type: types.SORT_SEMINAR_ERROR, message: `No Seminar in the room ${venue} found!`})
+        dispatch({ type: types.SORT_SEMINAR_ERROR, message: `No Seminar in the room ${venue} found!` })
       }
     })
   }
@@ -195,9 +196,9 @@ export function getSeminarBySpeaker (speaker) {
     // Sort by date.
     firebase.database().ref('seminars').orderByChild('speaker').equalTo(speaker).on('value', (snapshot) => {
       if (snapshot.val() != null && snapshot.val().length !== 0) {
-        dispatch({type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val()})
+        dispatch({ type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val() })
       } else {
-        dispatch({type: types.SORT_SEMINAR_ERROR, message: `No Seminar with name ${speaker} found!`})
+        dispatch({ type: types.SORT_SEMINAR_ERROR, message: `No Seminar with name ${speaker} found!` })
       }
     })
   }
@@ -218,7 +219,7 @@ export function getSeminarByOrganiserName (organiserName) {
         if (id !== 0) {
           firebase.database().ref('seminars').orderByChild('ownerid').equalTo(id).on('value', (snapshot) => {
             if (snapshot.val() != null) {
-              dispatch({type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val()})
+              dispatch({ type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val() })
             } else {
               dispatch({
                 type: types.SORT_SEMINAR_ERROR,
@@ -227,7 +228,7 @@ export function getSeminarByOrganiserName (organiserName) {
             }
           })
         } else {
-          dispatch({type: types.SORT_SEMINAR_ERROR, message: `No seminars with Organiser name ${organiserName} found.`})
+          dispatch({ type: types.SORT_SEMINAR_ERROR, message: `No seminars with Organiser name ${organiserName} found.` })
         }
       })
   }
@@ -245,20 +246,20 @@ export function sendUpdateEmailNotif (seminarid) {
     // orderBy equalTo
     firebase.database().ref('attendeelist').child(seminarid)
       .once('value').then((snapshot) => {
-      snapshot.forEach((attendeeid) => {
-        firebase.database().ref('attendees').child(attendeeid.val())
-          .once('value').then((snapshot) => {
-          attendeesListAndDetails.push(snapshot.val())
-        })
-          .then(() => {
-            console.log(attendeesListAndDetails)
-            // TODO: Handle error and success! --> Probably do not need to because it is automatically after a seminar is updated
-            sendEmail(attendeesListAndDetails).then(() => {
-              console.log('success')
+        snapshot.forEach((attendeeid) => {
+          firebase.database().ref('attendees').child(attendeeid.val())
+            .once('value').then((snapshot) => {
+              attendeesListAndDetails.push(snapshot.val())
             })
-              .catch(() => console.log('Fail'))
-          })
+            .then(() => {
+              console.log(attendeesListAndDetails)
+              // TODO: Handle error and success! --> Probably do not need to because it is automatically after a seminar is updated
+              sendEmail(attendeesListAndDetails).then(() => {
+                console.log('success')
+              })
+                .catch(() => console.log('Fail'))
+            })
+        })
       })
-    })
   }
 }

@@ -74,8 +74,8 @@ export default StyleSheet.create({
     fontSize: 15
   },
   subtitleText2: {
-    color: Colors.primaryTextColour,
-    color: 'red'
+    color: Colors.fire,
+    textAlign: 'center'
   },
 
   formStyle: {

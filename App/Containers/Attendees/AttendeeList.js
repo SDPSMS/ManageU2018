@@ -32,27 +32,27 @@ class AttendeeList extends Component {
       email: '',
       status: '',
       dropDownMenu: [
-        {value: 'going'},
-        {value: 'interested'}
+        { value: 'going' },
+        { value: 'interested' }
       ]
     }
   }
 
   editAttendees () {
-    const {name, status, selectedUser} = this.state
+    const { name, status, selectedUser } = this.state
     if (this.state.name === '') {
       console.log('please change something!')
     } else {
-      const {editAttendee} = this.props
+      const { editAttendee } = this.props
       editAttendee(selectedUser.id, name, status, selectedUser.email)
-      this.setState({showModal: false})
+      this.setState({ showModal: false })
     }
   }
 
   deleteAttendees (attendeeId) {
-    const {deleteAttendee, seminarId} = this.props
+    const { deleteAttendee, seminarId } = this.props
     deleteAttendee(seminarId, attendeeId)
-    this.setState({showModal: false})
+    this.setState({ showModal: false })
   }
 
   // createPDF () {
@@ -61,9 +61,8 @@ class AttendeeList extends Component {
   // }
 
   async createPDF () {
-    const {attendeeLists} = this.props
+    const { attendeeLists } = this.props
     let text = ''
-
     attendeeLists.forEach((attendee) => {
       console.log(attendee)
       text += `<div style="width:46%; height:15%; float:left; border: 1px solid black; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
@@ -88,7 +87,7 @@ class AttendeeList extends Component {
   }
 
   renderDialog () {
-    const {selectedUser, id} = this.state
+    const { selectedUser, id } = this.state
 
     let dialogContent
     let onPressPositive
@@ -102,12 +101,12 @@ class AttendeeList extends Component {
             <TextField
               placeholder={'name'}
               value={selectedUser.name}
-              onChangeText={(name) => this.setState({name})}
+              onChangeText={(name) => this.setState({ name })}
             />
             <CustomDropdown data={this.state.dropDownMenu}
-                            label={'Status'}
-                            value={selectedUser.status}
-                            onChangeText={(status) => this.setState({status})} />
+              label={'Status'}
+              value={selectedUser.status}
+              onChangeText={(status) => this.setState({ status })} />
           </View>
         )
         break
@@ -116,7 +115,7 @@ class AttendeeList extends Component {
         onPressPositive = () => this.deleteAttendees(id)
         dialogContent = (
           <View>
-            <Text style={{verticalAlign: 'middle'}}>Are you sure you want to delete this attendee?</Text>
+            <Text style={{ verticalAlign: 'middle' }}>Are you sure you want to delete this attendee?</Text>
           </View>
         )
         break
@@ -127,14 +126,14 @@ class AttendeeList extends Component {
         confirmText='Confirm'
         negativeText='Cancel'
         onPressPositive={onPressPositive}
-        onPressNegative={() => this.setState({showModal: false})} children={dialogContent}
+        onPressNegative={() => this.setState({ showModal: false })} children={dialogContent}
         title={title} isVisible={this.state.showModal} />
     )
   }
 
   render () {
     return (
-      <View>
+      <View style={{flex: 1}}>
         <SimpleIcon
           name={'close'}
           size={30}
@@ -144,21 +143,21 @@ class AttendeeList extends Component {
         <FlatList
           data={this.props.attendeeLists}
           renderItem={
-            ({item}) =>
-              <View style={{flexDirection: 'row', margin: 10, borderBottomWidth: 3, borderBottomColor: Colors.cloud}}>
-                <View style={{flex: 2, marginLeft: 10, marginTop: 5}}>
+            ({ item }) =>
+              <View style={{ flexDirection: 'row', margin: 10, borderBottomWidth: 3, borderBottomColor: Colors.cloud }}>
+                <View style={{ flex: 2, marginLeft: 10, marginTop: 5 }}>
                   <Text>Email: {item.email}</Text>
                   <Text>Name: {item.name}</Text>
                   <Text>Status: {item.status}</Text>
                 </View>
-                <View style={{flex: 1, marginRight: 10}}>
-                  <View style={{marginBottom: 10}}>
+                <View style={{ flex: 1, marginRight: 10 }}>
+                  <View style={{ marginBottom: 10 }}>
                     <Button title='Edit'
-                            onPress={() => this.setState({showModal: true, selectedUser: item, mode: 'edit'})} />
+                      onPress={() => this.setState({ showModal: true, selectedUser: item, mode: 'edit' })} />
                   </View>
-                  <View style={{marginBottom: 10}}>
+                  <View style={{ marginBottom: 10 }}>
                     <Button title='Delete' color={Colors.fire}
-                            onPress={() => this.setState({showModal: true, id: item.id, mode: 'delete'})} />
+                      onPress={() => this.setState({ showModal: true, id: item.id, mode: 'delete' })} />
                   </View>
                 </View>
               </View>
@@ -184,4 +183,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, {deleteAttendee, loadAttendees, editAttendee})(AttendeeList)
+export default connect(mapStateToProps, { deleteAttendee, loadAttendees, editAttendee })(AttendeeList)

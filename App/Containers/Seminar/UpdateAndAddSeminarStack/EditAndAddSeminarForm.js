@@ -24,42 +24,42 @@ class UpdateAndAddForm extends Component {
   render () {
     const dataObj = []
     venueData.forEach((element) => {
-      dataObj.push(JSON.parse(JSON.stringify({value: element})))
+      dataObj.push(JSON.parse(JSON.stringify({ value: element })))
     })
 
-    const {abstract, date, startTime, endTime, label, speaker, venue} = this.props
+    const { abstract, date, startTime, endTime, label, speaker, venue } = this.props
 
     return (
       <View>
         <TextField
           placeholder={'Abstract'}
           value={abstract}
-          onChangeText={(value) => this.props.formUpdate({prop: 'abstract', value})}
+          onChangeText={(value) => this.props.formUpdate({ prop: 'abstract', value })}
         />
-        <MyDatePicker date={date} onDateChange={(value) => this.props.formUpdate({prop: 'date', value})} />
+        <MyDatePicker date={date} onDateChange={(value) => this.props.formUpdate({ prop: 'date', value })} />
 
         <MyTimePicker time={startTime} placeholder='Start Time'
-                      onDateChange={(value) => {
-                        this.props.formUpdate({prop: 'startTime', value})
-                        this.setState({disabled: false})
-                      }} />
+          onDateChange={(value) => {
+            this.props.formUpdate({ prop: 'startTime', value })
+            this.setState({ disabled: false })
+          }} />
         <MyTimePicker disabled={this.state.disabled} minDate={startTime} time={endTime} placeholder='End Time'
-                      onDateChange={(value) => this.props.formUpdate({prop: 'endTime', value})} />
+          onDateChange={(value) => this.props.formUpdate({ prop: 'endTime', value })} />
         <TextField
           placeholder={'Label'}
           value={label}
-          onChangeText={(value) => this.props.formUpdate({prop: 'label', value})}
+          onChangeText={(value) => this.props.formUpdate({ prop: 'label', value })}
         />
         <TextField
           placeholder={'Speaker'}
           value={speaker}
-          onChangeText={(value) => this.props.formUpdate({prop: 'speaker', value})}
+          onChangeText={(value) => this.props.formUpdate({ prop: 'speaker', value })}
         />
         <CustomDropdown
           data={dataObj}
           label={'Venue'}
           value={venue}
-          onChangeText={(value) => this.props.formUpdate({prop: 'venue', value})}
+          onChangeText={(value) => this.props.formUpdate({ prop: 'venue', value })}
         />
       </View>
     )
@@ -73,4 +73,4 @@ UpdateAndAddForm.propTypes = {
   content: PropTypes.string
 }
 
-export default connect(null, {formUpdate})(UpdateAndAddForm)
+export default connect(null, { formUpdate })(UpdateAndAddForm)
