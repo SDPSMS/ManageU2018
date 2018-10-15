@@ -6,6 +6,7 @@ import { View } from 'react-native'
 import venueData from './venueData'
 import RoundedButton from '../../../Components/RoundedButton'
 import SearchDropdown from '../../../Components/SearchableDropdown'
+import BackButton from '../../../Components/BackButton'
 
 class Abstract extends Component {
   static defaultProps = {
@@ -17,6 +18,7 @@ class Abstract extends Component {
 
     return (
       <View style={{ marginLeft: 20, marginRight: 20 }}>
+        <BackButton onPress={() => this.props.navigation.pop()} />
         <TextField
           placeholder={'Label'}
           value={label}

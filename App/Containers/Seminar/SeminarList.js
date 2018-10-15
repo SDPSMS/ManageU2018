@@ -36,7 +36,7 @@ class SeminarList extends Component {
     if (user != null) {
       if (user.role === types.ORGANISER) {
         return (
-          <RoundedButton text='Add Seminar' onPress={() => this.props.navigation.navigate('AddSeminar')} />
+          <RoundedButton text='Add Seminar' onPress={() => this.props.navigation.push('Abstract')} />
         )
       }
     }

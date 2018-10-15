@@ -51,9 +51,11 @@ const SeminarStack = StackNavigator(
     EditSeminar: {
       screen: EditSeminar
     },
-    AddSeminar: {
-      screen: AddSeminarStack,
-      drawerLabel: null
+    Abstract: {
+      screen: Abstract
+    },
+    DateTime: {
+      screen: DateTime
     }
   },
   {

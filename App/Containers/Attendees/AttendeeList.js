@@ -18,8 +18,7 @@ import RNHTMLtoPDF from 'react-native-html-to-pdf'
 import CustomDropdown from '../../Components/Dropdown'
 
 class AttendeeList extends Component {
-  componentWillMount () {
-    console.log(this.props.seminar.id)
+  componentDidMount () {
     this.props.loadAttendees(this.props.seminarId)
   }
 
