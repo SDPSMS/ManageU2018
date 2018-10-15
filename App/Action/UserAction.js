@@ -235,8 +235,15 @@ function checkStaffsDatabaseForRegister (email, password) {
   return API.create().checkStaffDatabaseForRegister(email, password)
 }
 
+function registerInitStart () {
+  return {
+    type: types.REGISTER_CHECK_DATABASE_START
+  }
+}
+
 export function registerInitialisation (email, password) {
   return (dispatch) => {
+    dispatch(registerInitStart())
     checkStaffsDatabaseForRegister(email, password)
       .then((response) => {
         if (response.ok) {

@@ -11,7 +11,7 @@ export default class BackButton extends Component {
   }
 
   static defaultProps = {
-    onPress: (props) => props.navigation.pop()
+    onPress: () => console.log('back button pressed')
   }
 
   render () {

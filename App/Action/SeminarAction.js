@@ -124,25 +124,34 @@ function loadAttendeeFinish () {
   }
 }
 
+function loadAttendeeEmpty (attendeesListAndDetails) {
+  return {
+    type: types.EMPTY_ATTENDEE,
+    message: 'This seminar does not have any attendee yet',
+    payload: attendeesListAndDetails
+  }
+}
+
 export function loadAttendees (seminarId) {
   return (dispatch) => {
     let attendeesListAndDetails = []
     // orderBy equalTo
-    firebase.database().ref('attendeelist').child(seminarId)
+    firebase.database().ref(`attendeelist/${seminarId}`)
       .once('value').then((snapshot) => {
         snapshot.forEach((attendeeid) => {
-          console.log(attendeeid.key)
-          firebase.database().ref('attendees').child(attendeeid.key)
+          firebase.database().ref(`attendees/${attendeeid.key}`)
             .once('value')
             .then((snapshot) => {
               attendeesListAndDetails.push(snapshot.val())
             })
             .then(() => {
               dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
+              // attendeesListAndDetails.length === 0 ? dispatch(loadAttendeeEmpty(attendeesListAndDetails)) : dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
               dispatch(loadAttendeeFinish())
             })
         })
       })
+    dispatch(loadAttendeeEmpty())
   }
 }
 

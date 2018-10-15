@@ -16,6 +16,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         seminarAttendees: action.payload,
+        message: '',
+        isLoading: false
+      }
+
+    case types.EMPTY_ATTENDEE:
+      return {
+        ...state,
+        seminarAttendees: action.payload,
+        message: action.message,
         isLoading: false
       }
     case 'LIST_ATTENDEE_START':

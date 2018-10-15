@@ -23,7 +23,6 @@ class UpdateAndAddForm extends Component {
 
   render () {
     const { abstract, date, startTime, endTime, label, speaker, venue } = this.props
-    console.log(venueData)
     return (
       <View>
         <TextField

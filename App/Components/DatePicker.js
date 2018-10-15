@@ -17,27 +17,16 @@ export default class MyDatePicker extends Component {
 
     return (
       <DatePicker
-        style={{ width: 200 }}
+        style={{ width: 300, marginLeft: 10, marginRight: 10, borderWidth: 2, borderColor: 'red' }}
         date={date}
         mode='date'
+        showIcon={false}
         placeholder='Select Date'
         format={format}
         // Will need to set this to current date
         minDate={minimumDate}
         confirmBtnText='Confirm'
         cancelBtnText='Cancel'
-        customStyles={{
-          dateIcon: {
-            position: 'absolute',
-            left: 0,
-            top: 4,
-            marginLeft: 0
-          },
-          dateInput: {
-            marginLeft: 36
-          }
-
-        }}
         onDateChange={onDateChange}
       />
     )
