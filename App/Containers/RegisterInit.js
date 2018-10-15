@@ -6,6 +6,7 @@ import RoundedButton from '../Components/RoundedButton'
 import MessageText from '../Components/MessageText'
 import connect from 'react-redux/es/connect/connect'
 import { registerInitialisation } from '../Action/UserAction'
+import Loader from '../Components/Loader'
 
 class RegisterInit extends Component {
   constructor (props) {
@@ -22,6 +23,13 @@ class RegisterInit extends Component {
     this.props.registerInitialisation(this.state.email, this.state.password)
   }
 
+  renderLoad () {
+    return (
+      this.props.isLoading ? <Loader size='large' />
+        : <RoundedButton text='Continue' onPress={() => this.handleRegister()} />
+    )
+  }
+
   render () {
     return (
       <View style={styles.mainContainer}>
@@ -35,7 +43,7 @@ class RegisterInit extends Component {
             onChangeText={(password) => this.setState({ password })} />
           <MessageText>{this.props.error}</MessageText>
           <View style={{ marginLeft: 65, marginTop: 5, marginBottom: 10 }} />
-          <RoundedButton text='Continue' onPress={this.handleRegister.bind(this)} />
+          {this.renderLoad()}
         </View>
       </View>
     )

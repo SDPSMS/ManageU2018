@@ -124,6 +124,14 @@ function loadAttendeeFinish () {
   }
 }
 
+function loadAttendeeEmpty (attendeesListAndDetails) {
+  return {
+    type: types.EMPTY_ATTENDEE,
+    message: 'This seminar does not have any attendee yet',
+    payload: attendeesListAndDetails
+  }
+}
+
 export function loadAttendees (seminarId) {
   return (dispatch) => {
     let attendeesListAndDetails = []
@@ -138,11 +146,13 @@ export function loadAttendees (seminarId) {
               attendeesListAndDetails.push(snapshot.val())
             })
             .then(() => {
-              dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
+              attendeesListAndDetails.length === 0 ? dispatch(loadAttendeeEmpty(attendeesListAndDetails)) : dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
               dispatch(loadAttendeeFinish())
             })
+            .catch(() => console.log('no change'))
         })
       })
+      .catch(() => console.log('no change??'))
   }
 }
 

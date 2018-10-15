@@ -19,6 +19,7 @@ import CustomDropdown from '../../Components/Dropdown'
 
 class AttendeeList extends Component {
   componentWillMount () {
+    console.log(this.props.seminar.id)
     this.props.loadAttendees(this.props.seminarId)
   }
 
@@ -64,8 +65,7 @@ class AttendeeList extends Component {
     const { attendeeLists } = this.props
     let text = ''
     attendeeLists.forEach((attendee) => {
-      console.log(attendee)
-      text += `<div style="width:46%; height:15%; float:left; border: 1px solid black; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
+      text += `<div style="width:46%; height:15%; float:left; border: 1px solid black; border-radius: 2px; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
     })
 
     const html = `
@@ -78,12 +78,19 @@ class AttendeeList extends Component {
 
     let options = {
       html: html,
-      fileName: 'test',
-      directory: 'docs'
+      fileName: 'attendees',
+      directory: 'Documents'
     }
 
     let file = await RNHTMLtoPDF.convert(options)
     console.log(file.filePath)
+  }
+
+  renderPrintButton () {
+    const { seminar, user } = this.props
+    if (user != null && seminar != null) {
+      return seminar.ownerid === user.id ? (<Button title='Create PDF' onPress={() => this.createPDF()} />) : ''
+    }
   }
 
   renderDialog () {
@@ -140,6 +147,7 @@ class AttendeeList extends Component {
           onPress={() => this.props.navigation.popToTop()}
         />
         <Text style={styles.sectionText}>List of Attendees</Text>
+        <MessageText>{this.props.message}</MessageText>
         <FlatList
           data={this.props.attendeeLists}
           renderItem={
@@ -165,7 +173,7 @@ class AttendeeList extends Component {
           keyExtractor={(item, index) => index.toString()}
         />
         {this.renderDialog()}
-        <Button title='Create PDF' onPress={() => this.createPDF()} />
+        {this.renderPrintButton()}
       </View>
     )
   }
@@ -178,8 +186,11 @@ AttendeeList.propTypes = {
 function mapStateToProps (state) {
   return {
     attendeeLists: state.attendee.seminarAttendees,
+    seminar: state.seminar.seminarSelected,
     seminarId: state.seminar.seminarSelected.id,
-    showModal: state.attendee.showModal
+    user: state.user.user,
+    showModal: state.attendee.showModal,
+    message: state.attendee.message
   }
 }
 

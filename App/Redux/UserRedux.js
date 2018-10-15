@@ -112,6 +112,12 @@ export default (state = initialState, action) => {
         ))
       }
 
+    case types.DELETE_USER_SUCCESS:
+      return {
+        ...state,
+        userslist: state.userslist.filter(item => action.payload !== item.id)
+      }
+
     case 'ADD_NEW_USER':
       return {
         ...state,
@@ -126,22 +132,25 @@ export default (state = initialState, action) => {
         // the payload refer to the actions, the selectedid in SELECTED_USER action.
         selectedUser: action.payload
       }
+
+    case types.REGISTER_CHECK_DATABASE_START:
+      return {
+        ...state,
+        isLoading: true
+      }
+
     case types.REGISTER_CHECK_DATABASE_FAILED:
       return {
         ...state,
-        error: action.message
+        error: action.message,
+        isLoading: false
       }
 
     case types.REGISTER_CHECK_DATABASE_SUCCESS:
       return {
         ...state,
-        error: ''
-      }
-
-    case types.DELETE_USER_SUCCESS:
-      return {
-        ...state,
-        userslist: state.userslist.filter(item => action.payload !== item.id)
+        error: '',
+        isLoading: false
       }
     default:
       return state
