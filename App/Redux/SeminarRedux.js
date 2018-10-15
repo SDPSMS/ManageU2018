@@ -54,7 +54,9 @@ export default (state = initialState, action) => {
         label: '',
         speaker: '',
         venue: '',
-        venueCapacity: ''
+        venueCapacity: '',
+        // TODO: And then reorder?
+        seminars: [...state.seminars, action.payload]
       }
 
     case 'FORM_UPDATE':
@@ -97,12 +99,25 @@ export default (state = initialState, action) => {
         label: '',
         speaker: '',
         venue: '',
-        venueCapacity: ''
+        venueCapacity: '',
+        seminars: state.seminars.map((item) => (
+          item.id === action.payload.id ? {
+            ...item,
+            abstract: action.payload.abstract,
+            endDate: action.payload.endDate,
+            label: action.payload.label,
+            speaker: action.payload.speaker,
+            startDate: action.payload.startDate,
+            venue: action.payload.venue,
+            venueCapacity: action.payload.venueCapacity
+          } : item
+        ))
       }
 
     case 'DELETE_SEMINAR':
       return {
-        ...state
+        ...state,
+        seminars: state.seminars.filter(item => action.payload !== item.id)
         // seminarSelected: null
       }
     case types.SORT_SEMINAR_SUCCESS:

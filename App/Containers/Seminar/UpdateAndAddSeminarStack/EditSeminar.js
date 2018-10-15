@@ -11,7 +11,7 @@ class EditSeminar extends Component {
     const { abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity } = this.props
     // The actions.
     this.props.sendUpdateEmailNotif(id)
-    this.props.saveSeminar({ abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity })
+    this.props.saveSeminar({ abstract, date, startTime, endTime, label, speaker, venue: 'CB11.04.05', id, venueCapacity: '50' })
   }
 
   render () {

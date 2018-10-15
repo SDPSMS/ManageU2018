@@ -26,10 +26,18 @@ export function loadAllSeminars () {
     //   .then(() => dispatch({type: 'LOAD_ALL_SEMINAR', payload: seminars}))
 
     const seminarRef = firebase.database().ref('seminars')
-    console.log(moment.valueOf())
-    seminarRef.orderByChild('endDate').startAt(moment().valueOf()).on('value', (snapshot) => {
-      dispatch({ type: 'LOAD_ALL_SEMINAR', payload: snapshot.val() })
-    })
+    seminarRef.orderByChild('startDate').once('value')
+      .then((snapshot) => {
+        let seminarslists = []
+        snapshot.forEach((seminar) => {
+          seminarslists.push(seminar.val())
+        })
+        return seminarslists
+      })
+      .then((seminarslists) => {
+        console.log(seminarslists)
+        dispatch({ type: 'LOAD_ALL_SEMINAR', payload: seminarslists })
+      })
   }
 }
 
@@ -61,10 +69,10 @@ export function saveSeminar ({ abstract, date, startTime, endTime, label, speake
   const endDate = ConvertToTimestamp(date, endTime)
   return (dispatch) => {
     firebase.database().ref(`seminars/${id}`)
-      .update({ id, abstract, startDate, endDate, label, speaker, venue, ownerid: currentUser.uid, venueCapacity })
+      .update({ abstract, startDate, endDate, label, speaker, venue, venueCapacity })
       .then(() => {
         // SAVE SEMINAR IN THE DATABASE
-        dispatch({ type: 'SAVE_SEMINAR' })
+        dispatch({ type: 'SAVE_SEMINAR', payload: {id, abstract, startDate, endDate, label, speaker, venue, venueCapacity} })
         dispatch(NavigationActions.navigate('SeminarList'))
       })
       .catch(() => {
@@ -80,7 +88,7 @@ export function deleteSeminar (seminarId) {
       .remove()
       .then(() => {
         // after remove, we dispatch the actions so that the redux state can be updated.
-        dispatch({ type: 'DELETE_SEMINAR' })
+        dispatch({ type: 'DELETE_SEMINAR', payload: seminarId })
         dispatch(NavigationActions.navigate('SeminarList'))
       })
   }
@@ -96,7 +104,7 @@ export function addNewSeminar ({ abstract, date, startTime, endTime, label, spea
     const key = ref.getKey()
     ref.set({ id: key, abstract, startDate, endDate, label, speaker, venue, venueCapacity: capacity, ownerid: currentUser.uid, ownername: organiserName })
       .then(() => {
-        dispatch({ type: 'ADD_SEMINAR' })
+        dispatch({ type: 'ADD_SEMINAR', payload: {id: key, abstract, startDate, endDate, label, speaker, venue, venueCapacity: capacity, ownerid: currentUser.uid, ownername: organiserName} })
         dispatch(NavigationActions.navigate('SeminarList'))
       })
   }
