@@ -155,6 +155,30 @@ export function loadAttendees (seminarId) {
   }
 }
 
+export function deleteOldSeminars () {
+  return (dispatch) => {
+    const oldSeminarIdLists = []
+    firebase.database().ref('seminars').orderByChild('endDate').endAt(moment().valueOf()).once('value')
+      .then((snapshot) => {
+        snapshot.forEach((snap) => {
+          oldSeminarIdLists.push(snap.val().id)
+          firebase.database().ref(`attendeelist/${snap.val().id}`).once('value').then((snapshot) => {
+            snapshot.forEach((attendee) => {
+              firebase.database().ref(`attendees/${attendee.val().id}`).remove()
+                .then(() => console.log('success'))
+                .catch(() => console.log('failed'))
+            })
+          })
+          firebase.database().ref(`attendeelist/${snap.val().id}`).remove()
+            .then(() => console.log('deleted attendeelists!'))
+          firebase.database().ref(`seminars/${snap.val().id}`).remove()
+            .then(() => console.log('deleted seminars!'))
+        })
+      })
+      .then(() => {
+      })
+  }
+}
 // export function sortSeminarByDate () {
 //   return (dispatch) => {
 //     const sorted = []

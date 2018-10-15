@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { StyleSheet, View, Text, FlatList, ScrollView } from 'react-native'
-import { loadAllSeminars } from '../Action/SeminarAction'
+import { loadAllSeminars, deleteOldSeminars } from '../Action/SeminarAction'
 import { checkAuthenticated } from '../Action/UserAction'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -15,6 +15,7 @@ class AuthLoadingScreen extends Component {
   componentDidMount () {
     this.props.checkAuthenticated()
     this.props.loadAllSeminars()
+    this.props.deleteOldSeminars()
   }
 
   render () {
@@ -27,4 +28,4 @@ class AuthLoadingScreen extends Component {
   }
 }
 
-export default connect(null, { checkAuthenticated, loadAllSeminars })(AuthLoadingScreen)
+export default connect(null, { checkAuthenticated, loadAllSeminars, deleteOldSeminars })(AuthLoadingScreen)
