@@ -7,6 +7,7 @@ import AccentButton from '../../Components/RoundedButton'
 import TextField from '../../Components/TextField'
 import CustomDropdown from '../../Components/Dropdown'
 import * as types from '../../Types/userType'
+import MessageText from '../../Components/MessageText'
 
 /**
  * TODO: Redundant class, similar to AddSeminar, try checking guys and see what you guys can do about it.
@@ -23,6 +24,7 @@ class EditUser extends Component {
   onUpdatePressed () {
     const { email, id } = this.props.selectedUser
     const { name, role } = this.state
+    console.log(name)
     // The actions.
     this.props.saveUser({ id, name, email, role })
   }
@@ -42,6 +44,7 @@ class EditUser extends Component {
             data={[{ value: types.ORGANISER }]}
           />
         </View>
+        <MessageText>{this.props.error}</MessageText>
         <AccentButton
           text={'Update'}
           onPress={this.onUpdatePressed.bind(this)}
@@ -60,7 +63,8 @@ const styles = StyleSheet.create({
 // the redux function.
 const mapStateToProps = (state) => {
   return {
-    selectedUser: state.user.selectedUser
+    selectedUser: state.user.selectedUser,
+    error: state.user.error
   }
 }
 

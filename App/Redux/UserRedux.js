@@ -130,13 +130,15 @@ export default (state = initialState, action) => {
         // ES6 Syntax, merging the state with the rest.
         ...state,
         // the payload refer to the actions, the selectedid in SELECTED_USER action.
-        selectedUser: action.payload
+        selectedUser: action.payload,
+        error: ''
       }
 
     case types.REGISTER_CHECK_DATABASE_START:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        error: ''
       }
 
     case types.REGISTER_CHECK_DATABASE_FAILED:
@@ -152,6 +154,20 @@ export default (state = initialState, action) => {
         error: '',
         isLoading: false
       }
+
+    case 'ADD_USER_START': {
+      return {
+        ...state,
+        error: ''
+      }
+    }
+
+    case types.FORM_USER_FAILED:
+      return {
+        ...state,
+        error: action.message
+      }
+
     default:
       return state
   }

@@ -6,7 +6,8 @@ import {
   sortSeminarByDate,
   sortSeminarByVenue,
   getSeminarBySpeaker,
-  getSeminarByOrganiserName
+  getSeminarByOrganiserName,
+  startAddSeminar
 } from '../../Action/SeminarAction'
 import styles from '../Styles/ContainerStyle'
 import SeminarItem from './SeminarItem'
@@ -36,47 +37,47 @@ class SeminarList extends Component {
   }
 
   renderAddSeminarButton () {
-    const {user} = this.props
+    const { user } = this.props
     if (user != null) {
       if (user.role === types.ORGANISER) {
         return (
-          <RoundedButton text='Add Seminar' onPress={() => this.props.navigation.push('Abstract')} />
+          <RoundedButton text='Add Seminar' onPress={() => this.props.startAddSeminar()} />
         )
       }
     }
   }
 
   renderLoad () {
-    const {startDate, endDate} = this.state
+    const { startDate, endDate } = this.state
 
     let filterDialogContent = (
       <View>
         <Text text='Sort by:' />
-        <MyDatePicker date={startDate} onDateChange={(startDate) => this.setState({startDate})} />
-        <MyDatePicker date={endDate} onDateChange={(endDate) => this.setState({endDate})} />
+        <MyDatePicker date={startDate} onDateChange={(startDate) => this.setState({ startDate })} />
+        <MyDatePicker date={endDate} onDateChange={(endDate) => this.setState({ endDate })} />
         <RoundedButton text='Sort Seminar By Date' onPress={() => this.props.sortSeminarByDate(startDate, endDate)} />
         <SearchDropdown
           data={venueData}
           label='Venue List'
           value={this.state.venue}
           onItemSelect={(item) => {
-            this.setState({venue: item.name})
+            this.setState({ venue: item.name })
           }}
           onChangeText={
             (venue) => {
-              this.setState({venue})
+              this.setState({ venue })
             }
           }
         />
         <RoundedButton text='Sort Seminar By Venue' onPress={() => this.props.sortSeminarByVenue(this.state.venue)} />
         <TextField placeholder='Search By Speaker' value={this.state.speaker}
-                   onChangeText={(speaker) => this.setState({speaker})} />
+          onChangeText={(speaker) => this.setState({ speaker })} />
         <RoundedButton text='Get Seminar By Speaker'
-                       onPress={() => this.props.getSeminarBySpeaker(this.state.speaker)} />
+          onPress={() => this.props.getSeminarBySpeaker(this.state.speaker)} />
         <TextField placeholder='Search By Organiser Name' value={this.state.organiser}
-                   onChangeText={(organiser) => this.setState({organiser})} />
+          onChangeText={(organiser) => this.setState({ organiser })} />
         <RoundedButton text='Get Seminar By Organiser Name'
-                       onPress={() => this.props.getSeminarByOrganiserName(this.state.organiser)} />
+          onPress={() => this.props.getSeminarByOrganiserName(this.state.organiser)} />
       </View>
     )
 
@@ -96,7 +97,7 @@ class SeminarList extends Component {
         {/* Modal diaglog for setting filters */}
         <ModalDialog
           // onPressPositive={() => this.attendSeminar()}
-          onPressNegative={() => this.setState({showFilterModal: false})} children={filterDialogContent}
+          onPressNegative={() => this.setState({ showFilterModal: false })} children={filterDialogContent}
           title='Filters' isVisible={this.state.showFilterModal} />
         <Text />
         <Text />
@@ -105,7 +106,7 @@ class SeminarList extends Component {
             <FlatList
               data={this.props.seminarsList}
               renderItem={
-                ({item}) =>
+                ({ item }) =>
                   <SeminarItem seminar={item} />
               }
               keyExtractor={(item, index) => index.toString()}
@@ -147,5 +148,6 @@ export default connect(mapStateToProps, {
   sortSeminarByDate,
   sortSeminarByVenue,
   getSeminarBySpeaker,
-  getSeminarByOrganiserName
+  getSeminarByOrganiserName,
+  startAddSeminar
 })(SeminarList)

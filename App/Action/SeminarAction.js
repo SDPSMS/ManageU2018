@@ -57,8 +57,9 @@ export function unselectSeminar () {
 
 export function editSeminar (seminar) {
   return (dispatch) => {
+    console.log(seminar)
     dispatch({ type: 'EDIT_SEMINAR', payload: seminar })
-    dispatch(NavigationActions.push('EditSeminar'))
+    dispatch(NavigationActions.push('AbstractEdit'))
   }
 }
 
@@ -72,7 +73,7 @@ export function saveSeminar ({ abstract, date, startTime, endTime, label, speake
       .update({ abstract, startDate, endDate, label, speaker, venue, venueCapacity })
       .then(() => {
         // SAVE SEMINAR IN THE DATABASE
-        dispatch({ type: 'SAVE_SEMINAR', payload: {id, abstract, startDate, endDate, label, speaker, venue, venueCapacity} })
+        dispatch({ type: 'SAVE_SEMINAR', payload: { id, abstract, startDate, endDate, label, speaker, venue, venueCapacity } })
         dispatch(NavigationActions.navigate('SeminarList'))
       })
       .catch(() => {
@@ -94,7 +95,14 @@ export function deleteSeminar (seminarId) {
   }
 }
 
-export function addNewSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, capacity, organiserName }) {
+export function startAddSeminar () {
+  return (dispatch) => {
+    dispatch({type: types.START_ADD_SEMINAR})
+    dispatch(NavigationActions.push('Abstract'))
+  }
+}
+
+export function addNewSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName }) {
   const { currentUser } = firebase.auth()
   const startDate = ConvertToTimestamp(date, startTime)
   const endDate = ConvertToTimestamp(date, endTime)
@@ -102,9 +110,9 @@ export function addNewSeminar ({ abstract, date, startTime, endTime, label, spea
     // setting the current user uid (who created the seminar) as a foreign key in the seminars entity.
     const ref = firebase.database().ref('seminars').push()
     const key = ref.getKey()
-    ref.set({ id: key, abstract, startDate, endDate, label, speaker, venue, venueCapacity: capacity, ownerid: currentUser.uid, ownername: organiserName })
+    ref.set({ id: key, abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownerid: currentUser.uid, ownername: organiserName })
       .then(() => {
-        dispatch({ type: 'ADD_SEMINAR', payload: {id: key, abstract, startDate, endDate, label, speaker, venue, venueCapacity: capacity, ownerid: currentUser.uid, ownername: organiserName} })
+        dispatch({ type: 'ADD_SEMINAR', payload: { id: key, abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownerid: currentUser.uid, ownername: organiserName } })
         dispatch(NavigationActions.navigate('SeminarList'))
       })
   }

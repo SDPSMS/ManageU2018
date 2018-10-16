@@ -7,8 +7,9 @@ import * as actions from '../../../Action/SeminarAction'
 import MyDatePicker from '../../../Components/DatePicker'
 import MyTimePicker from '../../../Components/TimePicker'
 import styles from '../../Styles/ContainerStyle'
+import ConvertTimestampToDate from '../../../Transforms/ConvertTimestampToDate'
 
-class DateTime extends Component {
+class DateTimeEdit extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -16,10 +17,12 @@ class DateTime extends Component {
     }
   }
 
-  onAddPressed () {
-    const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName } = this.props
+  onUpdatePressed () {
+    const { abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity } = this.props
     // The actions.
-    this.props.addNewSeminar({ abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName })
+
+    this.props.sendUpdateEmailNotif(id)
+    this.props.saveSeminar({ abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity })
   }
 
   render () {
@@ -27,8 +30,9 @@ class DateTime extends Component {
 
     return (
       <View style={{ marginLeft: 20, marginRight: 20 }}>
-        <Text style={styles.sectionText}>Choose Your Seminar Time</Text>
+        <Text style={styles.sectionText}>Change Seminar Time</Text>
         <MyDatePicker date={date} onDateChange={(value) => this.props.formUpdate({ prop: 'date', value })} />
+
         <MyTimePicker time={startTime} placeholder='Start Time'
           onDateChange={(value) => {
             this.props.formUpdate({ prop: 'startTime', value })
@@ -37,8 +41,8 @@ class DateTime extends Component {
         <MyTimePicker disabled={this.state.disabled} minDate={startTime} time={endTime} placeholder='End Time'
           onDateChange={(value) => this.props.formUpdate({ prop: 'endTime', value })} />
         <RoundedButton
-          text={'Add'}
-          onPress={this.onAddPressed.bind(this)}
+          text={'Confirm Change'}
+          onPress={this.onUpdatePressed.bind(this)}
         />
       </View>
     )
@@ -47,9 +51,10 @@ class DateTime extends Component {
 
 const mapStateToProps = (state) => {
   const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity } = state.seminar
+  const { id } = state.seminar.seminarSelected
   return {
-    abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName: state.user.user.name
+    abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, id, organiserName: state.user.user.name
   }
 }
 
-export default connect(mapStateToProps, actions)(DateTime)
+export default connect(mapStateToProps, actions)(DateTimeEdit)

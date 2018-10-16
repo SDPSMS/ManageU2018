@@ -189,13 +189,18 @@ export function loadAllUser () {
 
 export function addNewUser (email, name, role) {
   return (dispatch) => {
-    const usersRef = firebase.database().ref('users').push()
-    firebase.database().ref(`users/${usersRef.getKey()}`).set({ id: usersRef.getKey(), email, name, role })
-      .then(() => {
-        dispatch({ type: 'ADD_NEW_USER', payload: { email, name, role } })
-      }).then(() => {
-        dispatch(NavigationActions.navigate('UsersList'))
-      }).catch(() => console.log('Failed!'))
+    dispatch({ type: 'ADD_USER_START' })
+    if (email === '' || name === '' || role === '') {
+      dispatch({ type: types.FORM_USER_FAILED, message: 'Please do not leave any empty fields' })
+    } else {
+      const usersRef = firebase.database().ref('users').push()
+      firebase.database().ref(`users/${usersRef.getKey()}`).set({ id: usersRef.getKey(), email, name, role })
+        .then(() => {
+          dispatch({ type: 'ADD_NEW_USER', payload: { email, name, role } })
+        }).then(() => {
+          dispatch(NavigationActions.navigate('UsersList'))
+        }).catch(() => console.log('Failed!'))
+    }
   }
 }
 
@@ -208,15 +213,19 @@ export function selectUser (userId) {
 
 export function saveUser ({ id, name, email, role }) {
   return (dispatch) => {
-    firebase.database().ref(`users/${id}`)
-      .set({ id, name, email, role })
-      .then(() => {
-        // SAVE USER IN THE DATABASE
-        dispatch({ type: 'SAVE_USER', payload: { name, role } })
-        // Navigate because we want to retrieve data directly again.
-        // TODO: Instead of navigate, maybe we can update the state instead?
-        dispatch(NavigationActions.navigate('UsersList'))
-      })
+    if (name !== '') {
+      firebase.database().ref(`users/${id}`)
+        .set({ id, name, email, role })
+        .then(() => {
+          // SAVE USER IN THE DATABASE
+          dispatch({ type: 'SAVE_USER', payload: { name, role } })
+          // Navigate because we want to retrieve data directly again.
+          // TODO: Instead of navigate, maybe we can update the state instead?
+          dispatch(NavigationActions.navigate('UsersList'))
+        })
+    } else {
+      dispatch({ type: types.FORM_USER_FAILED, message: 'Please do not leave any empty fields' })
+    }
   }
 }
 
