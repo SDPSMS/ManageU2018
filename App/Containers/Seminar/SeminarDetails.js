@@ -17,6 +17,9 @@ import Details from '../../Components/Details'
 import CustomDropdown from '../../Components/Dropdown'
 
 class SeminarDetails extends Component {
+  componentWillMount () {
+    this.props.loadAttendees(this.props.seminar.id)
+  }
   constructor (props) {
     super(props)
     this.state = {
@@ -72,14 +75,19 @@ class SeminarDetails extends Component {
 
   // TODO: The Display attendees button should not have that function when clicked (should only move the screen).
   renderDetails () {
+    const { attendeeLists } = this.props
     const { endDate, startDate } = this.props.seminar
     const date = ConvertToDate(endDate, 'LL')
     const endTime = ConvertToDate(endDate, 'LT')
     const startTime = ConvertToDate(startDate, 'LT')
     const dropDownMenu = [
-      { value: 'going' },
-      { value: 'interested' }
+      { value: 'Going' },
+      { value: 'Interested' }
     ]
+    let length
+    if (attendeeLists != null) {
+      length = attendeeLists.length
+    }
 
     let dialogContent = (
       <View>
@@ -98,6 +106,7 @@ class SeminarDetails extends Component {
         <MessageText>{this.props.message}</MessageText>
       </View>
     )
+    console.log(this.props.attendeeLists)
 
     return (
       <View style={styles.container}>
@@ -133,6 +142,8 @@ class SeminarDetails extends Component {
         <Text>{this.props.seminar.abstract}</Text>
         <Text>Organiser Name</Text>
         <Text>{this.props.seminar.ownername}</Text>
+        <Text>Number of Attendees: {length} </Text>
+
         <View>
           {this.showJoinButton()}
           <Button title='Display Attendees' onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
@@ -164,9 +175,9 @@ const
     return {
       seminar: state.seminar.seminarSelected,
       user: state.user.user,
-      myseminar: state.user.myseminar,
       message: state.attendee.message,
-      isLoading: state.attendee.isLoading
+      isLoading: state.attendee.isLoading,
+      attendeeLists: state.attendee.seminarAttendees
     }
   }
 

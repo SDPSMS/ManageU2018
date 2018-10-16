@@ -41,7 +41,7 @@ class DateTimeEdit extends Component {
         <MyTimePicker disabled={this.state.disabled} minDate={startTime} time={endTime} placeholder='End Time'
           onDateChange={(value) => this.props.formUpdate({ prop: 'endTime', value })} />
         <RoundedButton
-          text={'Add'}
+          text={'Confirm Change'}
           onPress={this.onUpdatePressed.bind(this)}
         />
       </View>
