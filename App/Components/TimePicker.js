@@ -10,7 +10,7 @@ export default class MyTimePicker extends Component {
 
   render () {
     const { placeholder, time, format, onDateChange, minDate, disabled } = this.props
-    const minTime = moment().format(format)
+    const minTime = moment().valueOf()
     return (
       <DatePicker
         style={{ width: 200 }}

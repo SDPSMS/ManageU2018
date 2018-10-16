@@ -7,7 +7,6 @@ import DrawerButton from '../Components/DrawerButton'
 import AuthLoadingScreen from '../Containers/AuthLoadingScreen'
 import SeminarItem from '../Containers/Seminar/SeminarItem'
 import SeminarDetails from '../Containers/Seminar/SeminarDetails'
-import EditSeminar from '../Containers/Seminar/UpdateAndAddSeminarStack/EditSeminar'
 import Register from '../Containers/Register'
 import Help from '../Containers/Help'
 import OrganiserHome from './OrganiserNavigation'
@@ -45,9 +44,6 @@ const SeminarStack = StackNavigator(
     },
     SeminarDetails: {
       screen: SeminarDetails
-    },
-    EditSeminar: {
-      screen: EditSeminar
     },
     SeminarAttendeesView: {
       screen: AttendeeList
