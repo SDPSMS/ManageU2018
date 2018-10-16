@@ -3,7 +3,6 @@ import SeminarList from '../Containers/Seminar/SeminarList'
 
 import SeminarItem from '../Containers/Seminar/SeminarItem'
 import SeminarDetails from '../Containers/Seminar/SeminarDetails'
-import EditSeminar from '../Containers/Seminar/UpdateAndAddSeminarStack/EditSeminar'
 import Print from '../Containers/Print'
 
 import { MySeminarComponent } from '../Containers/'
@@ -15,24 +14,8 @@ import AttendeeList from '../Containers/Attendees/AttendeeList'
 import Logout from '../Containers/Logout'
 import Help from '../Containers/Help'
 import DrawerButton from '../Components/DrawerButton'
-
-const AddSeminarStack = StackNavigator(
-  {
-    Abstract: {
-      screen: Abstract
-    },
-    DateTime: {
-      screen: DateTime
-    }
-  },
-  {
-    initialRouteName: 'Abstract',
-    headerMode: 'none',
-    navigationOptions: {
-      headerVisible: false
-    }
-  }
-)
+import AbstractEdit from '../Containers/Seminar/UpdateAndAddSeminarStack/AbstractEdit'
+import DateTimeEdit from '../Containers/Seminar/UpdateAndAddSeminarStack/DateTimeEdit'
 
 const SeminarStack = StackNavigator(
   {
@@ -48,8 +31,11 @@ const SeminarStack = StackNavigator(
     SeminarDetails: {
       screen: SeminarDetails
     },
-    EditSeminar: {
-      screen: EditSeminar
+    AbstractEdit: {
+      screen: AbstractEdit
+    },
+    DateTimeEdit: {
+      screen: DateTimeEdit
     },
     Abstract: {
       screen: Abstract
@@ -80,9 +66,6 @@ const MySeminarStack = StackNavigator(
     },
     SeminarDetails: {
       screen: SeminarDetails
-    },
-    EditSeminar: {
-      screen: EditSeminar
     },
     Print: {
       screen: Print

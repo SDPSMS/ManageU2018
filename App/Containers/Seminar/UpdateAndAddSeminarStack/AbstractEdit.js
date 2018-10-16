@@ -9,14 +9,14 @@ import SearchDropdown from '../../../Components/SearchableDropdown'
 import BackButton from '../../../Components/BackButton'
 import styles from '../../Styles/ContainerStyle'
 
-class Abstract extends Component {
+class AbstractEdit extends Component {
   render () {
     const { abstract, label, speaker, venue } = this.props
 
     return (
       <View style={{ marginLeft: 20, marginRight: 20 }}>
         <BackButton onPress={() => this.props.navigation.pop()} />
-        <Text style={styles.sectionText}>Add new Seminar</Text>
+        <Text style={styles.sectionText}>Edit Your Seminar</Text>
         <TextField
           placeholder={'Label'}
           value={label}
@@ -49,7 +49,7 @@ class Abstract extends Component {
         />
         <RoundedButton
           text={'Continue'}
-          onPress={() => this.props.navigation.push('DateTime')}
+          onPress={() => this.props.navigation.push('DateTimeEdit')}
         />
       </View>
     )
@@ -57,10 +57,10 @@ class Abstract extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { abstract, date, time, duration, label, speaker, venue, venueCapacity } = state.seminar
+  const { abstract, date, time, duration, label, speaker, venue, capacity } = state.seminar
   return {
-    abstract, date, time, duration, label, speaker, venue, venueCapacity
+    abstract, date, time, duration, label, speaker, venue, capacity
   }
 }
 
-export default connect(mapStateToProps, { formUpdate })(Abstract)
+export default connect(mapStateToProps, { formUpdate })(AbstractEdit)

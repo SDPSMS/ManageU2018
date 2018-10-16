@@ -13,7 +13,7 @@ export default class MyDatePicker extends Component {
 
   render () {
     const { date, onDateChange, format } = this.props
-    const minimumDate = moment().format(format)
+    const minimumDate = moment().valueOf()
 
     return (
       <DatePicker

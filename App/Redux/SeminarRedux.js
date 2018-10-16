@@ -1,4 +1,5 @@
 import * as types from '../Types/actionType'
+import ConvertTimestampToDate from '../Transforms/ConvertTimestampToDate'
 
 const initialState = {
   seminars: [],
@@ -43,6 +44,20 @@ export default (state = initialState, action) => {
         ...state
       }
 
+    case types.START_ADD_SEMINAR:
+      return {
+        ...state,
+        message: '',
+        abstract: '',
+        date: '',
+        endTime: '',
+        startTime: '',
+        label: '',
+        speaker: '',
+        venue: '',
+        venueCapacity: ''
+      }
+
     case 'ADD_SEMINAR':
       return {
         ...state,
@@ -75,9 +90,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         abstract: action.payload.abstract,
-        date: action.payload.date,
-        endTime: action.payload.endTime,
-        startTime: action.payload.startTime,
+        startTime: ConvertTimestampToDate(action.payload.startDate, 'HH:mm'),
+        endTime: ConvertTimestampToDate(action.payload.endDate, 'HH:mm'),
+        date: ConvertTimestampToDate(action.payload.startDate, 'YYYY-MM-DD'),
         label: action.payload.label,
         speaker: action.payload.speaker,
         venue: action.payload.venue,
