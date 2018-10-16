@@ -110,18 +110,18 @@ class SeminarDetails extends Component {
         <Text style={styles.titleText}>{this.props.seminar.label}</Text>
 
         {/* Seminar details */}
-        <Details placeholder='Speaker' detail={this.props.seminar.speaker} />
-
-        {/* TODO: Insert dividers between different sections.
-          Look to use a table view or equivalent for seminar
-          details */}
-
+        <Details placeholder='Speaker:' detail={this.props.seminar.speaker} />
         {/* Seminar date */}
-        <Text>Date</Text>
-        <Text>{date}</Text>
+        <Details placeholder='Date:' detail={date} />
+
         {/* Seminar time */}
         <Text>Time</Text>
         <Text>{startTime} - {endTime}</Text>
+        
+        {/* TODO: Insert dividers between different sections.
+          Look to use a table view or equivalent for seminar
+          details */}
+        
 
         <Text>Venue</Text>
         <Text>{this.props.seminar.venue}</Text>
