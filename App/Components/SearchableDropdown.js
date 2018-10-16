@@ -17,7 +17,6 @@ export default class SearchDropdown extends Component {
         itemsContainerStyle={styles.itemsContainerStyle}
         placeholder={label}
         items={data}
-        defaultIndex={1}
         value={value}
         resetValue={false}
         underlineColorAndroid='transparent'

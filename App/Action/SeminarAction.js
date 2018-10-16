@@ -64,16 +64,16 @@ export function editSeminar (seminar) {
 }
 
 // TODO: Instead of using this, wrap everything in one object called details
-export function saveSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity }) {
+export function saveSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity, ownername }) {
   const { currentUser } = firebase.auth()
   const startDate = ConvertToTimestamp(date, startTime)
   const endDate = ConvertToTimestamp(date, endTime)
   return (dispatch) => {
     firebase.database().ref(`seminars/${id}`)
-      .update({ abstract, startDate, endDate, label, speaker, venue, venueCapacity })
+      .update({ abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownername })
       .then(() => {
         // SAVE SEMINAR IN THE DATABASE
-        dispatch({ type: 'SAVE_SEMINAR', payload: { id, abstract, startDate, endDate, label, speaker, venue, venueCapacity } })
+        dispatch({ type: 'SAVE_SEMINAR', payload: { id, abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownername } })
         dispatch(NavigationActions.navigate('SeminarList'))
       })
       .catch(() => {
@@ -257,30 +257,16 @@ export function getSeminarBySpeaker (speaker) {
 // There should only be one organiser for a seminar, therefore, an organiser name should be unique?
 export function getSeminarByOrganiserName (organiserName) {
   return (dispatch) => {
-    firebase.database().ref('users').orderByChild('name').equalTo(organiserName).once('value').then((snapshot) => {
-      let id = 0
-      const data = snapshot.val() || null
-      if (data) {
-        id = Object.keys(data)[0]
+    firebase.database().ref('seminars').orderByChild('ownername').equalTo(organiserName).on('value', (snapshot) => {
+      if (snapshot.val() != null) {
+        dispatch({ type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val() })
+      } else {
+        dispatch({
+          type: types.SORT_SEMINAR_ERROR,
+          message: `No seminars with Organiser name ${organiserName} found.`
+        })
       }
-      return id
     })
-      .then((id) => {
-        if (id !== 0) {
-          firebase.database().ref('seminars').orderByChild('ownerid').equalTo(id).on('value', (snapshot) => {
-            if (snapshot.val() != null) {
-              dispatch({ type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val() })
-            } else {
-              dispatch({
-                type: types.SORT_SEMINAR_ERROR,
-                message: `${organiserName} exists but does not have any seminar`
-              })
-            }
-          })
-        } else {
-          dispatch({ type: types.SORT_SEMINAR_ERROR, message: `No seminars with Organiser name ${organiserName} found.` })
-        }
-      })
   }
 }
 

@@ -262,5 +262,9 @@ export default [
   {
     name: 'CB11.04.CR13',
     capacity: 50
+  },
+  {
+    name: 'CB07.02.025',
+    capacity: 100
   }
 ]

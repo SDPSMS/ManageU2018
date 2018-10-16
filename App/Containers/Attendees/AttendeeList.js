@@ -13,7 +13,7 @@ import ModalDialog from '../../Components/ModalDialog'
 import TextField from '../../Components/TextField'
 import MessageText from '../../Components/MessageText'
 import { loadAttendees } from '../../Action/SeminarAction'
-import { deleteAttendee, editAttendee } from '../../Action/AttendeeAction'
+import { deleteAttendee, editAttendee, editAttendeeStart, deleteAttendeeStart, closeModal } from '../../Action/AttendeeAction'
 import RNHTMLtoPDF from 'react-native-html-to-pdf'
 import CustomDropdown from '../../Components/Dropdown'
 
@@ -39,19 +39,19 @@ class AttendeeList extends Component {
   }
 
   editAttendees () {
-    const {name, status, selectedUser} = this.state
+    const {name, email, status, selectedUser} = this.state
     const {editAttendee} = this.props
+    console.log(this.state.role)
     this.state.name === '' ? this.setState({name: selectedUser.name}) : console.log('resetting value because empty')
+    this.state.email === '' ? this.setState({email: selectedUser.email}) : console.log('resetting value because empty')
     this.state.role === '' ? this.setState({role: selectedUser.role}) : console.log('resetting value because empty')
 
-    editAttendee(selectedUser.id, name, status, selectedUser.email)
-    this.setState({showModal: false})
+    editAttendee(selectedUser.id, name, status, email)
   }
 
   deleteAttendees (attendeeId) {
     const {deleteAttendee, seminarId} = this.props
     deleteAttendee(seminarId, attendeeId)
-    this.setState({showModal: false})
   }
 
   // createPDF () {
@@ -108,10 +108,16 @@ class AttendeeList extends Component {
               value={selectedUser.name}
               onChangeText={(name) => this.setState({name})}
             />
+            <TextField
+              placeholder={'name'}
+              value={selectedUser.email}
+              onChangeText={(email) => this.setState({email})}
+            />
             <CustomDropdown data={this.state.dropDownMenu}
                             label={'Status'}
                             value={selectedUser.status}
                             onChangeText={(status) => this.setState({status})} />
+            <MessageText>{this.props.error}</MessageText>
           </View>
         )
         break
@@ -131,8 +137,9 @@ class AttendeeList extends Component {
         confirmText='Confirm'
         negativeText='Cancel'
         onPressPositive={onPressPositive}
-        onPressNegative={() => this.setState({showModal: false})} children={dialogContent}
-        title={title} isVisible={this.state.showModal} />
+        showLoading={this.props.isLoading}
+        onPressNegative={() => this.props.closeModal()} children={dialogContent}
+        title={title} isVisible={this.props.showModal} />
     )
   }
 
@@ -159,11 +166,18 @@ class AttendeeList extends Component {
                 <View style={{flex: 1, marginRight: 10}}>
                   <View style={{marginBottom: 10}}>
                     <Button title='Edit'
-                            onPress={() => this.setState({showModal: true, selectedUser: item, mode: 'edit'})} />
+                            onPress={() => {
+                              this.setState({showModal: true, selectedUser: item, mode: 'edit'})
+                              this.props.editAttendeeStart()
+                            }} />
                   </View>
                   <View style={{marginBottom: 10}}>
                     <Button title='Delete' color={Colors.fire}
-                            onPress={() => this.setState({showModal: true, id: item.id, mode: 'delete'})} />
+                            onPress={() => {
+                              this.setState({showModal: true, id: item.id, mode: 'delete'})
+                              this.props.deleteAttendeeStart()
+                            }}
+                    />
                   </View>
                 </View>
               </View>
@@ -188,8 +202,9 @@ function mapStateToProps (state) {
     seminarId: state.seminar.seminarSelected.id,
     user: state.user.user,
     showModal: state.attendee.showModal,
-    message: state.attendee.message
+    error: state.attendee.error,
+    isLoading: state.attendee.isLoading
   }
 }
 
-export default connect(mapStateToProps, {deleteAttendee, loadAttendees, editAttendee})(AttendeeList)
+export default connect(mapStateToProps, {deleteAttendee, loadAttendees, editAttendee, editAttendeeStart, deleteAttendeeStart, closeModal})(AttendeeList)
