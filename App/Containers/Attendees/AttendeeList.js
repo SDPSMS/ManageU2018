@@ -13,9 +13,16 @@ import ModalDialog from '../../Components/ModalDialog'
 import TextField from '../../Components/TextField'
 import MessageText from '../../Components/MessageText'
 import { loadAttendees } from '../../Action/SeminarAction'
-import { deleteAttendee, editAttendee, editAttendeeStart, deleteAttendeeStart, closeModal } from '../../Action/AttendeeAction'
+import {
+  deleteAttendee,
+  editAttendee,
+  editAttendeeStart,
+  deleteAttendeeStart,
+  closeModal
+} from '../../Action/AttendeeAction'
 import RNHTMLtoPDF from 'react-native-html-to-pdf'
 import CustomDropdown from '../../Components/Dropdown'
+import Share from 'react-native-share'
 
 class AttendeeList extends Component {
   componentDidMount () {
@@ -54,16 +61,23 @@ class AttendeeList extends Component {
     deleteAttendee(seminarId, attendeeId)
   }
 
-  // createPDF () {
-  //   const {attendeeLists} = this.props
-  //   console.log(attendeeLists)
-  // }
-
   async createPDF () {
     const {attendeeLists} = this.props
     let text = ''
     attendeeLists.forEach((attendee) => {
-      text += `<div style="width:46%; height:15%; float:left; border: 1px solid black; border-radius: 25px; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
+      text += `<div style="width:46%; height:12.5%; float:left; border: 1px solid black; border-radius: 25px; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
+    })
+
+    attendeeLists.forEach((attendee) => {
+      text += `<div style="width:46%; height:12.5%; float:left; border: 1px solid black; border-radius: 25px; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
+    })
+
+    attendeeLists.forEach((attendee) => {
+      text += `<div style="width:46%; height:12.5%; float:left; border: 1px solid black; border-radius: 25px; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
+    })
+
+    attendeeLists.forEach((attendee) => {
+      text += `<div style="width:46%; height:12.5%; float:left; border: 1px solid black; border-radius: 25px; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
     })
 
     const html = `
@@ -80,8 +94,14 @@ class AttendeeList extends Component {
       directory: 'docs'
     }
 
-    let file = await RNHTMLtoPDF.convert(options)
-    console.log(file.filePath)
+    await RNHTMLtoPDF.convert(options).then(filePath => {
+      Share.open({
+        title: 'Share this!',
+        message: 'I just wanted to show you this:',
+        url: filePath.filePath,
+        subject: 'I am only visible for emails :('
+      })
+    })
   }
 
   renderPrintButton () {
@@ -207,4 +227,11 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, {deleteAttendee, loadAttendees, editAttendee, editAttendeeStart, deleteAttendeeStart, closeModal})(AttendeeList)
+export default connect(mapStateToProps, {
+  deleteAttendee,
+  loadAttendees,
+  editAttendee,
+  editAttendeeStart,
+  deleteAttendeeStart,
+  closeModal
+})(AttendeeList)
