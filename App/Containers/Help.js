@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { Text, View, ScrollView } from 'react-native'
 import styles from './Styles/ContainerStyle'
+import RoundedButton from '../Components/RoundedButton';
 
 export default class Help extends Component {
   render () {
     return (
       <View style={styles.container}>
+        <RoundedButton text='Online Help'/>
         <ScrollView>
-          <Text style={styles.sectionText}>Need A Help?</Text>
+          <Text style={styles.sectionText}>Need help?</Text>
           <Text style={styles.titleText}>Getting Started</Text>
           <Text>
           Use the navigation menu on the top left corner of the screen to access the various menus of ManageU.

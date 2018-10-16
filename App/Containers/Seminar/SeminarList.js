@@ -88,10 +88,11 @@ class SeminarList extends Component {
     return (
       <View style={[styles.container, style]}>
         {/* Filter area, it does not scroll */}
-        <Text style={styles.seminarText}>Seminars List</Text>
-        <TextField placeholder='  SEARCH HERE!' value={this.state.search}
-          onChangeText={(email) => this.setState({ email })} />
-        <RoundedButton text='Filter' onPress={() => this.setState({ showFilterModal: true })} />
+        <View>
+          <TextField placeholder='  SEARCH HERE!' value={this.state.search}
+                   onChangeText={(email) => this.setState({email})} />
+          <RoundedButton text='Filter' onPress={() => this.setState({showFilterModal: true})} />
+        </View>
 
         {/* Modal diaglog for setting filters */}
         <ModalDialog
