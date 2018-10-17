@@ -5,14 +5,13 @@ export default StyleSheet.create({
   ...ApplicationStyles.screen,
   container: {
     padding: Metrics.baseMargin,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.background
   },
-  containerHelp:{
-      padding: Metrics.baseMargin,
-      backgroundColor: Colors.background,
-      marginBottom: 50
-    },
-  
+  containerHelp: {
+    padding: Metrics.baseMargin,
+    backgroundColor: Colors.background,
+    marginBottom: 50
+  },
 
   logo: {
     marginTop: Metrics.doubleSection,
@@ -47,12 +46,12 @@ export default StyleSheet.create({
     color: Colors.primaryTextColour,
     fontWeight: 'bold',
     fontSize: 22,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
     marginBottom: 3
   },
-  
+
   explainText: {
     color: '#555660',
     fontSize: 15
@@ -68,7 +67,7 @@ export default StyleSheet.create({
     paddingBottom: 25,
     fontSize: 45
   },
-  
+
   loginText: {
     color: Colors.primaryTextColour,
     padding: Metrics.baseMargin,
@@ -104,7 +103,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center'
   },
-  
+
   semDetailsText: {
     color: Colors.primaryTextColour,
     fontWeight: 'bold',

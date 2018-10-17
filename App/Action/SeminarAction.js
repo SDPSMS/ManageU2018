@@ -64,18 +64,18 @@ export function editSeminar (seminar) {
 }
 
 // TODO: Instead of using this, wrap everything in one object called details
-export function saveSeminar ({abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity, ownername}) {
-  const {currentUser} = firebase.auth()
+export function saveSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity, ownername }) {
+  const { currentUser } = firebase.auth()
   const startDate = ConvertToTimestamp(date, startTime)
   const endDate = ConvertToTimestamp(date, endTime)
   return (dispatch) => {
     firebase.database().ref(`seminars/${id}`)
-      .update({abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownername})
+      .update({ abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownername })
       .then(() => {
         // SAVE SEMINAR IN THE DATABASE
         dispatch({
           type: 'SAVE_SEMINAR',
-          payload: {id, abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownername}
+          payload: { id, abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownername }
         })
         dispatch(NavigationActions.navigate('SeminarList'))
       })
@@ -100,7 +100,7 @@ export function deleteSeminar (seminarId) {
 
 export function startAddSeminar () {
   return (dispatch) => {
-    dispatch({type: types.START_ADD_SEMINAR})
+    dispatch({ type: types.START_ADD_SEMINAR })
     dispatch(NavigationActions.push('Abstract'))
   }
 }
@@ -194,7 +194,7 @@ export function loadAttendees (seminarId) {
                 if (a.length === 0) {
                   dispatch(loadAttendeeEmpty(a))
                 } else {
-                  dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: a})
+                  dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: a })
                   dispatch(loadAttendeeFinish())
                 }
               })
@@ -348,7 +348,7 @@ export function getSeminarByOrganiserName (organiserName) {
   return (dispatch) => {
     firebase.database().ref('seminars').orderByChild('ownername').equalTo(organiserName).on('value', (snapshot) => {
       if (snapshot.val() != null) {
-        dispatch({type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val()})
+        dispatch({ type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val() })
       } else {
         dispatch({
           type: types.SORT_SEMINAR_ERROR,

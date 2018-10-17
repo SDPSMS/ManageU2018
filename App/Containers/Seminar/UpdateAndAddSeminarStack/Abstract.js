@@ -8,6 +8,7 @@ import RoundedButton from '../../../Components/RoundedButton'
 import SearchDropdown from '../../../Components/SearchableDropdown'
 import BackButton from '../../../Components/BackButton'
 import styles from '../../Styles/ContainerStyle'
+import TextFieldLarge from '../../../Components/TextFieldLarge'
 
 class Abstract extends Component {
   render () {
@@ -22,7 +23,7 @@ class Abstract extends Component {
           value={label}
           onChangeText={(value) => this.props.formUpdate({ prop: 'label', value })}
         />
-        <TextField
+        <TextFieldLarge
           placeholder={'Abstract'}
           value={abstract}
           onChangeText={(value) => this.props.formUpdate({ prop: 'abstract', value })}

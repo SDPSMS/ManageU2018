@@ -14,7 +14,7 @@ function attendSeminarError () {
 function attendSeminarSuccess (name, status, email, seminarid) {
   return {
     type: types.SEMINAR_ATTEND_SUCCESS,
-    payload: ({name, status, email, id: seminarid}),
+    payload: ({ name, status, email, id: seminarid }),
     message: 'Successfully registered, now you can close this registration!'
   }
 }
@@ -66,9 +66,9 @@ export function attendSeminar (name, email, status, seminarid) {
               // TODO: Dispatch error message.
               dispatch(attendSeminarError())
             } else {
-              const newAttendee = firebase.database().ref('attendees').push({name, status, email})
-              firebase.database().ref(`attendees/${newAttendee.getKey()}`).update({id: newAttendee.getKey()})
-              firebase.database().ref(`attendeelist/${seminarid}/${newAttendee.getKey()}`).set({id: newAttendee.getKey()})
+              const newAttendee = firebase.database().ref('attendees').push({ name, status, email })
+              firebase.database().ref(`attendees/${newAttendee.getKey()}`).update({ id: newAttendee.getKey() })
+              firebase.database().ref(`attendeelist/${seminarid}/${newAttendee.getKey()}`).set({ id: newAttendee.getKey() })
                 .then(() => dispatch(attendSeminarSuccess(name, status, email, seminarid)))
             }
           })
@@ -77,7 +77,7 @@ export function attendSeminar (name, email, status, seminarid) {
         dispatch(attendSeminarFailed())
       }
     })
-      .catch(() => { console.log('failed!') })
+      .catch(() => { console.log('Attend Seminar failed!') })
   }
   //   dispatch({type: types.SEMINAR_ATTEND_START})
   //   const useridlists = []
@@ -109,18 +109,17 @@ export function attendSeminar (name, email, status, seminarid) {
 }
 
 export function deleteAttendeeStart () {
-  return ({type: 'DELETE_ATTENDEE_START'})
+  return ({ type: 'DELETE_ATTENDEE_START' })
 }
 
 export function deleteAttendee (seminarId, attendeeId) {
   return (dispatch) => {
-    dispatch({type: 'ATTENDEE_LOADING'})
+    dispatch({ type: 'ATTENDEE_LOADING' })
     firebase.database().ref(`attendeelist/${seminarId}/${attendeeId}`).remove()
       .then(() => {
         firebase.database().ref(`attendees/${attendeeId}`).remove()
           .then(() => {
-            console.log(attendeeId)
-            dispatch({type: types.DELETE_ATTENDEE_SUCCESS, payload: attendeeId})
+            dispatch({ type: types.DELETE_ATTENDEE_SUCCESS, payload: attendeeId })
           })
       })
       .catch(() => {
@@ -129,26 +128,26 @@ export function deleteAttendee (seminarId, attendeeId) {
 }
 
 export function editAttendeeStart (attendeeId) {
-  return ({type: 'EDIT_ATTENDEE_START', payload: attendeeId})
+  return ({ type: 'EDIT_ATTENDEE_START', payload: attendeeId })
 }
 
 export function editAttendee (attendeeId, name, status, email) {
   return (dispatch) => {
-    dispatch({type: 'ATTENDEE_LOADING'})
+    dispatch({ type: 'ATTENDEE_LOADING' })
     checkStudentsDatabaseForRegister(email).then((response) => {
       if (response.ok) {
         firebase.database().ref(`attendees/${attendeeId}`)
-          .update({email, id: attendeeId, name, status})
+          .update({ email, id: attendeeId, name, status })
           .then(() => {
-            dispatch({type: 'EDIT_ATTENDEE_SUCCESS', payload: ({email, id: attendeeId, name, status})})
+            dispatch({ type: 'EDIT_ATTENDEE_SUCCESS', payload: ({ email, id: attendeeId, name, status }) })
           })
       } else {
-        dispatch({type: 'EDIT_ATTENDEE_FAIL', error: 'Can only change to valid UTS Student/Staff email!'})
+        dispatch({ type: 'EDIT_ATTENDEE_FAIL', error: 'Can only change to valid UTS Student/Staff email!' })
       }
     })
   }
 }
 
 export function closeModal () {
-  return ({type: 'CLOSE_MODAL'})
+  return ({ type: 'CLOSE_MODAL' })
 }

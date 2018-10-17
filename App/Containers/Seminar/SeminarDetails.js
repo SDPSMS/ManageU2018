@@ -20,6 +20,7 @@ class SeminarDetails extends Component {
   componentWillMount () {
     this.props.loadAttendees(this.props.seminar.id)
   }
+
   constructor (props) {
     super(props)
     this.state = {
@@ -77,7 +78,6 @@ class SeminarDetails extends Component {
 
   // TODO: The Display attendees button should not have that function when clicked (should only move the screen).
   renderDetails () {
-    const { attendeeLists } = this.props
     const { endDate, startDate } = this.props.seminar
     const date = ConvertToDate(endDate, 'LL')
     const endTime = ConvertToDate(endDate, 'LT')
@@ -86,10 +86,6 @@ class SeminarDetails extends Component {
       { value: 'Going' },
       { value: 'Interested' }
     ]
-    let length
-    if (attendeeLists != null) {
-      length = attendeeLists.length
-    }
 
     let dialogContent = (
       <View>
@@ -108,7 +104,6 @@ class SeminarDetails extends Component {
         <MessageText>{this.props.message}</MessageText>
       </View>
     )
-    console.log(this.props.attendeeLists)
 
     return (
       <View style={styles.container}>
@@ -117,31 +112,30 @@ class SeminarDetails extends Component {
         />
         {this.renderEditAndCancelButton()}
 
-       {/* Title of Seminar */}
-       <Text style={styles.semDetailsText} >{this.props.seminar.label}</Text>
-      <Text></Text>
-      {/* Seminar details */}
-      <Details placeholder='Speaker: ' style={styles.seminardetailsText} detail={this.props.seminar.speaker} />
+        {/* Title of Seminar */}
+        <Text style={styles.semDetailsText}>{this.props.seminar.label}</Text>
+        <Text />
+        {/* Seminar details */}
+        <Details placeholder='Speaker: ' style={styles.seminardetailsText} detail={this.props.seminar.speaker} />
 
-      {/* TODO: Insert dividers between different sections.
+        {/* TODO: Insert dividers between different sections.
       Look to use a table view or equivalent for seminar
       details */}
 
-      {/* Seminar date */}
-      <Details style={styles.seminardetailsText} placeholder='Date: ' detail={date} />
-      {/* Seminar time */}
-      <Details placeholder='Time: ' detail={startTime + " - " + endTime} />
+        {/* Seminar date */}
+        <Details style={styles.seminardetailsText} placeholder='Date: ' detail={date} />
+        {/* Seminar time */}
+        <Details placeholder='Time: ' detail={startTime + ' - ' + endTime} />
 
-      <Details placeholder='Venue: ' detail={this.props.seminar.venue} />
+        <Details placeholder='Venue: ' detail={this.props.seminar.venue} />
 
-      <Details placeholder='Venue Capacity: ' detail={this.props.seminar.venueCapacity} />
+        <Details placeholder='Venue Capacity: ' detail={this.props.seminar.venueCapacity} />
 
-      {/* Abstract text */}
-      <Details placeholder='Abstract: ' detail={this.props.seminar.abstract} />
+        {/* Abstract text */}
+        <Details placeholder='Abstract: ' detail={this.props.seminar.abstract} />
 
-      <Details placeholder='Organiser Name: ' detail={this.props.seminar.ownername} />
+        <Details placeholder='Organiser Name: ' detail={this.props.seminar.ownername} />
 
-      <Details placeholder ='No. Attendees: ' detail={length} />
       <Text></Text>
       <Text></Text>
       <Text></Text>
@@ -152,7 +146,7 @@ class SeminarDetails extends Component {
           <View> 
           <RoundedButton text='Display Attendees' onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
         </View>
-        
+
         <ModalDialog
           onPressPositive={() => this.attendSeminar()}
           onPressNegative={() => this.finishAttendSeminar()} children={dialogContent}

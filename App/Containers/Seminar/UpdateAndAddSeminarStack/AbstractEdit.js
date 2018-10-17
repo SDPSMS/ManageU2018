@@ -8,13 +8,14 @@ import RoundedButton from '../../../Components/RoundedButton'
 import SearchDropdown from '../../../Components/SearchableDropdown'
 import BackButton from '../../../Components/BackButton'
 import styles from '../../Styles/ContainerStyle'
+import TextFieldLarge from '../../../Components/TextFieldLarge'
 
 class AbstractEdit extends Component {
   render () {
     const { abstract, label, speaker, venue, ownername } = this.props
 
     return (
-      <View style={{ marginLeft: 20, marginRight: 20 }}>
+      <View style={{ marginLeft: 20, marginRight: 20 }} >
         <BackButton onPress={() => this.props.navigation.pop()} />
         <Text style={styles.sectionText}>Edit Your Seminar</Text>
         <TextField
@@ -22,7 +23,7 @@ class AbstractEdit extends Component {
           value={label}
           onChangeText={(value) => this.props.formUpdate({ prop: 'label', value })}
         />
-        <TextField
+        <TextFieldLarge
           placeholder={'Abstract'}
           value={abstract}
           onChangeText={(value) => this.props.formUpdate({ prop: 'abstract', value })}

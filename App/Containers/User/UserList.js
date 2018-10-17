@@ -21,6 +21,7 @@ class UserList extends Component {
         <Text style={styles.semDetailsText}>User Lists</Text>
         <ScrollView>
         <FlatList 
+          style={{marginBottom: 50}}
           data={this.props.userslist}
           renderItem={
             ({ item }) =>
@@ -40,7 +41,6 @@ class UserList extends Component {
         
         
         </View>
-        
     )
   }
 }
