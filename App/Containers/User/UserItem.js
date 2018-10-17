@@ -1,10 +1,10 @@
 import React from 'react'
 import { Text, View, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native'
 import { connect } from 'react-redux'
-import Icon from 'react-native-vector-icons/EvilIcons'
 import PropTypes from 'prop-types'
 import { selectUser, deleteUser } from '../../Action/UserAction'
 import RoundedButton from '../../Components/RoundedButton'
+import { Colors, Metrics, Fonts } from '../../Themes/'
 
 // we do not need the react lifecycle, so stateless components
 const UserItem = (props) => {
@@ -13,16 +13,12 @@ const UserItem = (props) => {
       // props.seminar refer to the seminar id.
       onPress={() => props.selectUser(props.user)}
     >
-      <View>
-        <Text>
-          Email: {props.user.email}
-        </Text>
-        <Text>
-          Name: {props.user.name}
-        </Text>
-        <Text>
-          Role: {props.user.role}
-        </Text>
+      <View style={{ borderRadius: 1}}>
+                <View style={{flex: 2, marginLeft: 10, marginTop: 5}}>
+                <Text>Email: {props.user.email}</Text>
+                <Text>Name: {props.user.name}</Text>
+                <Text>Role: {props.user.role}</Text>
+        </View>
         <RoundedButton text='Delete user' onPress={() => props.deleteUser(props.user.id)} />
       </View>
     </TouchableWithoutFeedback>

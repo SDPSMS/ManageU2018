@@ -115,39 +115,42 @@ class SeminarDetails extends Component {
         />
         {this.renderEditAndCancelButton()}
 
-        {/* Title of Seminar */}
-        <Text style={styles.titleText}>{this.props.seminar.label}</Text>
+       {/* Title of Seminar */}
+       <Text style={styles.semDetailsText} >{this.props.seminar.label}</Text>
+      <Text></Text>
+      {/* Seminar details */}
+      <Details placeholder='Speaker: ' style={styles.seminardetailsText} detail={this.props.seminar.speaker} />
 
-        {/* Seminar details */}
-        <Details placeholder='Speaker:' detail={this.props.seminar.speaker} />
-        {/* Seminar date */}
-        <Details placeholder='Date:' detail={date} />
+      {/* TODO: Insert dividers between different sections.
+      Look to use a table view or equivalent for seminar
+      details */}
 
-        {/* Seminar time */}
-        <Text>Time</Text>
-        <Text>{startTime} - {endTime}</Text>
+      {/* Seminar date */}
+      <Details style={styles.seminardetailsText} placeholder='Date: ' detail={date} />
+      {/* Seminar time */}
+      <Details placeholder='Time: ' detail={startTime + " - " + endTime} />
+
+      <Details placeholder='Venue: ' detail={this.props.seminar.venue} />
+
+      <Details placeholder='Venue Capacity: ' detail={this.props.seminar.venueCapacity} />
+
+      {/* Abstract text */}
+      <Details placeholder='Abstract: ' detail={this.props.seminar.abstract} />
+
+      <Details placeholder='Organiser Name: ' detail={this.props.seminar.ownername} />
+
+      <Details placeholder ='No. Attendees: ' detail={length} />
+      <Text></Text>
+      <Text></Text>
+      <Text></Text>
+      <Text></Text>
+
         
-        {/* TODO: Insert dividers between different sections.
-          Look to use a table view or equivalent for seminar
-          details */}
-        
-
-        <Text>Venue</Text>
-        <Text>{this.props.seminar.venue}</Text>
-        <Text>Venue Capacity</Text>
-        <Text>{this.props.seminar.venueCapacity}</Text>
-
-        {/* Abstract text */}
-        <Text>Abstract</Text>
-        <Text>{this.props.seminar.abstract}</Text>
-        <Text>Organiser Name</Text>
-        <Text>{this.props.seminar.ownername}</Text>
-        <Text>Number of Attendees: {length} </Text>
-
-        <View>
           {this.showJoinButton()}
-          <Button title='Display Attendees' onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
+          <View> 
+          <RoundedButton text='Display Attendees' onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
         </View>
+        
         <ModalDialog
           onPressPositive={() => this.attendSeminar()}
           onPressNegative={() => this.finishAttendSeminar()} children={dialogContent}
