@@ -7,6 +7,8 @@ import * as actions from '../../../Action/SeminarAction'
 import MyDatePicker from '../../../Components/DatePicker'
 import MyTimePicker from '../../../Components/TimePicker'
 import styles from '../../Styles/ContainerStyle'
+import venueData from './venueData'
+import SearchDropdown from '../../../Components/SearchableDropdown'
 
 class DateTime extends Component {
   constructor (props) {
@@ -17,17 +19,30 @@ class DateTime extends Component {
   }
 
   onAddPressed () {
-    const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName } = this.props
+    const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName, host } = this.props
     // The actions.
-    this.props.addNewSeminar({ abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName })
+    this.props.addNewSeminar({
+      abstract,
+      date,
+      startTime,
+      endTime,
+      label,
+      speaker,
+      venue,
+      venueCapacity,
+      organiserName,
+      host
+    })
   }
 
   render () {
-    const { date, startTime, endTime } = this.props
+    const { date, startTime, endTime, venue } = this.props
 
     return (
+      
       <View style={{ marginLeft: 20, marginRight: 20 }}>
-        <Text style={styles.dateTimeText}>Choose Your Seminar Time</Text>
+      <BackButton onPress={() => this.props.navigation.pop()} />
+        <Text style={styles.sectionText}>Choose Your Seminar Time</Text>
         <MyDatePicker date={date} onDateChange={(value) => this.props.formUpdate({ prop: 'date', value })} />
         <MyTimePicker time={startTime} placeholder='Start Time'
           onDateChange={(value) => {
@@ -36,9 +51,21 @@ class DateTime extends Component {
           }} />
         <MyTimePicker disabled={this.state.disabled} minDate={startTime} time={endTime} placeholder='End Time'
           onDateChange={(value) => this.props.formUpdate({ prop: 'endTime', value })} />
-        <Text />
-        <Text />
-        <Text />
+        <SearchDropdown
+          data={venueData}
+          label='Venue'
+          value={venue}
+          onItemSelect={(item) => {
+            this.props.formUpdate({ prop: 'venue', value: item.name })
+            this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
+          }}
+          onChangeText={
+            (item) => {
+              this.props.formUpdate({ prop: 'venue', value: item.name })
+              this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
+            }
+          }
+        />
         <RoundedButton
           text={'Add'}
           onPress={this.onAddPressed.bind(this)}
@@ -49,9 +76,9 @@ class DateTime extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity } = state.seminar
+  const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, host } = state.seminar
   return {
-    abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName: state.user.user.name
+    abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, host, organiserName: state.user.user.name
   }
 }
 

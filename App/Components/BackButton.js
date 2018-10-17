@@ -23,6 +23,7 @@ export default class BackButton extends Component {
         size={30}
         color='#517fa4'
         onPress={onPress}
+        style={{marginLeft:10}}
       />
     )
   }

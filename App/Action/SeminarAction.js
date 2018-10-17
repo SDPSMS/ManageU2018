@@ -52,18 +52,18 @@ export function editSeminar (seminar) {
   }
 }
 
-export function saveSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity, ownername }) {
+export function saveSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity, ownername, host }) {
   const { currentUser } = firebase.auth()
   const startDate = ConvertToTimestamp(date, startTime)
   const endDate = ConvertToTimestamp(date, endTime)
   return (dispatch) => {
     firebase.database().ref(`seminars/${id}`)
-      .update({ abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownername })
+      .update({ abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownername, host })
       .then(() => {
         // SAVE SEMINAR IN THE DATABASE
         dispatch({
           type: 'SAVE_SEMINAR',
-          payload: { id, abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownername }
+          payload: { id, abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownername, host }
         })
         dispatch(NavigationActions.navigate('SeminarList'))
       })
@@ -93,7 +93,7 @@ export function startAddSeminar () {
   }
 }
 
-export function addNewSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName }) {
+export function addNewSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName, host }) {
   const { currentUser } = firebase.auth()
   const startDate = ConvertToTimestamp(date, startTime)
   const endDate = ConvertToTimestamp(date, endTime)
@@ -110,6 +110,7 @@ export function addNewSeminar ({ abstract, date, startTime, endTime, label, spea
       speaker,
       venue,
       venueCapacity,
+      host,
       ownerid: currentUser.uid,
       ownername: organiserName
     })
@@ -125,6 +126,7 @@ export function addNewSeminar ({ abstract, date, startTime, endTime, label, spea
             speaker,
             venue,
             venueCapacity,
+            host,
             ownerid: currentUser.uid,
             ownername: organiserName
           }
@@ -306,23 +308,23 @@ async function sendEmail (emails) {
 
 export function sendUpdateEmailNotif (seminarid) {
   return (dispatch) => {
-    let attendeesListAndDetails = []
+    console.log(seminarid)
     // orderBy equalTo
     firebase.database().ref('attendeelist').child(seminarid)
       .once('value').then((snapshot) => {
         snapshot.forEach((attendeeid) => {
-          firebase.database().ref('attendees').child(attendeeid.val())
+          console.log(attendeeid.val().id)
+          firebase.database().ref('attendees').child(attendeeid.val().id)
             .once('value').then((snapshot) => {
-              attendeesListAndDetails.push(snapshot.val())
-            })
-            .then(() => {
-              console.log(attendeesListAndDetails)
-              sendEmail(attendeesListAndDetails).then(() => {
+              console.log(snapshot.val().email)
+              sendEmail(snapshot.val().email).then(() => {
                 console.log('success')
               })
                 .catch(() => console.log('Fail to send update email notifications'))
             })
+            .catch(() => console.log('Failed '))
         })
       })
+      .catch(() => console.log('has problem with child attendee lists'))
   }
 }

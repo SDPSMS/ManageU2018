@@ -12,46 +12,36 @@ import TextFieldLarge from '../../../Components/TextFieldLarge'
 
 class AbstractEdit extends Component {
   render () {
-    const { abstract, label, speaker, venue, ownername } = this.props
+    const { abstract, label, speaker, ownername, host } = this.props
 
     return (
       <View style={{ marginLeft: 20, marginRight: 20 }} >
         <BackButton onPress={() => this.props.navigation.pop()} />
         <Text style={styles.sectionText}>Edit Your Seminar</Text>
         <TextField
-          placeholder={'Label'}
+          placeholder={'Seminar Title'}
           value={label}
           onChangeText={(value) => this.props.formUpdate({ prop: 'label', value })}
-        />
-        <TextFieldLarge
-          placeholder={'Abstract'}
-          value={abstract}
-          onChangeText={(value) => this.props.formUpdate({ prop: 'abstract', value })}
         />
         <TextField
           placeholder={'Speaker'}
           value={speaker}
           onChangeText={(value) => this.props.formUpdate({ prop: 'speaker', value })}
         />
+        <TextFieldLarge
+          placeholder={'Speaker Bio'}
+          value={abstract}
+          onChangeText={(value) => this.props.formUpdate({ prop: 'abstract', value })}
+        />
+        <TextField
+          placeholder={'Host'}
+          value={host}
+          onChangeText={(value) => this.props.formUpdate({ prop: 'host', value })}
+        />
         <TextField
           placeholder={'Organiser Name'}
           value={ownername}
           onChangeText={(value) => this.props.formUpdate({ prop: 'ownername', value })}
-        />
-        <SearchDropdown
-          data={venueData}
-          label='Venue'
-          value={venue}
-          onItemSelect={(item) => {
-            this.props.formUpdate({ prop: 'venue', value: item.name })
-            this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
-          }}
-          onChangeText={
-            (item) => {
-              this.props.formUpdate({ prop: 'venue', value: item.name })
-              this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
-            }
-          }
         />
         <RoundedButton
           text={'Continue'}
@@ -63,9 +53,9 @@ class AbstractEdit extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { abstract, date, time, duration, label, speaker, venue, capacity, ownername } = state.seminar
+  const { abstract, date, time, duration, label, speaker, venue, capacity, ownername, host } = state.seminar
   return {
-    abstract, date, time, duration, label, speaker, venue, capacity, ownername
+    abstract, date, time, duration, label, speaker, venue, capacity, ownername, host
   }
 }
 
