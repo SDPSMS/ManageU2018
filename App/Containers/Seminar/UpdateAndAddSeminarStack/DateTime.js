@@ -17,9 +17,9 @@ class DateTime extends Component {
   }
 
   onAddPressed () {
-    const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName } = this.props
+    const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName, host } = this.props
     // The actions.
-    this.props.addNewSeminar({ abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName })
+    this.props.addNewSeminar({ abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName, host})
   }
 
   render () {
@@ -46,9 +46,9 @@ class DateTime extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity } = state.seminar
+  const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, host } = state.seminar
   return {
-    abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName: state.user.user.name
+    abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, host, organiserName: state.user.user.name
   }
 }
 

@@ -9,6 +9,7 @@ import CustomDropdown from '../Components/Dropdown'
 import Loader from '../Components/Loader'
 import MessageText from '../Components/MessageText'
 import * as types from '../Types/userType'
+import BackButton from '../Components/BackButton'
 
 class Register extends Component {
   constructor (props) {
