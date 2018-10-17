@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, ScrollView } from 'react-native'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { loadAllUser } from '../../Action/UserAction'
 import { connect } from 'react-redux'
 import RoundedButton from '../../Components/RoundedButton'
 import UserItem from './UserItem'
+import styles from '../Styles/ContainerStyle'
+import { Colors, Metrics, Fonts } from '../../Themes/'
 
 class UserList extends Component {
   componentDidMount () {
@@ -15,9 +17,10 @@ class UserList extends Component {
   render () {
     console.log(this.props.userslist)
     return (
-      <View>
-        <Text>User Lists</Text>
-        <FlatList
+      <View style={styles.containerHelp}>
+        <Text style={styles.semDetailsText}>User Lists</Text>
+        <ScrollView>
+        <FlatList 
           data={this.props.userslist}
           renderItem={
             ({ item }) =>
@@ -25,8 +28,17 @@ class UserList extends Component {
           }
           keyExtractor={(item, index) => index.toString()}
         />
-        <RoundedButton text='Add new User' onPress={() => this.props.navigation.push('AddUser')} />
-      </View>
+          <Text></Text>
+          <RoundedButton text='Add new User' onPress={() => this.props.navigation.push('AddUser')} />
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
+        </ScrollView>
+        
+        </View>
+        
     )
   }
 }

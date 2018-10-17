@@ -5,8 +5,14 @@ export default StyleSheet.create({
   ...ApplicationStyles.screen,
   container: {
     padding: Metrics.baseMargin,
-    backgroundColor: Colors.background
+    backgroundColor: Colors.background,
   },
+  containerHelp:{
+      padding: Metrics.baseMargin,
+      backgroundColor: Colors.background,
+      marginBottom: 50
+    },
+  
 
   logo: {
     marginTop: Metrics.doubleSection,
@@ -40,7 +46,16 @@ export default StyleSheet.create({
   titleText: {
     color: Colors.primaryTextColour,
     fontWeight: 'bold',
-    fontSize: 20
+    fontSize: 22,
+    justifyContent: 'center', 
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginBottom: 3
+  },
+  
+  explainText: {
+    color: '#555660',
+    fontSize: 15
   },
 
   sectionText: {
@@ -49,11 +64,11 @@ export default StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     fontWeight: 'bold',
-    paddingTop: 10,
-    paddingBottom: 10,
-    fontSize: 35
+    paddingTop: 25,
+    paddingBottom: 25,
+    fontSize: 45
   },
-
+  
   loginText: {
     color: Colors.primaryTextColour,
     padding: Metrics.baseMargin,
@@ -87,5 +102,22 @@ export default StyleSheet.create({
     fontSize: 20,
     alignItems: 'center',
     alignSelf: 'center'
+  },
+  
+  semDetailsText: {
+    color: Colors.primaryTextColour,
+    fontWeight: 'bold',
+    fontSize: 35,
+    justifyContent: 'center', 
+    textAlign: 'center',
+    marginBottom: 10,
+    marginTop: 10
+  },
+
+  loadingContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 })
