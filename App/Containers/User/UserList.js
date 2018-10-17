@@ -8,39 +8,37 @@ import RoundedButton from '../../Components/RoundedButton'
 import UserItem from './UserItem'
 import styles from '../Styles/ContainerStyle'
 
-
 class UserList extends Component {
   componentDidMount () {
     this.props.loadAllUser()
   }
 
   render () {
-    console.log(this.props.userslist)
     return (
       <View style={styles.containerHelp}>
         <Text style={styles.semDetailsText}>User Lists</Text>
         <ScrollView>
-        <FlatList 
-          style={{marginBottom: 50}}
-          data={this.props.userslist}
-          renderItem={
-            ({ item }) =>
-              <UserItem user={item} />
-          }
-          keyExtractor={(item, index) => index.toString()}
-        />
-        <RoundedButton text='Add new User' onPress={() => this.props.navigation.push('AddUser')} />
+          <FlatList
+            style={{marginBottom: 50}}
+            data={this.props.userslist}
+            renderItem={
+              ({item}) =>
+                <UserItem user={item} />
+            }
+            keyExtractor={(item, index) => index.toString()}
+          />
+          <RoundedButton text='Add new User' onPress={() => this.props.navigation.push('AddUser')} />
           <Text></Text>
           <Text></Text>
           <Text></Text>
           <Text></Text>
           <Text></Text>
           <Text></Text>
-          
+
         </ScrollView>
-        
-        
-        </View>
+
+
+      </View>
     )
   }
 }
@@ -56,4 +54,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, { loadAllUser })(UserList)
+export default connect(mapStateToProps, {loadAllUser})(UserList)

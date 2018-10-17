@@ -24,6 +24,7 @@ import RNHTMLtoPDF from 'react-native-html-to-pdf'
 import CustomDropdown from '../../Components/Dropdown'
 import Share from 'react-native-share'
 import RNPrint from 'react-native-print'
+import BackButton from '../../Components/BackButton'
 
 class AttendeeList extends Component {
   constructor (props) {
@@ -36,27 +37,27 @@ class AttendeeList extends Component {
       email: '',
       status: '',
       dropDownMenu: [
-        { value: 'Going' },
-        { value: 'Interested' }
+        {value: 'Going'},
+        {value: 'Interested'}
       ]
     }
   }
 
   editAttendees () {
-    const { name, email, status, selectedUser } = this.state
-    const { editAttendee, selectedAttendee } = this.props
+    const {name, email, status, selectedUser} = this.state
+    const {editAttendee, selectedAttendee} = this.props
 
     editAttendee(selectedUser.id, name || selectedAttendee.name, status || selectedAttendee.status, email || selectedAttendee.email)
   }
 
   deleteAttendees (attendeeId) {
-    const { deleteAttendee, seminarId } = this.props
+    const {deleteAttendee, seminarId} = this.props
     deleteAttendee(seminarId, attendeeId)
   }
 
   async createPDF () {
-    const { attendeeLists } = this.props
-    let text = null
+    const {attendeeLists} = this.props
+    let text = ''
     attendeeLists.forEach((attendee) => {
       text += `<div style="width:46%; height:12.5%; float:left; border: 1px solid black; border-radius: 25px; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
     })
@@ -107,19 +108,19 @@ class AttendeeList extends Component {
         fileName: 'attendees'
       })
 
-      await RNPrint.print({ filePath: results.filePath })
+      await RNPrint.print({filePath: results.filePath})
     }
   }
 
   renderPrintButton () {
-    const { seminar, user } = this.props
+    const {seminar, user} = this.props
     if (user != null && seminar != null) {
-      return seminar.ownerid === user.id ? (<Button title='Create PDF' onPress={() => this.createPDF()} />) : <Text/>
+      return seminar.ownerid === user.id ? (<Button title='Create PDF' onPress={() => this.createPDF()} />) : <Text />
     }
   }
 
   renderDialog () {
-    const { selectedUser, id } = this.state
+    const {id} = this.state
 
     let dialogContent
     let onPressPositive
@@ -133,12 +134,7 @@ class AttendeeList extends Component {
             <TextField
               placeholder={'Name'}
               value={this.props.selectedAttendee.name}
-              onChangeText={(name) => this.setState({ name })}
-            />
-            <TextField
-              placeholder={'Email'}
-              value={this.props.selectedAttendee.email}
-              onChangeText={(email) => this.setState({ email })}
+              onChangeText={(name) => this.setState({name})}
             />
             <TextField
               placeholder={'Email'}
@@ -146,9 +142,9 @@ class AttendeeList extends Component {
               onChangeText={(email) => this.setState({email})}
             />
             <CustomDropdown data={this.state.dropDownMenu}
-              label={'Status'}
-              value={this.props.selectedAttendee.status}
-              onChangeText={(status) => this.setState({ status })} />
+                            label={'Status'}
+                            value={this.props.selectedAttendee.status}
+                            onChangeText={(status) => this.setState({status})} />
             <MessageText>{this.props.error}</MessageText>
           </View>
         )
@@ -158,7 +154,7 @@ class AttendeeList extends Component {
         onPressPositive = () => this.deleteAttendees(id)
         dialogContent = (
           <View>
-            <Text style={{ verticalAlign: 'middle' }}>Are you sure you want to delete this attendee?</Text>
+            <Text style={{verticalAlign: 'middle'}}>Are you sure you want to delete this attendee?</Text>
           </View>
         )
         break
@@ -181,21 +177,19 @@ class AttendeeList extends Component {
       length = this.props.attendeeLists.length
     }
     return (
-      <View style={{ flex: 1 }}>
-        <SimpleIcon
-          name={'close'}
-          size={30}
-          onPress={() => this.props.navigation.popToTop()
-          }
-        />
+      <View style={{flex: 1}}>
+        <BackButton onPress={() => this.props.navigation.popToTop()} />
         <Text style={styles.sectionText}>List of Attendees</Text>
-        <Text style={styles.subtitleText1}>Number of Attendees: {this.props.attendeeLists.length}</Text>
+        <Text style={styles.subtitleText1}>Number of Attendees: {length}</Text>
+        <MessageText>{this.props.message}</MessageText>
         <FlatList
           data={this.props.attendeeLists}
           renderItem={
             ({item}) =>
-              <View style={{flexDirection: 'row', margin: 10, borderBottomWidth: 3,
-              borderTopWidth: 3, borderColor: Colors.cloud}}>
+              <View style={{
+                flexDirection: 'row', margin: 10, borderBottomWidth: 3,
+                borderTopWidth: 3, borderColor: Colors.cloud
+              }}>
                 <View style={{flex: 2, marginLeft: 10, marginTop: 7}}>
                   <Text style={{fontSize: 20, color: 'black'}}>Email: {item.email}</Text>
                   <Text style={{fontSize: 20, color: 'black'}}>Name: {item.name}</Text>
@@ -209,12 +203,12 @@ class AttendeeList extends Component {
                               this.props.editAttendeeStart(item.id)
                             }} />
                   </View>
-                  <View style={{ marginBottom: 10 }}>
+                  <View style={{marginBottom: 10}}>
                     <Button title='Delete' color={Colors.fire}
-                      onPress={() => {
-                        this.setState({ id: item.id, mode: 'delete' })
-                        this.props.deleteAttendeeStart()
-                      }}
+                            onPress={() => {
+                              this.setState({id: item.id, mode: 'delete'})
+                              this.props.deleteAttendeeStart()
+                            }}
                     />
                   </View>
                 </View>
@@ -222,7 +216,6 @@ class AttendeeList extends Component {
           }
           keyExtractor={(item, index) => index.toString()}
         />
-        <MessageText>{this.props.message}</MessageText>
         {this.renderDialog()}
         {this.renderPrintButton()}
       </View>

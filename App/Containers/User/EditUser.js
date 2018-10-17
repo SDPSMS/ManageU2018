@@ -25,7 +25,6 @@ class EditUser extends Component {
   onUpdatePressed () {
     const { email, id } = this.props.selectedUser
     const { name, role } = this.state
-    console.log(name)
     // The actions.
     this.props.saveUser({ id, name, email, role })
   }

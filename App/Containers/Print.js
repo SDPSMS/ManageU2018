@@ -31,7 +31,6 @@ export default class Print extends Component {
     }
 
     let file = await RNHTMLtoPDF.convert(options)
-    console.log(file.filePath)
   }
 
   render () {

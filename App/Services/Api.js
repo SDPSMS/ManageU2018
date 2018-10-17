@@ -35,7 +35,6 @@ const create = (baseURL = 'https://manageusdp.herokuapp.com/') => {
   // way at this level.
   //
   const checkStaffDatabaseForRegister = (email, password) => {
-    console.log(email, password)
     return api.post('staffs', { email, password })
   }
   const checkStudentDatabaseForRegister = (email) => {
@@ -44,7 +43,6 @@ const create = (baseURL = 'https://manageusdp.herokuapp.com/') => {
   }
   const sendEmail = (email) => {
     api.post('sendupdatemessage', { receiver: email })
-    console.log(email)
   }
   // ------
   // STEP 3
