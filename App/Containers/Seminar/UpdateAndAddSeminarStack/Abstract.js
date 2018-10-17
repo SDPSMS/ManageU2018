@@ -3,7 +3,6 @@ import TextField from '../../../Components/TextField'
 import { formUpdate } from '../../../Action/SeminarAction'
 import { connect } from 'react-redux'
 import { Text, View } from 'react-native'
-import venueData from './venueData'
 import RoundedButton from '../../../Components/RoundedButton'
 import SearchDropdown from '../../../Components/SearchableDropdown'
 import BackButton from '../../../Components/BackButton'
@@ -12,7 +11,7 @@ import TextFieldLarge from '../../../Components/TextFieldLarge'
 
 class Abstract extends Component {
   render () {
-    const { abstract, label, speaker, host, venue } = this.props
+    const { abstract, label, speaker, host } = this.props
 
     return (
       <View style={{ marginLeft: 20, marginRight: 20 }}>
@@ -37,21 +36,6 @@ class Abstract extends Component {
           placeholder={'Host'}
           value={host}
           onChangeText={(value) => this.props.formUpdate({ prop: 'host', value })}
-        />
-        <SearchDropdown
-          data={venueData}
-          label='Venue'
-          value={venue}
-          onItemSelect={(item) => {
-            this.props.formUpdate({ prop: 'venue', value: item.name })
-            this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
-          }}
-          onChangeText={
-            (item) => {
-              this.props.formUpdate({ prop: 'venue', value: item.name })
-              this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
-            }
-          }
         />
         <RoundedButton
           text={'Continue'}
