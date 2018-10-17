@@ -7,7 +7,6 @@ import * as actions from '../../../Action/SeminarAction'
 import MyDatePicker from '../../../Components/DatePicker'
 import MyTimePicker from '../../../Components/TimePicker'
 import styles from '../../Styles/ContainerStyle'
-import ConvertTimestampToDate from '../../../Transforms/ConvertTimestampToDate'
 
 class DateTimeEdit extends Component {
   constructor (props) {
@@ -18,11 +17,26 @@ class DateTimeEdit extends Component {
   }
 
   onUpdatePressed () {
-    const { abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity } = this.props
-    // The actions.
+    const { abstract, organisername, ownername, date, startTime, endTime, label, speaker, venue, id, venueCapacity } = this.props
+    let val = ''
+    /* Backwards Compatibility, Stupid Code, Change this if have time, not reusable. */
+    if (ownername === '') {
+      val = organisername
+    } else {
+      val = ownername
+    }
+    let vnue = ''
+    let venueCpct = 100
+    if (venue === '') {
+      vnue = 'CB07.02.025'
+      venueCpct = 100
+    } else {
+      vnue = venue
+      venueCpct = venueCapacity
+    }
 
     this.props.sendUpdateEmailNotif(id)
-    this.props.saveSeminar({ abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity })
+    this.props.saveSeminar({ abstract, date, startTime, endTime, label, speaker, venue: vnue, id, venueCapacity: venueCpct, ownername: val })
   }
 
   render () {
@@ -50,10 +64,10 @@ class DateTimeEdit extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity } = state.seminar
+  const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, ownername } = state.seminar
   const { id } = state.seminar.seminarSelected
   return {
-    abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, id, organiserName: state.user.user.name
+    abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, id, ownername, organiserName: state.user.user.name
   }
 }
 

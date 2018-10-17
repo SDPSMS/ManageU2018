@@ -28,6 +28,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
+        message: '',
         seminars: action.payload
       }
 
@@ -97,7 +98,8 @@ export default (state = initialState, action) => {
         speaker: action.payload.speaker,
         venue: action.payload.venue,
         venueCapacity: action.payload.venueCapacity,
-        id: action.payload.id
+        id: action.payload.id,
+        ownername: action.payload.ownername
         // seminarSelected: null,
       }
 
@@ -115,6 +117,7 @@ export default (state = initialState, action) => {
         speaker: '',
         venue: '',
         venueCapacity: '',
+        ownername: '',
         seminars: state.seminars.map((item) => (
           item.id === action.payload.id ? {
             ...item,
@@ -124,7 +127,8 @@ export default (state = initialState, action) => {
             speaker: action.payload.speaker,
             startDate: action.payload.startDate,
             venue: action.payload.venue,
-            venueCapacity: action.payload.venueCapacity
+            venueCapacity: action.payload.venueCapacity,
+            ownername: action.payload.ownername
           } : item
         ))
       }

@@ -60,7 +60,7 @@ export default StyleSheet.create({
 
   sectionText: {
     color: Colors.primaryTextColour,
-    padding: Metrics.baseMargin,
+    padding: Metrics.smallMargin,
     alignItems: 'center',
     alignSelf: 'center',
     fontWeight: 'bold',

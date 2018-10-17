@@ -11,7 +11,7 @@ import styles from '../../Styles/ContainerStyle'
 
 class AbstractEdit extends Component {
   render () {
-    const { abstract, label, speaker, venue } = this.props
+    const { abstract, label, speaker, venue, ownername } = this.props
 
     return (
       <View style={{ marginLeft: 20, marginRight: 20 }}>
@@ -31,6 +31,11 @@ class AbstractEdit extends Component {
           placeholder={'Speaker'}
           value={speaker}
           onChangeText={(value) => this.props.formUpdate({ prop: 'speaker', value })}
+        />
+        <TextField
+          placeholder={'Organiser Name'}
+          value={ownername}
+          onChangeText={(value) => this.props.formUpdate({ prop: 'ownername', value })}
         />
         <SearchDropdown
           data={venueData}
@@ -57,9 +62,9 @@ class AbstractEdit extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { abstract, date, time, duration, label, speaker, venue, capacity } = state.seminar
+  const { abstract, date, time, duration, label, speaker, venue, capacity, ownername } = state.seminar
   return {
-    abstract, date, time, duration, label, speaker, venue, capacity
+    abstract, date, time, duration, label, speaker, venue, capacity, ownername
   }
 }
 

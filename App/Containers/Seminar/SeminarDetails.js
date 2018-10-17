@@ -20,6 +20,7 @@ class SeminarDetails extends Component {
   componentWillMount () {
     this.props.loadAttendees(this.props.seminar.id)
   }
+
   constructor (props) {
     super(props)
     this.state = {
@@ -34,13 +35,13 @@ class SeminarDetails extends Component {
   }
 
   finishAttendSeminar () {
-    this.setState({ showModal: false })
+    this.setState({showModal: false})
     this.props.attendSeminarFinish()
   }
 
   // TODO: Might not be a good idea to put it here. --> Put it in actions?
   renderEditAndCancelButton () {
-    const { user, seminar } = this.props
+    const {user, seminar} = this.props
     if (user !== null && seminar.ownerid === user.id) {
       return (
         <View>
@@ -61,52 +62,46 @@ class SeminarDetails extends Component {
   }
 
   showJoinButton () {
-    const { seminar, user } = this.props
+    const {seminar, user} = this.props
     if (user == null) {
       return (
-        <RoundedButton text='Join' onPress={() => this.setState({ showModal: true })} />
+        <RoundedButton text='Join' onPress={() => this.setState({showModal: true})} />
       )
     } else if (user.id !== seminar.ownerid) {
       return (
-        <RoundedButton text='Join' onPress={() => this.setState({ showModal: true })} />
+        <RoundedButton text='Join' onPress={() => this.setState({showModal: true})} />
       )
     }
   }
 
   // TODO: The Display attendees button should not have that function when clicked (should only move the screen).
   renderDetails () {
-    const { attendeeLists } = this.props
-    const { endDate, startDate } = this.props.seminar
+    const {endDate, startDate} = this.props.seminar
     const date = ConvertToDate(endDate, 'LL')
     const endTime = ConvertToDate(endDate, 'LT')
     const startTime = ConvertToDate(startDate, 'LT')
     const dropDownMenu = [
-      { value: 'Going' },
-      { value: 'Interested' }
+      {value: 'Going'},
+      {value: 'Interested'}
     ]
-    let length
-    if (attendeeLists != null) {
-      length = attendeeLists.length
-    }
 
     let dialogContent = (
       <View>
         <TextField
           placeholder={'Name'}
-          onChangeText={(value) => this.setState({ name: value })}
+          onChangeText={(value) => this.setState({name: value})}
         />
         <TextField
           placeholder={'Email'}
-          onChangeText={(value) => this.setState({ email: value })}
+          onChangeText={(value) => this.setState({email: value})}
         />
         <CustomDropdown data={dropDownMenu}
-          label={'Status'}
-          value={this.state.status}
-          onChangeText={(status) => this.setState({ status })} />
+                        label={'Status'}
+                        value={this.state.status}
+                        onChangeText={(status) => this.setState({status})} />
         <MessageText>{this.props.message}</MessageText>
       </View>
     )
-    console.log(this.props.attendeeLists)
 
     return (
       <View style={styles.container}>

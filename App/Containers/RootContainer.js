@@ -13,6 +13,8 @@ class RootContainer extends Component {
   }
 
   render () {
+    // TODO: Might need this later for debug, keyword: removeyellowwarning.
+    console.disableYellowBox = true
     return (
       <View style={styles.applicationView}>
         <StatusBar barStyle='light-content' />
