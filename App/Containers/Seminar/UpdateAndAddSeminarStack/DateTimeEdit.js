@@ -19,7 +19,7 @@ class DateTimeEdit extends Component {
   }
 
   onUpdatePressed () {
-    const { abstract, organisername, ownername, date, startTime, endTime, label, speaker, venue, id, venueCapacity, host } = this.props
+    const { abstract, organisername, ownername, date, startTime, endTime, label, speaker, venue, id, venueCapacity, host, seminardesc } = this.props
     let val = ''
     /* Backwards Compatibility, Stupid Code, Change this if have time, not reusable. */
     if (ownername === '') {
@@ -39,7 +39,7 @@ class DateTimeEdit extends Component {
 
     console.log(id)
     this.props.sendUpdateEmailNotif(id)
-    this.props.saveSeminar({ abstract, date, startTime, endTime, label, speaker, venue: vnue, id, venueCapacity: venueCpct, ownername: val, host })
+    this.props.saveSeminar({ abstract, date, startTime, endTime, label, speaker, venue: vnue, id, venueCapacity: venueCpct, ownername: val, host, seminardesc })
   }
 
   render () {
@@ -82,10 +82,10 @@ class DateTimeEdit extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, ownername, host } = state.seminar
+  const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, ownername, host, seminardesc } = state.seminar
   const { id } = state.seminar.seminarSelected
   return {
-    abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, id, host, ownername, organiserName: state.user.user.name
+    abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, id, host, ownername, seminardesc, organiserName: state.user.user.name
   }
 }
 

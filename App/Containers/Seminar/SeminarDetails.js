@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Text, View } from 'react-native'
+import { Button, ScrollView, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons'
@@ -35,12 +35,12 @@ class SeminarDetails extends Component {
   }
 
   finishAttendSeminar () {
-    this.setState({ showModal: false })
+    this.setState({showModal: false})
     this.props.attendSeminarFinish()
   }
 
   renderEditAndCancelButton () {
-    const { user, seminar } = this.props
+    const {user, seminar} = this.props
     if (user !== null && seminar.ownerid === user.id) {
       return (
         <View>
@@ -63,42 +63,42 @@ class SeminarDetails extends Component {
   }
 
   showJoinButton () {
-    const { seminar, user } = this.props
+    const {seminar, user} = this.props
     if (user == null) {
       return (
-        <RoundedButton text='Join' onPress={() => this.setState({ showModal: true })} />
+        <RoundedButton text='Join' onPress={() => this.setState({showModal: true})} />
       )
     } else if (user.id !== seminar.ownerid) {
       return (
-        <RoundedButton text='Join' onPress={() => this.setState({ showModal: true })} />
+        <RoundedButton text='Join' onPress={() => this.setState({showModal: true})} />
       )
     }
   }
 
   renderDetails () {
-    const { endDate, startDate } = this.props.seminar
+    const {endDate, startDate} = this.props.seminar
     const date = ConvertToDate(endDate, 'LL')
     const endTime = ConvertToDate(endDate, 'LT')
     const startTime = ConvertToDate(startDate, 'LT')
     const dropDownMenu = [
-      { value: 'Going' },
-      { value: 'Interested' }
+      {value: 'Going'},
+      {value: 'Interested'}
     ]
 
     let dialogContent = (
       <View>
         <TextField
           placeholder={'Name'}
-          onChangeText={(value) => this.setState({ name: value })}
+          onChangeText={(value) => this.setState({name: value})}
         />
         <TextField
           placeholder={'Email'}
-          onChangeText={(value) => this.setState({ email: value })}
+          onChangeText={(value) => this.setState({email: value})}
         />
         <CustomDropdown data={dropDownMenu}
-          label={'Status'}
-          value={this.state.status}
-          onChangeText={(status) => this.setState({ status })} />
+                        label={'Status'}
+                        value={this.state.status}
+                        onChangeText={(status) => this.setState({status})} />
         <MessageText>{this.props.message}</MessageText>
       </View>
     )
@@ -110,35 +110,40 @@ class SeminarDetails extends Component {
         />
         {this.renderEditAndCancelButton()}
 
-        {/* Title of Seminar */}
-        <Text style={styles.semDetailsText}>{this.props.seminar.label}</Text>
-        <Text />
-        {/* Seminar details */}
-        <Details placeholder='Speaker: ' style={styles.seminardetailsText} detail={this.props.seminar.speaker} />
+        <ScrollView>
 
-        {/* Abstract text */}
-        <Details placeholder='Abstract: ' detail={this.props.seminar.abstract} />
+          {/* Title of Seminar */}
+          <Text style={styles.semDetailsText}>{this.props.seminar.label}</Text>
+          <Details placeholder='Abstract: ' style={styles.seminardetailsText} detail={this.props.seminar.seminardesc} />
+          <Text />
+          {/* Seminar details */}
+          <Details placeholder='Speaker: ' style={styles.seminardetailsText} detail={this.props.seminar.speaker} />
 
-        {/* Seminar date */}
-        <Details style={styles.seminardetailsText} placeholder='Date: ' detail={date} />
-        {/* Seminar time */}
-        <Details placeholder='Time: ' detail={startTime + ' - ' + endTime} />
+          {/* Abstract text */}
+          <Details placeholder='Speaker Bio: ' detail={this.props.seminar.abstract} />
 
-        <Details placeholder='Venue: ' detail={this.props.seminar.venue} />
+          {/* Seminar date */}
+          <Details style={styles.seminardetailsText} placeholder='Date: ' detail={date} />
+          {/* Seminar time */}
+          <Details placeholder='Time: ' detail={startTime + ' - ' + endTime} />
 
-        <Details placeholder='Venue Capacity: ' detail={this.props.seminar.venueCapacity} />
+          <Details placeholder='Venue: ' detail={this.props.seminar.venue} />
 
-        <Details placeholder='Organiser Name: ' detail={this.props.seminar.ownername} />
+          <Details placeholder='Venue Capacity: ' detail={this.props.seminar.venueCapacity} />
 
-        <Text />
-        <Text />
-        <Text />
-        <Text />
+          <Details placeholder='Organiser Name: ' detail={this.props.seminar.ownername} />
+
+          <Text />
+          <Text />
+          <Text />
+          <Text />
+
+        </ScrollView>
 
         {this.showJoinButton()}
         <View>
           <RoundedButton text='Display Attendees'
-            onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
+                         onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
         </View>
 
         <ModalDialog

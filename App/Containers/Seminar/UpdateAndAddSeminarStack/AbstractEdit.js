@@ -3,16 +3,14 @@ import TextField from '../../../Components/TextField'
 import { formUpdate } from '../../../Action/SeminarAction'
 import { connect } from 'react-redux'
 import { Text, View } from 'react-native'
-import venueData from './venueData'
 import RoundedButton from '../../../Components/RoundedButton'
-import SearchDropdown from '../../../Components/SearchableDropdown'
 import BackButton from '../../../Components/BackButton'
 import styles from '../../Styles/ContainerStyle'
 import TextFieldLarge from '../../../Components/TextFieldLarge'
 
 class AbstractEdit extends Component {
   render () {
-    const { abstract, label, speaker, ownername, host } = this.props
+    const { abstract, label, speaker, ownername, host} = this.props
 
     return (
       <View style={{ marginLeft: 20, marginRight: 20 }} >
@@ -53,9 +51,9 @@ class AbstractEdit extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { abstract, date, time, duration, label, speaker, venue, capacity, ownername, host } = state.seminar
+  const { abstract, date, time, duration, label, speaker, venue, capacity, ownername, host, seminardesc } = state.seminar
   return {
-    abstract, date, time, duration, label, speaker, venue, capacity, ownername, host
+    abstract, date, time, duration, label, speaker, venue, capacity, ownername, host, seminardesc
   }
 }
 

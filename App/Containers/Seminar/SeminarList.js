@@ -98,6 +98,7 @@ class SeminarList extends Component {
 
         {/* Modal diaglog for setting filters */}
         <ModalDialog
+          showPositiveButton={false}
           // onPressPositive={() => this.attendSeminar()}
           onPressNegative={() => this.setState({ showFilterModal: false })} children={filterDialogContent}
           title='Filters' isVisible={this.state.showFilterModal} />

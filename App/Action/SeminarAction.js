@@ -93,7 +93,7 @@ export function startAddSeminar () {
   }
 }
 
-export function addNewSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName, host }) {
+export function addNewSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName, host, seminardesc }) {
   const { currentUser } = firebase.auth()
   const startDate = ConvertToTimestamp(date, startTime)
   const endDate = ConvertToTimestamp(date, endTime)
@@ -111,6 +111,7 @@ export function addNewSeminar ({ abstract, date, startTime, endTime, label, spea
       venue,
       venueCapacity,
       host,
+      seminardesc,
       ownerid: currentUser.uid,
       ownername: organiserName
     })
@@ -127,6 +128,7 @@ export function addNewSeminar ({ abstract, date, startTime, endTime, label, spea
             venue,
             venueCapacity,
             host,
+            seminardesc,
             ownerid: currentUser.uid,
             ownername: organiserName
           }

@@ -14,7 +14,8 @@ const initialState = {
   speaker: '',
   venue: '',
   host: '',
-  venueCapacity: ''
+  venueCapacity: '',
+  seminardesc: ''
 }
 
 export default (state = initialState, action) => {
@@ -58,6 +59,7 @@ export default (state = initialState, action) => {
         speaker: '',
         venue: '',
         venueCapacity: '',
+        seminardesc: '',
         host: ''
       }
 
@@ -74,6 +76,7 @@ export default (state = initialState, action) => {
         venue: '',
         venueCapacity: '',
         host: '',
+        seminardesc: '',
         seminars: [...state.seminars, action.payload]
       }
 
@@ -102,7 +105,8 @@ export default (state = initialState, action) => {
         venueCapacity: action.payload.venueCapacity,
         id: action.payload.id,
         host: action.payload.host,
-        ownername: action.payload.ownername
+        ownername: action.payload.ownername,
+        seminardesc: action.payload.seminardesc
         // seminarSelected: null,
       }
 
@@ -121,6 +125,7 @@ export default (state = initialState, action) => {
         venueCapacity: '',
         ownername: '',
         host: '',
+        seminardesc: '',
         seminars: state.seminars.map((item) => (
           item.id === action.payload.id ? {
             ...item,
@@ -132,7 +137,8 @@ export default (state = initialState, action) => {
             venue: action.payload.venue,
             venueCapacity: action.payload.venueCapacity,
             ownername: action.payload.ownername,
-            host: action.payload.host
+            host: action.payload.host,
+            seminardesc: action.payload.seminardesc
           } : item
         ))
       }
