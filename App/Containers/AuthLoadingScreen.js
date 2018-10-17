@@ -23,8 +23,8 @@ class AuthLoadingScreen extends Component {
     return (
       <View style={styles.loadingContainer}>
         <Text style={styles.titleText} >Welcome to ManageU</Text>
-        <Text>Connecting to services...</Text>   
-        <Loader size='large'/>
+        <Text>Connecting to services...</Text>
+        <Loader size='large' />
       </View>
     )
   }

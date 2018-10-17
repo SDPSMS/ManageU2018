@@ -20,25 +20,25 @@ class UserList extends Component {
       <View style={styles.containerHelp}>
         <Text style={styles.semDetailsText}>User Lists</Text>
         <ScrollView>
-        <FlatList 
-          data={this.props.userslist}
-          renderItem={
-            ({ item }) =>
-              <UserItem user={item} />
-          }
-          keyExtractor={(item, index) => index.toString()}
-        />
-          <Text></Text>
+          <FlatList
+            data={this.props.userslist}
+            renderItem={
+              ({ item }) =>
+                <UserItem user={item} />
+            }
+            keyExtractor={(item, index) => index.toString()}
+          />
+          <Text />
           <RoundedButton text='Add new User' onPress={() => this.props.navigation.push('AddUser')} />
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
+          <Text />
+          <Text />
+          <Text />
+          <Text />
+          <Text />
         </ScrollView>
-        
-        </View>
-        
+
+      </View>
+
     )
   }
 }

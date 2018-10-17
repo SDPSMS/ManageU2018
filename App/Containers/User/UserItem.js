@@ -13,11 +13,11 @@ const UserItem = (props) => {
       // props.seminar refer to the seminar id.
       onPress={() => props.selectUser(props.user)}
     >
-      <View style={{ borderRadius: 1}}>
-                <View style={{flex: 2, marginLeft: 10, marginTop: 5}}>
-                <Text>Email: {props.user.email}</Text>
-                <Text>Name: {props.user.name}</Text>
-                <Text>Role: {props.user.role}</Text>
+      <View style={{ borderRadius: 1 }}>
+        <View style={{ flex: 2, marginLeft: 10, marginTop: 5 }}>
+          <Text>Email: {props.user.email}</Text>
+          <Text>Name: {props.user.name}</Text>
+          <Text>Role: {props.user.role}</Text>
         </View>
         <RoundedButton text='Delete user' onPress={() => props.deleteUser(props.user.id)} />
       </View>
