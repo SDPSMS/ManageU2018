@@ -17,7 +17,7 @@ export default class MyDatePicker extends Component {
 
     return (
       <DatePicker
-        style={{ width: 300, alignItems: 'center', alignSelf: 'center',  marginVertical: 5,borderWidth: 2, borderColor: 'red' }}
+        style={{ width: 300, alignItems: 'center', alignSelf: 'center', marginVertical: 5, borderWidth: 2, borderColor: 'red' }}
         mode='date'
         showIcon={false}
         placeholder='Select Date'

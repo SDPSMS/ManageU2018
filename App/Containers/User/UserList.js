@@ -19,24 +19,23 @@ class UserList extends Component {
         <Text style={styles.semDetailsText}>User Lists</Text>
         <ScrollView>
           <FlatList
-            style={{marginBottom: 50}}
+            style={{ marginBottom: 50 }}
             data={this.props.userslist}
             renderItem={
-              ({item}) =>
+              ({ item }) =>
                 <UserItem user={item} />
             }
             keyExtractor={(item, index) => index.toString()}
           />
           <RoundedButton text='Add new User' onPress={() => this.props.navigation.push('AddUser')} />
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
+          <Text />
+          <Text />
+          <Text />
+          <Text />
+          <Text />
+          <Text />
 
         </ScrollView>
-
 
       </View>
     )
@@ -54,4 +53,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, {loadAllUser})(UserList)
+export default connect(mapStateToProps, { loadAllUser })(UserList)

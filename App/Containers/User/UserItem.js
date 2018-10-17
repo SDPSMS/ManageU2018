@@ -16,7 +16,7 @@ const UserItem = (props) => {
       onPress={() => props.selectUser(props.user)}
     >
       <View style={styles.listContainer}>
-        <View style={{flex: 2, marginLeft: 10, marginTop: 5}}>
+        <View style={{ flex: 2, marginLeft: 10, marginTop: 5 }}>
           <Details placeholder='Email: ' detail={props.user.email} />
           <Details placeholder='Name: ' detail={props.user.name} />
           <Details placeholder='Role: ' detail={props.user.role} />
@@ -34,4 +34,4 @@ UserItem.propTypes = {
 
 // null for null props (because we already have the props from the peoplelist)
 // actions is to handle for action dispatched.
-export default connect(null, {selectUser, deleteUser})(UserItem)
+export default connect(null, { selectUser, deleteUser })(UserItem)

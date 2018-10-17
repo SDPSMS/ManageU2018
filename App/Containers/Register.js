@@ -37,7 +37,7 @@ class Register extends Component {
   render () {
     return (
       <View style={styles.mainContainer}>
-      <BackButton
+        <BackButton
           onPress={() => this.props.unselectSeminar()}
         />
         <View>
