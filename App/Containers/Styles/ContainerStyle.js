@@ -108,7 +108,7 @@ export default StyleSheet.create({
     color: Colors.primaryTextColour,
     fontWeight: 'bold',
     fontSize: 37,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     textAlign: 'center',
     marginBottom: 10,
     marginTop: 10,

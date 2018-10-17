@@ -74,7 +74,7 @@ const AdminRootNav = StackNavigator(
     navigationOptions: ({ navigation }) => ({
       headerStyle: { backgroundColor: Colours.defaultPrimaryColour },
       title: 'ManageU',
-      headerTintColor: Colours.textPrimaryColour ,
+      headerTintColor: Colours.textPrimaryColour,
       gesturesEnabled: false,
       headerLeft: DrawerButton(navigation)
     })

@@ -35,12 +35,12 @@ class SeminarDetails extends Component {
   }
 
   finishAttendSeminar () {
-    this.setState({showModal: false})
+    this.setState({ showModal: false })
     this.props.attendSeminarFinish()
   }
 
   renderEditAndCancelButton () {
-    const {user, seminar} = this.props
+    const { user, seminar } = this.props
     if (user !== null && seminar.ownerid === user.id) {
       return (
         <View>
@@ -63,42 +63,42 @@ class SeminarDetails extends Component {
   }
 
   showJoinButton () {
-    const {seminar, user} = this.props
+    const { seminar, user } = this.props
     if (user == null) {
       return (
-        <RoundedButton text='Join' onPress={() => this.setState({showModal: true})} />
+        <RoundedButton text='Join' onPress={() => this.setState({ showModal: true })} />
       )
     } else if (user.id !== seminar.ownerid) {
       return (
-        <RoundedButton text='Join' onPress={() => this.setState({showModal: true})} />
+        <RoundedButton text='Join' onPress={() => this.setState({ showModal: true })} />
       )
     }
   }
 
   renderDetails () {
-    const {endDate, startDate} = this.props.seminar
+    const { endDate, startDate } = this.props.seminar
     const date = ConvertToDate(endDate, 'LL')
     const endTime = ConvertToDate(endDate, 'LT')
     const startTime = ConvertToDate(startDate, 'LT')
     const dropDownMenu = [
-      {value: 'Going'},
-      {value: 'Interested'}
+      { value: 'Going' },
+      { value: 'Interested' }
     ]
 
     let dialogContent = (
       <View>
         <TextField
           placeholder={'Name'}
-          onChangeText={(value) => this.setState({name: value})}
+          onChangeText={(value) => this.setState({ name: value })}
         />
         <TextField
           placeholder={'Email'}
-          onChangeText={(value) => this.setState({email: value})}
+          onChangeText={(value) => this.setState({ email: value })}
         />
         <CustomDropdown data={dropDownMenu}
-                        label={'Status'}
-                        value={this.state.status}
-                        onChangeText={(status) => this.setState({status})} />
+          label={'Status'}
+          value={this.state.status}
+          onChangeText={(status) => this.setState({ status })} />
         <MessageText>{this.props.message}</MessageText>
       </View>
     )
@@ -130,16 +130,15 @@ class SeminarDetails extends Component {
 
         <Details placeholder='Organiser Name: ' detail={this.props.seminar.ownername} />
 
-        <Text></Text>
-        <Text></Text>
-        <Text></Text>
-        <Text></Text>
-
+        <Text />
+        <Text />
+        <Text />
+        <Text />
 
         {this.showJoinButton()}
         <View>
           <RoundedButton text='Display Attendees'
-                         onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
+            onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
         </View>
 
         <ModalDialog
