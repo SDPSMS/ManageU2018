@@ -27,7 +27,7 @@ class DateTime extends Component {
 
     return (
       <View style={{ marginLeft: 20, marginRight: 20 }}>
-        <Text style={styles.sectionText}>Choose Your Seminar Time</Text>
+        <Text style={styles.dateTimeText}>Choose Your Seminar Time</Text>
         <MyDatePicker date={date} onDateChange={(value) => this.props.formUpdate({ prop: 'date', value })} />
         <MyTimePicker time={startTime} placeholder='Start Time'
           onDateChange={(value) => {
@@ -36,6 +36,9 @@ class DateTime extends Component {
           }} />
         <MyTimePicker disabled={this.state.disabled} minDate={startTime} time={endTime} placeholder='End Time'
           onDateChange={(value) => this.props.formUpdate({ prop: 'endTime', value })} />
+        <Text />
+        <Text />
+        <Text />
         <RoundedButton
           text={'Add'}
           onPress={this.onAddPressed.bind(this)}

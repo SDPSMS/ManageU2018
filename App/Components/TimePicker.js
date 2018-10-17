@@ -10,10 +10,10 @@ export default class MyTimePicker extends Component {
 
   render () {
     const { placeholder, time, format, onDateChange, minDate, disabled } = this.props
-    const minTime = moment().valueOf()
+    const minTime = moment().format(format)
     return (
       <DatePicker
-        style={{ width: 200 }}
+        style={{width: 270, marginVertical: 3, alignItems: 'center', alignSelf: 'center'}}
         date={time}
         mode='time'
         placeholder={placeholder}
@@ -24,6 +24,7 @@ export default class MyTimePicker extends Component {
         confirmBtnText='Confirm'
         minuteInterval={30}
         cancelBtnText='Cancel'
+        showIcon= {true}
         customStyles={{
           dateIcon: {
             position: 'absolute',

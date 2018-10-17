@@ -24,6 +24,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
 
+
   listContainer: {
     marginTop: Metrics.doubleBaseMargin,
     padding: Metrics.baseMargin,
@@ -37,8 +38,8 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     alignItems: 'center',
     alignSelf: 'center',
-    paddingTop: 30,
-    paddingBottom: 20,
+    paddingTop: 25,
+    paddingBottom: 10,
     fontSize: 40
   },
 
@@ -98,7 +99,7 @@ export default StyleSheet.create({
   },
 
   registerLinkText: {
-    color: 'blue',
+    color: '#3680f7',
     fontSize: 20,
     alignItems: 'center',
     alignSelf: 'center'
@@ -113,6 +114,16 @@ export default StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
     fontStyle: 'italic'
+  },
+  
+  dateTimeText:{
+    color: Colors.primaryTextColour,
+    fontWeight: 'bold',
+    fontSize: 50,
+    justifyContent: 'center',
+    textAlign: 'center',
+    marginBottom: 20,
+    marginTop: 50,
   },
 
   loadingContainer: {

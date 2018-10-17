@@ -3,6 +3,7 @@ import DatePicker from 'react-native-datepicker'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 
+
 export default class MyDatePicker extends Component {
   static propTypes = {
     format: PropTypes.string
@@ -17,17 +18,31 @@ export default class MyDatePicker extends Component {
 
     return (
       <DatePicker
-        style={{ width: 300, alignItems: 'center', alignSelf: 'center', marginVertical: 5, borderWidth: 2, borderColor: 'red' }}
-        mode='date'
+        style={{ width: 270, marginVertical: 3, alignItems: 'center', alignSelf: 'center'}}
+        mode="date"
         showIcon={false}
-        placeholder='Select Date'
+        placeholder="Select Date"
         date={date}
-        format={format}
+        format= {format}
         // Will need to set this to current date
         minDate={minimumDate}
         confirmBtnText='Confirm'
         cancelBtnText='Cancel'
         onDateChange={onDateChange}
+        showIcon = {true}
+        customStyles={{
+        dateIcon: {
+          
+          position: 'absolute',
+          left: 0,
+          top: 4,
+          marginLeft: 0
+          },
+          dateInput: {
+            marginLeft: 36
+          }
+        }}
+        
       />
     )
   }

@@ -179,8 +179,7 @@ class AttendeeList extends Component {
     return (
       <View style={{ flex: 1 }}>
         <BackButton onPress={() => this.props.navigation.popToTop()} />
-        <Text style={styles.sectionText}>List of Attendees</Text>
-        <Text style={styles.subtitleText1}>Number of Attendees: {length}</Text>
+        <Text style={styles.seminarText}>List of Attendees</Text>
         <MessageText>{this.props.message}</MessageText>
         <FlatList
           data={this.props.attendeeLists}
@@ -193,12 +192,12 @@ class AttendeeList extends Component {
                 borderTopWidth: 3,
                 borderColor: Colors.cloud
               }}>
-                <View style={{ flex: 2, marginLeft: 10, marginTop: 7 }}>
-                  <Text style={{ fontSize: 20, color: 'black' }}>Email: {item.email}</Text>
-                  <Text style={{ fontSize: 20, color: 'black' }}>Name: {item.name}</Text>
-                  <Text style={{ fontSize: 20, color: 'black' }}>Status: {item.status}</Text>
+                <View style={{ flex: 2, marginLeft: 10, marginTop: 11 }}>
+                  <Text style={{ fontSize: 16, color: 'black' }}>Email: {item.email}</Text>
+                  <Text style={{ fontSize: 16, color: 'black' }}>Name: {item.name}</Text>
+                  <Text style={{ fontSize: 16, color: 'black' }}>Status: {item.status}</Text>
                 </View>
-                <View style={{ flex: 1, marginRight: 10, marginTop: 12 }}>
+                <View style={{ flex: 0.7, marginRight: 10, marginTop: 12 }}>
                   <View style={{ marginBottom: 10 }}>
                     <Button title='Edit'
                       onPress={() => {
@@ -214,11 +213,15 @@ class AttendeeList extends Component {
                       }}
                     />
                   </View>
+                  
                 </View>
+                
               </View>
+              
           }
           keyExtractor={(item, index) => index.toString()}
         />
+        <Text style={styles.registerLinkText}>Number of Attendees: {length}</Text>
         {this.renderDialog()}
         {this.renderPrintButton()}
       </View>
