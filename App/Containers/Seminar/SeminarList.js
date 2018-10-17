@@ -79,6 +79,7 @@ class SeminarList extends Component {
           onChangeText={(organiser) => this.setState({ organiser })} />
         <RoundedButton text='Get Seminar By Organiser Name'
           onPress={() => this.props.getSeminarByOrganiserName(this.state.organiser)} />
+        <RoundedButton text='Clear filter' onPress={() => this.props.loadAllSeminars()} />
       </View>
     )
 
@@ -93,7 +94,6 @@ class SeminarList extends Component {
           <TextField placeholder='  SEARCH HERE!' value={this.state.search}
             onChangeText={(email) => this.setState({ email })} />
           <RoundedButton text='Filter' onPress={() => this.setState({ showFilterModal: true })} />
-          <RoundedButton text='Clear filter' onPress={() => this.props.loadAllSeminars()} />
         </View>
 
         {/* Modal diaglog for setting filters */}
