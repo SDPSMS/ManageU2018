@@ -79,7 +79,6 @@ class SeminarList extends Component {
           onChangeText={(organiser) => this.setState({ organiser })} />
         <RoundedButton text='Get Seminar By Organiser Name'
           onPress={() => this.props.getSeminarByOrganiserName(this.state.organiser)} />
-        <RoundedButton text='Clear filter' onPress={() => this.props.loadAllSeminars()} />
       </View>
     )
 
@@ -102,7 +101,6 @@ class SeminarList extends Component {
           onPressNegative={() => this.setState({ showFilterModal: false })} children={filterDialogContent}
           title='Filters' isVisible={this.state.showFilterModal} />
         <Text />
-        <Text />
         <ScrollView style={styles.container}>
           <View>
             <FlatList
@@ -119,6 +117,7 @@ class SeminarList extends Component {
           </View>
         </ScrollView>
         {this.renderAddSeminarButton()}
+        <RoundedButton text='Clear filter' onPress={() => this.props.loadAllSeminars()} />
       </View>
     )
   }

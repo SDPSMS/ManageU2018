@@ -12,7 +12,7 @@ export default class MyTimePicker extends Component {
     const { placeholder, time, format, onDateChange, disabled } = this.props
     return (
       <DatePicker
-        style={{ width: 200 }}
+        style={{width: 270, marginVertical: 3, alignItems: 'center', alignSelf: 'center'}}
         date={time}
         mode='time'
         placeholder={placeholder}
@@ -22,6 +22,7 @@ export default class MyTimePicker extends Component {
         confirmBtnText='Confirm'
         minuteInterval={30}
         cancelBtnText='Cancel'
+        showIcon= {true}
         customStyles={{
           dateIcon: {
             position: 'absolute',
