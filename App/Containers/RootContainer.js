@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 // Styles
 import styles from './Styles/RootContainerStyles'
+import colours from '../Themes/Colors'
 import { initializeFirebase } from '../Services/FirebaseConfig'
 
 class RootContainer extends Component {
@@ -15,7 +16,7 @@ class RootContainer extends Component {
   render () {
     return (
       <View style={styles.applicationView}>
-        <StatusBar barStyle='light-content' />
+        <StatusBar barStyle='light-content' backgroundColor={colours.darkPrimaryColour} />
         <ReduxNavigation />
       </View>
     )
