@@ -3,7 +3,6 @@ import TextField from '../../../Components/TextField'
 import { formUpdate } from '../../../Action/SeminarAction'
 import { connect } from 'react-redux'
 import { Text, View } from 'react-native'
-import venueData from './venueData'
 import RoundedButton from '../../../Components/RoundedButton'
 import SearchDropdown from '../../../Components/SearchableDropdown'
 import BackButton from '../../../Components/BackButton'
@@ -12,41 +11,31 @@ import TextFieldLarge from '../../../Components/TextFieldLarge'
 
 class Abstract extends Component {
   render () {
-    const { abstract, label, speaker, venue } = this.props
+    const { abstract, label, speaker, host } = this.props
 
     return (
       <View style={{ marginLeft: 20, marginRight: 20 }}>
         <BackButton onPress={() => this.props.navigation.pop()} />
         <Text style={styles.sectionText}>Add new Seminar</Text>
         <TextField
-          placeholder={'Label'}
+          placeholder={'Seminar Title'}
           value={label}
           onChangeText={(value) => this.props.formUpdate({ prop: 'label', value })}
-        />
-        <TextFieldLarge
-          placeholder={'Abstract'}
-          value={abstract}
-          onChangeText={(value) => this.props.formUpdate({ prop: 'abstract', value })}
         />
         <TextField
           placeholder={'Speaker'}
           value={speaker}
           onChangeText={(value) => this.props.formUpdate({ prop: 'speaker', value })}
         />
-        <SearchDropdown
-          data={venueData}
-          label='Venue'
-          value={venue}
-          onItemSelect={(item) => {
-            this.props.formUpdate({ prop: 'venue', value: item.name })
-            this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
-          }}
-          onChangeText={
-            (item) => {
-              this.props.formUpdate({ prop: 'venue', value: item.name })
-              this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
-            }
-          }
+        <TextFieldLarge
+          placeholder={'Speaker Bio'}
+          value={abstract}
+          onChangeText={(value) => this.props.formUpdate({ prop: 'abstract', value })}
+        />
+        <TextField
+          placeholder={'Host'}
+          value={host}
+          onChangeText={(value) => this.props.formUpdate({ prop: 'host', value })}
         />
         <RoundedButton
           text={'Continue'}
@@ -58,9 +47,9 @@ class Abstract extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { abstract, date, time, duration, label, speaker, venue, venueCapacity } = state.seminar
+  const { abstract, date, time, duration, label, speaker, venue, venueCapacity, host } = state.seminar
   return {
-    abstract, date, time, duration, label, speaker, venue, venueCapacity
+    abstract, date, time, duration, label, speaker, venue, venueCapacity, host
   }
 }
 

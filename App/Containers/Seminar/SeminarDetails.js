@@ -118,6 +118,9 @@ class SeminarDetails extends Component {
         {/* Seminar details */}
         <Details placeholder='Speaker: ' style={styles.seminardetailsText} detail={this.props.seminar.speaker} />
 
+        {/* Abstract text */}
+        <Details placeholder='Abstract: ' detail={this.props.seminar.abstract} />
+
         {/* Seminar date */}
         <Details style={styles.seminardetailsText} placeholder='Date: ' detail={date} />
         {/* Seminar time */}
@@ -126,9 +129,6 @@ class SeminarDetails extends Component {
         <Details placeholder='Venue: ' detail={this.props.seminar.venue} />
 
         <Details placeholder='Venue Capacity: ' detail={this.props.seminar.venueCapacity} />
-
-        {/* Abstract text */}
-        <Details placeholder='Abstract: ' detail={this.props.seminar.abstract} />
 
         <Details placeholder='Organiser Name: ' detail={this.props.seminar.ownername} />
 

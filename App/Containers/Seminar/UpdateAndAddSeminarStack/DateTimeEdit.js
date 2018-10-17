@@ -7,6 +7,8 @@ import * as actions from '../../../Action/SeminarAction'
 import MyDatePicker from '../../../Components/DatePicker'
 import MyTimePicker from '../../../Components/TimePicker'
 import styles from '../../Styles/ContainerStyle'
+import venueData from './venueData'
+import SearchDropdown from '../../../Components/SearchableDropdown'
 
 class DateTimeEdit extends Component {
   constructor (props) {
@@ -17,7 +19,7 @@ class DateTimeEdit extends Component {
   }
 
   onUpdatePressed () {
-    const { abstract, organisername, ownername, date, startTime, endTime, label, speaker, venue, id, venueCapacity } = this.props
+    const { abstract, organisername, ownername, date, startTime, endTime, label, speaker, venue, id, venueCapacity, host } = this.props
     let val = ''
     /* Backwards Compatibility, Stupid Code, Change this if have time, not reusable. */
     if (ownername === '') {
@@ -35,12 +37,13 @@ class DateTimeEdit extends Component {
       venueCpct = venueCapacity
     }
 
+    console.log(id)
     this.props.sendUpdateEmailNotif(id)
-    this.props.saveSeminar({ abstract, date, startTime, endTime, label, speaker, venue: vnue, id, venueCapacity: venueCpct, ownername: val })
+    this.props.saveSeminar({ abstract, date, startTime, endTime, label, speaker, venue: vnue, id, venueCapacity: venueCpct, ownername: val, host })
   }
 
   render () {
-    const { date, startTime, endTime } = this.props
+    const { date, startTime, endTime, venue } = this.props
 
     return (
       <View style={{ marginLeft: 20, marginRight: 20 }}>
@@ -54,6 +57,21 @@ class DateTimeEdit extends Component {
           }} />
         <MyTimePicker disabled={this.state.disabled} minDate={startTime} time={endTime} placeholder='End Time'
           onDateChange={(value) => this.props.formUpdate({ prop: 'endTime', value })} />
+        <SearchDropdown
+          data={venueData}
+          label='Venue'
+          value={venue}
+          onItemSelect={(item) => {
+            this.props.formUpdate({ prop: 'venue', value: item.name })
+            this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
+          }}
+          onChangeText={
+            (item) => {
+              this.props.formUpdate({ prop: 'venue', value: item.name })
+              this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
+            }
+          }
+        />
         <RoundedButton
           text={'Confirm Change'}
           onPress={this.onUpdatePressed.bind(this)}
@@ -64,10 +82,10 @@ class DateTimeEdit extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, ownername } = state.seminar
+  const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, ownername, host } = state.seminar
   const { id } = state.seminar.seminarSelected
   return {
-    abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, id, ownername, organiserName: state.user.user.name
+    abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, id, host, ownername, organiserName: state.user.user.name
   }
 }
 
