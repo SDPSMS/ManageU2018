@@ -177,24 +177,62 @@ function loadAttendeeEmpty (attendeesListAndDetails) {
 }
 
 export function loadAttendees (seminarId) {
-  return (dispatch) => {
-    let attendeeLists = []
-    firebase.database().ref(`attendeelist/${seminarId}`)
-      .on('value', (snapshot) => {
-        snapshot.forEach((attendeeid) => {
-          firebase.database().ref(`attendees/${attendeeid.key}`)
-            .on('value', (snapshot) => {
-              attendeeLists.push(snapshot.val())
+  return async (dispatch) => {
+    try {
+      const a = []
+      const attendeeListRef = await firebase.database().ref(`attendeelist/${seminarId}`)
+      attendeeListRef.once('value').then(snapshot => {
+        console.log(snapshot.hasChildren())
+        if (snapshot.hasChildren()) {
+          snapshot.forEach((attendeeid) => {
+            const attendeesDetailsRef = firebase.database().ref(`attendees/${attendeeid.key}`)
+            attendeesDetailsRef.once('value', snap => {
+              console.log(snap.val())
+              a.push(snap.val())
             })
-        })
-        if (attendeeLists.length !== 0) {
-          dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeeLists})
-          // attendeesListAndDetails.length === 0 ? dispatch(loadAttendeeEmpty(attendeesListAndDetails)) : dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
-          dispatch(loadAttendeeFinish())
+              .then(() => {
+                if (a.length === 0) {
+                  dispatch(loadAttendeeEmpty(a))
+                } else {
+                  dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: a})
+                  dispatch(loadAttendeeFinish())
+                }
+              })
+          })
         } else {
-          dispatch(loadAttendeeEmpty())
+          dispatch(loadAttendeeEmpty(a))
         }
       })
+        .catch(() => {
+          dispatch(loadAttendeeEmpty(a))
+        })
+    } catch (err) {
+      console.log(err)
+    }
+
+    //   return score.once("value", snapshot => {
+    //     const res = snapshot.map(childSnapshot => childSnapshot.toJSON())
+    //     return dispatch({ type: GET_SCORES, payload: res });
+    //   })
+    // }
+    // firebase.database().ref(`attendeelist/${seminarId}`)
+    //   .once('value').then(async (snapshot) => {
+    //     let attendeeLists = []
+    //     snapshot.forEach((attendeeid) => {
+    //       firebase.database().ref(`attendees/${attendeeid.key}`)
+    //         .once('value').then((snapshot) => {
+    //           attendeeLists.push(snapshot.val())
+    //         })
+    //     })
+    //     dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeeLists})
+    //     dispatch(loadAttendeeFinish())
+    //   })
+    // .then(async (attendeeLists) => {
+    //   console.log(attendeeLists)
+    //   await dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeeLists})
+    //   // attendeesListAndDetails.length === 0 ? dispatch(loadAttendeeEmpty(attendeesListAndDetails)) : dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
+    //   await
+    // })
   }
 }
 

@@ -19,13 +19,24 @@ class DateTimeEdit extends Component {
   onUpdatePressed () {
     const { abstract, organisername, ownername, date, startTime, endTime, label, speaker, venue, id, venueCapacity } = this.props
     let val = ''
+    /* Backwards Compatibility, Stupid Code, Change this if have time, not reusable. */
     if (ownername === '') {
       val = organisername
     } else {
       val = ownername
     }
+    let vnue = ''
+    let venueCpct = 100
+    if (venue === '') {
+      vnue = 'CB07.02.025'
+      venueCpct = 100
+    } else {
+      vnue = venue
+      venueCpct = venueCapacity
+    }
+
     this.props.sendUpdateEmailNotif(id)
-    this.props.saveSeminar({ abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity, ownername: val })
+    this.props.saveSeminar({ abstract, date, startTime, endTime, label, speaker, venue: vnue, id, venueCapacity: venueCpct, ownername: val })
   }
 
   render () {

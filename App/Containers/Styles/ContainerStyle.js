@@ -45,13 +45,13 @@ export default StyleSheet.create({
 
   sectionText: {
     color: Colors.primaryTextColour,
-    padding: Metrics.baseMargin,
+    padding: Metrics.smallMargin,
     alignItems: 'center',
     alignSelf: 'center',
     fontWeight: 'bold',
-    paddingTop: 50,
-    paddingBottom: 35,
-    fontSize: 50
+    paddingTop: 10,
+    paddingBottom: 10,
+    fontSize: 35
   },
 
   loginText: {

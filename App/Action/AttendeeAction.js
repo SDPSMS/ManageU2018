@@ -11,9 +11,10 @@ function attendSeminarError () {
   }
 }
 
-function attendSeminarSuccess () {
+function attendSeminarSuccess (name, status, email, seminarid) {
   return {
     type: types.SEMINAR_ATTEND_SUCCESS,
+    payload: ({name, status, email, id: seminarid}),
     message: 'Successfully registered, now you can close this registration!'
   }
 }
@@ -68,7 +69,7 @@ export function attendSeminar (name, email, status, seminarid) {
               const newAttendee = firebase.database().ref('attendees').push({name, status, email})
               firebase.database().ref(`attendees/${newAttendee.getKey()}`).update({id: newAttendee.getKey()})
               firebase.database().ref(`attendeelist/${seminarid}/${newAttendee.getKey()}`).set({id: newAttendee.getKey()})
-                .then(() => dispatch(attendSeminarSuccess()))
+                .then(() => dispatch(attendSeminarSuccess(name, status, email, seminarid)))
             }
           })
       } else {
@@ -117,17 +118,18 @@ export function deleteAttendee (seminarId, attendeeId) {
     firebase.database().ref(`attendeelist/${seminarId}/${attendeeId}`).remove()
       .then(() => {
         firebase.database().ref(`attendees/${attendeeId}`).remove()
-      })
-      .then(() => {
-        dispatch({type: types.DELETE_ATTENDEE_SUCCESS, payload: attendeeId})
+          .then(() => {
+            console.log(attendeeId)
+            dispatch({type: types.DELETE_ATTENDEE_SUCCESS, payload: attendeeId})
+          })
       })
       .catch(() => {
       })
   }
 }
 
-export function editAttendeeStart () {
-  return ({type: 'EDIT_ATTENDEE_START'})
+export function editAttendeeStart (attendeeId) {
+  return ({type: 'EDIT_ATTENDEE_START', payload: attendeeId})
 }
 
 export function editAttendee (attendeeId, name, status, email) {
@@ -138,7 +140,6 @@ export function editAttendee (attendeeId, name, status, email) {
         firebase.database().ref(`attendees/${attendeeId}`)
           .update({email, id: attendeeId, name, status})
           .then(() => {
-            // SAVE USER IN THE DATABASE
             dispatch({type: 'EDIT_ATTENDEE_SUCCESS', payload: ({email, id: attendeeId, name, status})})
           })
       } else {

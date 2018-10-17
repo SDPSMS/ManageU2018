@@ -27,7 +27,6 @@ import RNPrint from 'react-native-print'
 
 class AttendeeList extends Component {
   componentDidMount () {
-    this.props.loadAttendees(this.props.seminarId)
   }
 
   constructor (props) {
@@ -49,10 +48,6 @@ class AttendeeList extends Component {
   editAttendees () {
     const {name, email, status, selectedUser} = this.state
     const {editAttendee} = this.props
-    console.log(this.state.role)
-    this.state.name === '' ? this.setState({name: selectedUser.name}) : console.log('resetting value because empty')
-    this.state.email === '' ? this.setState({email: selectedUser.email}) : console.log('resetting value because empty')
-    this.state.role === '' ? this.setState({role: selectedUser.role}) : console.log('resetting value because empty')
 
     editAttendee(selectedUser.id, name, status, email)
   }
@@ -143,18 +138,18 @@ class AttendeeList extends Component {
         dialogContent = (
           <View>
             <TextField
-              placeholder={'name'}
-              value={selectedUser.name}
+              placeholder={'Name'}
+              value={this.props.selectedAttendee.name}
               onChangeText={(name) => this.setState({name})}
             />
             <TextField
-              placeholder={'name'}
-              value={selectedUser.email}
+              placeholder={'Email'}
+              value={this.props.selectedAttendee.email}
               onChangeText={(email) => this.setState({email})}
             />
             <CustomDropdown data={this.state.dropDownMenu}
                             label={'Status'}
-                            value={selectedUser.status}
+                            value={this.props.selectedAttendee.status}
                             onChangeText={(status) => this.setState({status})} />
             <MessageText>{this.props.error}</MessageText>
           </View>
@@ -191,7 +186,7 @@ class AttendeeList extends Component {
           onPress={() => this.props.navigation.popToTop()}
         />
         <Text style={styles.sectionText}>List of Attendees</Text>
-        <MessageText>{this.props.message}</MessageText>
+        <Text style={styles.subtitleText1}>Number of Attendees: {this.props.attendeeLists.length}</Text>
         <FlatList
           data={this.props.attendeeLists}
           renderItem={
@@ -206,14 +201,14 @@ class AttendeeList extends Component {
                   <View style={{marginBottom: 10}}>
                     <Button title='Edit'
                             onPress={() => {
-                              this.setState({showModal: true, selectedUser: item, mode: 'edit'})
-                              this.props.editAttendeeStart()
+                              this.setState({selectedUser: item, mode: 'edit'})
+                              this.props.editAttendeeStart(item.id)
                             }} />
                   </View>
                   <View style={{marginBottom: 10}}>
                     <Button title='Delete' color={Colors.fire}
                             onPress={() => {
-                              this.setState({showModal: true, id: item.id, mode: 'delete'})
+                              this.setState({id: item.id, mode: 'delete'})
                               this.props.deleteAttendeeStart()
                             }}
                     />
@@ -223,6 +218,7 @@ class AttendeeList extends Component {
           }
           keyExtractor={(item, index) => index.toString()}
         />
+        <MessageText>{this.props.message}</MessageText>
         {this.renderDialog()}
         {this.renderPrintButton()}
       </View>
@@ -242,7 +238,9 @@ function mapStateToProps (state) {
     user: state.user.user,
     showModal: state.attendee.showModal,
     error: state.attendee.error,
-    isLoading: state.attendee.isLoading
+    isLoading: state.attendee.isLoading,
+    message: state.attendee.message,
+    selectedAttendee: state.attendee.selectedAttendee
   }
 }
 

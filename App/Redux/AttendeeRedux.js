@@ -3,6 +3,7 @@ import _ from 'lodash'
 
 const initialState = {
   seminarAttendees: [],
+  selectedAttendee: null,
   isLoading: false,
   message: '',
   showModal: false,
@@ -55,7 +56,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         message: action.message,
-        isLoading: false
+        isLoading: false,
+        seminarAttendees: [...state.seminarAttendees, action.payload]
       }
     case types.SEMINAR_ATTEND_FAILED:
       return {
@@ -77,7 +79,8 @@ export default (state = initialState, action) => {
         ...state,
         showModal: true,
         isLoading: false,
-        error: ''
+        error: '',
+        selectedAttendee: state.seminarAttendees.find(x => x.id === action.payload)
       }
 
     case 'DELETE_ATTENDEE_START':
@@ -95,7 +98,6 @@ export default (state = initialState, action) => {
         seminarAttendees: state.seminarAttendees.map((item) => (
           item.id === action.payload.id ? {
             ...item,
-            id: action.payload.id,
             email: action.payload.email,
             name: action.payload.name,
             status: action.payload.status

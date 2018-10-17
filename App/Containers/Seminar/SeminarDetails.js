@@ -76,7 +76,6 @@ class SeminarDetails extends Component {
 
   // TODO: The Display attendees button should not have that function when clicked (should only move the screen).
   renderDetails () {
-    const {attendeeLists} = this.props
     const {endDate, startDate} = this.props.seminar
     const date = ConvertToDate(endDate, 'LL')
     const endTime = ConvertToDate(endDate, 'LT')
@@ -85,10 +84,6 @@ class SeminarDetails extends Component {
       {value: 'Going'},
       {value: 'Interested'}
     ]
-    let length
-    if (attendeeLists != null) {
-      length = attendeeLists.length
-    }
 
     let dialogContent = (
       <View>
@@ -142,7 +137,6 @@ class SeminarDetails extends Component {
         <Text>{this.props.seminar.abstract}</Text>
         <Text>Organiser Name</Text>
         <Text>{this.props.seminar.ownername}</Text>
-        <Text>Number of Attendees: {length} </Text>
 
         <View>
           {this.showJoinButton()}

@@ -29,9 +29,9 @@ class SeminarList extends Component {
       venue: '',
       search: '',
       showFilterModal: false,
-      startDate: moment().format('L'),
+      startDate: moment().format('YYYY-MM-DD'),
       // Adding a day today.
-      endDate: moment().add('1', 'days').format('L'),
+      endDate: moment().add('1', 'days').format('YYYY-MM-DD'),
       speaker: '',
       organiser: ''
     }

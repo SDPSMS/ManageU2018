@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons'
+import SimpleIcon from 'react-native-vector-icons/MaterialIcons'
 
 export default class BackButton extends Component {
   static propTypes = {
@@ -19,7 +19,7 @@ export default class BackButton extends Component {
     // TODO: Change the back icons.
     return (
       <SimpleIcon
-        name={'close'}
+        name={'arrow_back_ios'}
         size={30}
         onPress={onPress}
       />
