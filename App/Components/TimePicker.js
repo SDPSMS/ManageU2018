@@ -9,8 +9,7 @@ export default class MyTimePicker extends Component {
   }
 
   render () {
-    const { placeholder, time, format, onDateChange, minDate, disabled } = this.props
-    const minTime = moment().valueOf()
+    const { placeholder, time, format, onDateChange, disabled } = this.props
     return (
       <DatePicker
         style={{ width: 200 }}
@@ -18,7 +17,6 @@ export default class MyTimePicker extends Component {
         mode='time'
         placeholder={placeholder}
         format={format}
-        minDate={minTime || minDate}
         disabled={disabled}
         // Will need to set this to current date
         confirmBtnText='Confirm'

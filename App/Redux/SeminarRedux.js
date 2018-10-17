@@ -13,6 +13,7 @@ const initialState = {
   label: '',
   speaker: '',
   venue: '',
+  host: '',
   venueCapacity: ''
 }
 
@@ -56,7 +57,8 @@ export default (state = initialState, action) => {
         label: '',
         speaker: '',
         venue: '',
-        venueCapacity: ''
+        venueCapacity: '',
+        host: ''
       }
 
     case 'ADD_SEMINAR':
@@ -71,6 +73,7 @@ export default (state = initialState, action) => {
         speaker: '',
         venue: '',
         venueCapacity: '',
+        host: '',
         seminars: [...state.seminars, action.payload]
       }
 
@@ -98,6 +101,7 @@ export default (state = initialState, action) => {
         venue: action.payload.venue,
         venueCapacity: action.payload.venueCapacity,
         id: action.payload.id,
+        host: action.payload.host,
         ownername: action.payload.ownername
         // seminarSelected: null,
       }
@@ -116,6 +120,7 @@ export default (state = initialState, action) => {
         venue: '',
         venueCapacity: '',
         ownername: '',
+        host: '',
         seminars: state.seminars.map((item) => (
           item.id === action.payload.id ? {
             ...item,
@@ -126,7 +131,8 @@ export default (state = initialState, action) => {
             startDate: action.payload.startDate,
             venue: action.payload.venue,
             venueCapacity: action.payload.venueCapacity,
-            ownername: action.payload.ownername
+            ownername: action.payload.ownername,
+            host: action.payload.host
           } : item
         ))
       }

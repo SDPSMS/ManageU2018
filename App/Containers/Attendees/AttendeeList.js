@@ -47,7 +47,7 @@ class AttendeeList extends Component {
     const { name, email, status, selectedUser } = this.state
     const { editAttendee, selectedAttendee } = this.props
 
-    editAttendee(selectedUser.id, name || selectedAttendee.name, status || selectedAttendee.status, email || selectedAttendee.email)
+    editAttendee(selectedAttendee.id, name || selectedAttendee.name, status || selectedAttendee.status, email || selectedAttendee.email)
   }
 
   deleteAttendees (attendeeId) {

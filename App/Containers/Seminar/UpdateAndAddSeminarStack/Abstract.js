@@ -12,26 +12,31 @@ import TextFieldLarge from '../../../Components/TextFieldLarge'
 
 class Abstract extends Component {
   render () {
-    const { abstract, label, speaker, venue } = this.props
+    const { abstract, label, speaker, host, venue } = this.props
 
     return (
       <View style={{ marginLeft: 20, marginRight: 20 }}>
         <BackButton onPress={() => this.props.navigation.pop()} />
         <Text style={styles.sectionText}>Add new Seminar</Text>
         <TextField
-          placeholder={'Label'}
+          placeholder={'Seminar Title'}
           value={label}
           onChangeText={(value) => this.props.formUpdate({ prop: 'label', value })}
-        />
-        <TextFieldLarge
-          placeholder={'Abstract'}
-          value={abstract}
-          onChangeText={(value) => this.props.formUpdate({ prop: 'abstract', value })}
         />
         <TextField
           placeholder={'Speaker'}
           value={speaker}
           onChangeText={(value) => this.props.formUpdate({ prop: 'speaker', value })}
+        />
+        <TextFieldLarge
+          placeholder={'Speaker Bio'}
+          value={abstract}
+          onChangeText={(value) => this.props.formUpdate({ prop: 'abstract', value })}
+        />
+        <TextField
+          placeholder={'Host'}
+          value={host}
+          onChangeText={(value) => this.props.formUpdate({ prop: 'host', value })}
         />
         <SearchDropdown
           data={venueData}
@@ -58,9 +63,9 @@ class Abstract extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { abstract, date, time, duration, label, speaker, venue, venueCapacity } = state.seminar
+  const { abstract, date, time, duration, label, speaker, venue, venueCapacity, host } = state.seminar
   return {
-    abstract, date, time, duration, label, speaker, venue, venueCapacity
+    abstract, date, time, duration, label, speaker, venue, venueCapacity, host
   }
 }
 
