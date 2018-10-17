@@ -7,6 +7,7 @@ import Logout from '../Containers/Logout'
 import Help from '../Containers/Help'
 import Print from '../Containers/Print'
 import DrawerButton from '../Components/DrawerButton'
+import Colours from '../Themes/Colors'
 
 // ADMIN ONLY LOGGED IN UTILITY
 // TODO: Only show this if user role when logged in is checked as admin.
@@ -73,8 +74,9 @@ const AdminRootNav = StackNavigator(
     AdminNav: { screen: AdminNav }
   }, {
     navigationOptions: ({ navigation }) => ({
-      headerStyle: { backgroundColor: '#6495ed' },
+      headerStyle: { backgroundColor: Colours.defaultPrimaryColour },
       title: 'ManageU',
+      headerTintColor: Colours.textPrimaryColour ,
       gesturesEnabled: false,
       headerLeft: DrawerButton(navigation)
     })
