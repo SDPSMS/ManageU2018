@@ -31,15 +31,15 @@ class UserList extends Component {
         />
           <Text></Text>
           <RoundedButton text='Add new User' onPress={() => this.props.navigation.push('AddUser')} />
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
+          <Text />
+          <Text />
+          <Text />
+          <Text />
+          <Text />
         </ScrollView>
-        
-        </View>
-        
+
+      </View>
+
     )
   }
 }

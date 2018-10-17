@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { Text, View, ScrollView, Linking } from 'react-native'
 import styles from './Styles/ContainerStyle'
-import RoundedButton from '../Components/RoundedButton';
+import RoundedButton from '../Components/RoundedButton'
 
 export default class Help extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <RoundedButton text='Online Help' onPress={() => { Linking.openURL('https://google.com/')}} />
+        <RoundedButton text='Online Help' onPress={() => { Linking.openURL('https://google.com/') }} />
         <ScrollView>
           <Text style={styles.sectionText}>Need help?</Text>
           <Text style={styles.titleText}>Getting Started</Text>
@@ -45,14 +45,12 @@ export default class Help extends Component {
            - If you wish to edit a seminar, open the seminar's detail view, then press on the 'Edit' button.
              Once you have made changes, press the 'done' button and the changes will be saved.
           </Text>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-          </ScrollView>
-          <RoundedButton text='Online Help' />
-         
-          
-          
+          <Text />
+          <Text />
+          <Text />
+        </ScrollView>
+        <RoundedButton text='Online Help' />
+
       </View>
     )
   }
