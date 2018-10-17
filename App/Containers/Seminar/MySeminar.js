@@ -7,6 +7,7 @@ import _ from 'lodash'
 import SeminarItem from './SeminarItem'
 import RoundedButton from '../../Components/RoundedButton'
 import * as types from '../../Types/userType'
+import styles from '../Styles/ContainerStyle'
 
 /**
  * Display the lists owned by a seminar hosts.
@@ -29,8 +30,8 @@ class MySeminar extends Component {
   renderInitialView () {
     return (
       // Return the list view
-      <View>
-        <Text>My Seminars</Text>
+      <View style={styles.container}>
+        <Text style={styles.sectionText}> My Seminars</Text>
         <FlatList
           data={this.props.mySeminar}
           renderItem={

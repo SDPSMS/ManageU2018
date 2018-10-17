@@ -5,8 +5,8 @@ export default StyleSheet.create({
   button: {
     alignItems: 'center',
     alignSelf: 'center',
-    width: 340,
-    height: 45,
+    width: 330,
+    height: 42,
     borderRadius: 50,
     marginHorizontal: Metrics.section,
     marginVertical: 3,
@@ -18,7 +18,7 @@ export default StyleSheet.create({
     color: Colors.snow,
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: Fonts.size.medium,
+    fontSize: 15,
     marginVertical: Metrics.baseMargin
   }
 })
