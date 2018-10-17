@@ -7,6 +7,8 @@ import * as actions from '../../../Action/SeminarAction'
 import MyDatePicker from '../../../Components/DatePicker'
 import MyTimePicker from '../../../Components/TimePicker'
 import styles from '../../Styles/ContainerStyle'
+import venueData from './venueData'
+import SearchDropdown from '../../../Components/SearchableDropdown'
 
 class DateTimeEdit extends Component {
   constructor (props) {
@@ -41,7 +43,7 @@ class DateTimeEdit extends Component {
   }
 
   render () {
-    const { date, startTime, endTime } = this.props
+    const { date, startTime, endTime, venue } = this.props
 
     return (
       <View style={{ marginLeft: 20, marginRight: 20 }}>
@@ -55,6 +57,21 @@ class DateTimeEdit extends Component {
           }} />
         <MyTimePicker disabled={this.state.disabled} minDate={startTime} time={endTime} placeholder='End Time'
           onDateChange={(value) => this.props.formUpdate({ prop: 'endTime', value })} />
+        <SearchDropdown
+          data={venueData}
+          label='Venue'
+          value={venue}
+          onItemSelect={(item) => {
+            this.props.formUpdate({ prop: 'venue', value: item.name })
+            this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
+          }}
+          onChangeText={
+            (item) => {
+              this.props.formUpdate({ prop: 'venue', value: item.name })
+              this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
+            }
+          }
+        />
         <RoundedButton
           text={'Confirm Change'}
           onPress={this.onUpdatePressed.bind(this)}

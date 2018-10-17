@@ -12,7 +12,7 @@ import TextFieldLarge from '../../../Components/TextFieldLarge'
 
 class AbstractEdit extends Component {
   render () {
-    const { abstract, label, speaker, venue, ownername, host } = this.props
+    const { abstract, label, speaker, ownername, host } = this.props
 
     return (
       <View style={{ marginLeft: 20, marginRight: 20 }} >
@@ -42,21 +42,6 @@ class AbstractEdit extends Component {
           placeholder={'Organiser Name'}
           value={ownername}
           onChangeText={(value) => this.props.formUpdate({ prop: 'ownername', value })}
-        />
-        <SearchDropdown
-          data={venueData}
-          label='Venue'
-          value={venue}
-          onItemSelect={(item) => {
-            this.props.formUpdate({ prop: 'venue', value: item.name })
-            this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
-          }}
-          onChangeText={
-            (item) => {
-              this.props.formUpdate({ prop: 'venue', value: item.name })
-              this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
-            }
-          }
         />
         <RoundedButton
           text={'Continue'}
