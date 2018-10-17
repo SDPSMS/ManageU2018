@@ -134,7 +134,7 @@ class SeminarDetails extends Component {
 
       <Details placeholder='Organiser Name: ' detail={this.props.seminar.ownername} />
 
-      <Details placeholder ='No. Attendees: ' detail={length} />
+      {/* <Details placeholder ='No. Attendees: ' detail={length} /> */}
       <Text></Text>
       <Text></Text>
       <Text></Text>
