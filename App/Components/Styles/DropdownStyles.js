@@ -25,6 +25,6 @@ export default {
     color: '#222'
   },
   itemsContainerStyle: {
-    maxHeight: 140
+    maxHeight: 210
   }
 }

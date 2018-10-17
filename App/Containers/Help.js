@@ -49,7 +49,7 @@ export default class Help extends Component {
           <Text />
           <Text />
         </ScrollView>
-        <RoundedButton text='Online Help' onPress={() => { Linking.openURL('https://google.com/') }} />
+        {/* <RoundedButton text='Online Help' onPress={() => { Linking.openURL('https://google.com/') }} /> */}
       </View>
     )
   }

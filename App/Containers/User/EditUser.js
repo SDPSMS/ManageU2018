@@ -9,6 +9,7 @@ import CustomDropdown from '../../Components/Dropdown'
 import * as types from '../../Types/userType'
 import MessageText from '../../Components/MessageText'
 import { Colors, Metrics, Fonts } from '../../Themes/'
+import BackButton from '../../Components/BackButton'
 
 class EditUser extends Component {
   constructor (props) {
@@ -33,6 +34,7 @@ class EditUser extends Component {
         <View style={{ padding: Metrics.baseMargin,
           backgroundColor: Colors.background,
           marginBottom: 50 }}>
+          <BackButton onPress={() => this.props.navigation.pop()} />
           <Text style={{ color: Colors.primaryTextColour,
             alignSelf: 'center',
             fontWeight: 'bold',

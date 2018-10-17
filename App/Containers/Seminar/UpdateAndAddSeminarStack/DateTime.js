@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import TextField from '../../../Components/TextField'
 import { connect } from 'react-redux'
-import { Text, View } from 'react-native'
+import { Text, View, KeyboardAvoidingView } from 'react-native'
 import RoundedButton from '../../../Components/RoundedButton'
 import * as actions from '../../../Action/SeminarAction'
 import MyDatePicker from '../../../Components/DatePicker'
@@ -11,15 +11,16 @@ import venueData from './venueData'
 import SearchDropdown from '../../../Components/SearchableDropdown'
 import BackButton from '../../../Components/BackButton'
 
+
 class DateTime extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       disabled: true
     }
   }
 
-  onAddPressed () {
+  onAddPressed() {
     const { abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName, host, seminardesc } = this.props
     // The actions.
     this.props.addNewSeminar({
@@ -37,13 +38,33 @@ class DateTime extends Component {
     })
   }
 
-  render () {
+  render() {
     const { date, startTime, endTime, venue } = this.props
 
     return (
-      <View style={{ marginLeft: 20, marginRight: 20 }}>
-        <BackButton onPress={() => this.props.navigation.pop()} />
-        <Text style={styles.sectionText}>Choose Your Seminar Time</Text>
+      <View>
+        <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={130}>
+          <BackButton onPress={() => this.props.navigation.pop()} />
+          <Text style={styles.sectionText}>Confirm Venue</Text>
+
+          <SearchDropdown
+            style={{width:270}}
+            data={venueData}
+            label='Venue'
+            value={venue}
+            onItemSelect={(item) => {
+              this.props.formUpdate({ prop: 'venue', value: item.name })
+              this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
+            }}
+            onChangeText={
+              (item) => {
+                this.props.formUpdate({ prop: 'venue', value: item.name })
+                this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
+              }
+            }
+          />
+        </KeyboardAvoidingView>
+
         <MyDatePicker date={date} onDateChange={(value) => this.props.formUpdate({ prop: 'date', value })} />
         <MyTimePicker time={startTime} placeholder='Start Time'
           onDateChange={(value) => {
@@ -52,25 +73,19 @@ class DateTime extends Component {
           }} />
         <MyTimePicker disabled={this.state.disabled} minDate={startTime} time={endTime} placeholder='End Time'
           onDateChange={(value) => this.props.formUpdate({ prop: 'endTime', value })} />
-        <SearchDropdown
-          data={venueData}
-          label='Venue'
-          value={venue}
-          onItemSelect={(item) => {
-            this.props.formUpdate({ prop: 'venue', value: item.name })
-            this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
-          }}
-          onChangeText={
-            (item) => {
-              this.props.formUpdate({ prop: 'venue', value: item.name })
-              this.props.formUpdate({ prop: 'venueCapacity', value: item.capacity })
-            }
-          }
-        />
+
+
+
+
+
+
+
+
         <RoundedButton
           text={'Add'}
           onPress={this.onAddPressed.bind(this)}
         />
+
       </View>
     )
   }
