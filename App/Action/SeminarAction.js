@@ -52,7 +52,6 @@ export function editSeminar (seminar) {
   }
 }
 
-// TODO: Instead of using this, wrap everything in one object called details
 export function saveSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity, ownername }) {
   const { currentUser } = firebase.auth()
   const startDate = ConvertToTimestamp(date, startTime)
@@ -305,7 +304,6 @@ async function sendEmail (emails) {
   await api.sendEmail(emails)
 }
 
-// TODO: Might not be right here.
 export function sendUpdateEmailNotif (seminarid) {
   return (dispatch) => {
     let attendeesListAndDetails = []
@@ -319,7 +317,6 @@ export function sendUpdateEmailNotif (seminarid) {
             })
           .then(() => {
             console.log(attendeesListAndDetails)
-            // TODO: Handle error and success! --> Probably do not need to because it is automatically after a seminar is updated
             sendEmail(attendeesListAndDetails).then(() => {
               console.log('success')
             })

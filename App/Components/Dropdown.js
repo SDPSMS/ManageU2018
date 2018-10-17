@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Dropdown } from 'react-native-material-dropdown'
 import styles from './Styles/DropdownStyles'
 
-// TODO: Add font styling here, so it can be used anywhere.
 // size refer to the activity indicator's size.
 
 export default class CustomDropdown extends Component {

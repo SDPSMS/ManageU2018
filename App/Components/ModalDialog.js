@@ -12,16 +12,22 @@ export default class ModalDialog extends Component {
   static defaultProps = {
     negativeText: 'Close',
     confirmText: 'Register',
-    showLoading: false
+    showLoading: false,
+    showPositiveButton: true
+  }
+
+  renderPositiveButton () {
+    const { showPositiveButton, onPressPositive, confirmText } = this.props
+    return (showPositiveButton ? <Button onPress={onPressPositive} title={confirmText} /> : <Text />)
   }
 
   renderButtonOrLoading () {
-    const { showLoading, confirmText, negativeText, onPressPositive, onPressNegative } = this.props
+    const { showLoading, negativeText, onPressNegative } = this.props
     return (showLoading
       ? <Loader size='small' />
       : <View style={{ marginTop: 20, flexDirection: 'row' }}>
         <View style={{ paddingRight: 15 }}>
-          <Button onPress={onPressPositive} title={confirmText} />
+          {this.renderPositiveButton()}
         </View>
         <Button onPress={onPressNegative} title={negativeText} />
       </View>

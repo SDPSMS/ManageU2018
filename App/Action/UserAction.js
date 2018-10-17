@@ -93,7 +93,6 @@ export function register (email, name, password, role) {
         dispatch(registerError())
       })
   }
-  // TODO: Handle catch error
 }
 
 export function logout () {
@@ -103,7 +102,6 @@ export function logout () {
         dispatch(logoutSuccess())
         dispatch(NavigationActions.navigate('LoggedOutNav'))
       })
-      // TODO: Change the catch
       .catch(dispatch(logoutError()))
   }
 }
@@ -114,12 +112,6 @@ function viewSeminar () {
   }
 }
 
-// TODO: Check user type function (Call this after logged in or registered)
-export function checkUserType () {
-  // get user type instance from users database entity
-}
-
-// TODO: Need to check everytime updated as well, maybe we can do onChildChanged or onChildAdded.
 export function fetchMySeminar () {
   const {currentUser} = firebase.auth()
 
@@ -133,7 +125,6 @@ export function fetchMySeminar () {
   }
 }
 
-// TODO: Use this but can't directly use this in app.js.
 export function checkAuthenticated () {
   return (dispatch) => {
     dispatch(startAuthentication())

@@ -10,9 +10,6 @@ import * as types from '../../Types/userType'
 import MessageText from '../../Components/MessageText'
 import { Colors, Metrics, Fonts } from '../../Themes/'
 
-/**
- * TODO: Redundant class, similar to AddSeminar, try checking guys and see what you guys can do about it.
- */
 class EditUser extends Component {
   constructor (props) {
     super(props)

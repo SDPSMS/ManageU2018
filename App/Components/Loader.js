@@ -28,7 +28,6 @@ Loader.propTypes = {
 }
 
 const styles = {
-  // TODO: make it to the middle. (center)
   loader: {
     justifyContent: 'center',
     alignItems: 'center'

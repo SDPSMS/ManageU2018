@@ -3,7 +3,6 @@ import { TextInput } from 'react-native'
 import PropTypes from 'prop-types'
 import styles from './Styles/TextInputStyle'
 
-// TODO: Add font styling here, so it can be used anywhere.
 // size refer to the activity indicator's size.
 
 export default class TextFieldLarge extends Component {

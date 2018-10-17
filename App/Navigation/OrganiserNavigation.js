@@ -129,13 +129,12 @@ const OrganiserNav = DrawerNavigator(
 
 const OrganiserRootNav = StackNavigator(
   {
-    // TODO: Drawer Change in here instead of creating two nav.
     OrganiserNav: { screen: OrganiserNav }
   }, {
     navigationOptions: ({ navigation }) => ({
       headerStyle: { backgroundColor: Colours.defaultPrimaryColour },
       title: 'ManageU',
-      headerTintColor: Colours.textPrimaryColour ,
+      headerTintColor: Colours.textPrimaryColour,
       gesturesEnabled: false,
       headerLeft: DrawerButton(navigation)
     })

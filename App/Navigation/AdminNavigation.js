@@ -10,7 +10,6 @@ import DrawerButton from '../Components/DrawerButton'
 import Colours from '../Themes/Colors'
 
 // ADMIN ONLY LOGGED IN UTILITY
-// TODO: Only show this if user role when logged in is checked as admin.
 const UserManagementStack = StackNavigator(
   {
     UsersList: {
@@ -70,7 +69,6 @@ const AdminNav = DrawerNavigator(
 
 const AdminRootNav = StackNavigator(
   {
-    // TODO: Drawer Change in here instead of creating two nav.
     AdminNav: { screen: AdminNav }
   }, {
     navigationOptions: ({ navigation }) => ({

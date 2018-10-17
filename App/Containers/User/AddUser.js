@@ -17,27 +17,26 @@ class AddUser extends Component {
       role: ''
     }
   }
-  
-  // TODO: Create form component for add/updating seminar
+
   render () {
-    const { email, name, role } = this.state
-    
+    const {email, name, role} = this.state
+
     return (
       <View style={styles.containerHelp}>
         <Text style={styles.loginText}>Edit User</Text>
         <TextField
           value={email}
           placeholder='Email Address'
-          onChangeText={(email) => this.setState({ email })}
+          onChangeText={(email) => this.setState({email})}
         />
         <TextField
           value={name}
           placeholder='Name'
-          onChangeText={(name) => this.setState({ name })}
+          onChangeText={(name) => this.setState({name})}
         />
         <CustomDropdown
-          label='Role' value={this.state.role} onChangeText={(role) => this.setState({ role })}
-          data={[{ value: types.ORGANISER }]}
+          label='Role' value={this.state.role} onChangeText={(role) => this.setState({role})}
+          data={[{value: types.ORGANISER}]}
         />
         <View>
           <AccentButton text='Add' onPress={() => this.props.addNewUser(email, name, role)} />
@@ -47,4 +46,4 @@ class AddUser extends Component {
   }
 }
 
-export default connect(null, { addNewUser })(AddUser)
+export default connect(null, {addNewUser})(AddUser)
