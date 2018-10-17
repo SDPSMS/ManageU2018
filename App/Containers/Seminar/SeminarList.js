@@ -90,8 +90,6 @@ class SeminarList extends Component {
       <View style={[styles.container, style]}>
         {/* Filter area, it does not scroll */}
         <View>
-          <TextField placeholder='  SEARCH HERE!' value={this.state.search}
-            onChangeText={(email) => this.setState({ email })} />
           <RoundedButton text='Filter' onPress={() => this.setState({ showFilterModal: true })} />
         </View>
 
