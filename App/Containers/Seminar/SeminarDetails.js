@@ -43,12 +43,13 @@ class SeminarDetails extends Component {
     const { user, seminar } = this.props
     if (user !== null && seminar.ownerid === user.id) {
       return (
-        <View>
+        <View style={{flexDirection:"row", }}>
           <SimpleIcon
             name={'settings'}
             size={30}
             color='#517fa4'
             onPress={() => this.props.editSeminar(this.props.seminar)}
+            style={{marginLeft:20}}
           />
 
           <SimpleIcon
@@ -56,6 +57,7 @@ class SeminarDetails extends Component {
             size={30}
             color='#517fa4'
             onPress={() => this.props.deleteSeminar(this.props.seminar.id)}
+            style={{marginLeft:20}}
           />
         </View>
       )
@@ -105,11 +107,11 @@ class SeminarDetails extends Component {
 
     return (
       <View style={styles.container}>
-        <BackButton
-          onPress={() => this.props.unselectSeminar()}
-        />
-        {this.renderEditAndCancelButton()}
-
+        <View style ={{flexDirection:"row" }}>
+            <BackButton onPress={() => this.props.unselectSeminar()}/>
+           {this.renderEditAndCancelButton()}
+         
+        </View>
         {/* Title of Seminar */}
         <Text style={styles.semDetailsText}>{this.props.seminar.label}</Text>
         <Text />
