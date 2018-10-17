@@ -66,7 +66,6 @@ export default (state = initialState, action) => {
     case 'LOGOUT_ERROR':
       return {
         ...state
-        // TODO: Write error, for example, if error we show that there is an error signing out dialog.
       }
 
     case 'REGISTER_ERROR':

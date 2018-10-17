@@ -23,7 +23,6 @@ class Register extends Component {
     }
   }
 
-  // TODO: Handling register should be in the backend.
   handleRegister () {
     this.props.register(this.state.email, this.state.name, this.state.password, this.state.role)
   }

@@ -15,16 +15,6 @@ export function loadAllSeminars () {
   return (dispatch) => {
     dispatch(loadSeminarStart())
 
-    // const seminars = []
-    // const seminarRef = firebase.database().ref('seminars')
-    // seminarRef.orderByChild('startDate').once('value').then((snapshot) => {
-    //   snapshot.forEach(child => {
-    //     console.log(child.val())
-    //     seminars.push(child.val())
-    //   })
-    // })
-    //   .then(() => dispatch({type: 'LOAD_ALL_SEMINAR', payload: seminars}))
-
     const seminarRef = firebase.database().ref('seminars')
     seminarRef.orderByChild('startDate').once('value')
       .then((snapshot) => {
@@ -57,13 +47,11 @@ export function unselectSeminar () {
 
 export function editSeminar (seminar) {
   return (dispatch) => {
-    console.log(seminar)
     dispatch({type: 'EDIT_SEMINAR', payload: seminar})
     dispatch(NavigationActions.push('AbstractEdit'))
   }
 }
 
-// TODO: Instead of using this, wrap everything in one object called details
 export function saveSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity, ownername }) {
   const { currentUser } = firebase.auth()
   const startDate = ConvertToTimestamp(date, startTime)
@@ -187,7 +175,6 @@ export function loadAttendees (seminarId) {
           snapshot.forEach((attendeeid) => {
             const attendeesDetailsRef = firebase.database().ref(`attendees/${attendeeid.key}`)
             attendeesDetailsRef.once('value', snap => {
-              console.log(snap.val())
               a.push(snap.val())
             })
               .then(() => {
@@ -209,55 +196,8 @@ export function loadAttendees (seminarId) {
     } catch (err) {
       console.log(err)
     }
-
-    //   return score.once("value", snapshot => {
-    //     const res = snapshot.map(childSnapshot => childSnapshot.toJSON())
-    //     return dispatch({ type: GET_SCORES, payload: res });
-    //   })
-    // }
-    // firebase.database().ref(`attendeelist/${seminarId}`)
-    //   .once('value').then(async (snapshot) => {
-    //     let attendeeLists = []
-    //     snapshot.forEach((attendeeid) => {
-    //       firebase.database().ref(`attendees/${attendeeid.key}`)
-    //         .once('value').then((snapshot) => {
-    //           attendeeLists.push(snapshot.val())
-    //         })
-    //     })
-    //     dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeeLists})
-    //     dispatch(loadAttendeeFinish())
-    //   })
-    // .then(async (attendeeLists) => {
-    //   console.log(attendeeLists)
-    //   await dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeeLists})
-    //   // attendeesListAndDetails.length === 0 ? dispatch(loadAttendeeEmpty(attendeesListAndDetails)) : dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
-    //   await
-    // })
   }
 }
-
-// orderBy equalTo
-// firebase.database().ref(`attendeelist/${seminarId}`)
-//   .once('value')
-//   .then((snapshot) => {
-//     let attendeesListAndDetails = []
-//     snapshot.forEach((attendeeid) => {
-//       firebase.database().ref(`attendees/${attendeeid.key}`)
-//         .on('value', (snapshot) => {
-//           attendeesListAndDetails.push(snapshot.val())
-//           console.log(snapshot.val())
-//           return snapshot.val()
-//         })
-//     })
-//     // .then(() => {
-//
-//     //   // attendeesListAndDetails.length === 0 ? dispatch(loadAttendeeEmpty(attendeesListAndDetails)) : dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
-//     //   dispatch(loadAttendeeFinish())
-//     // })
-//   })
-//   .then((attendeesListAndDetails) => {
-//     console.log(attendeesListAndDetails)
-//   })
 
 export function deleteOldSeminars () {
   return (dispatch) => {
@@ -269,8 +209,8 @@ export function deleteOldSeminars () {
           firebase.database().ref(`attendeelist/${snap.val().id}`).once('value').then((snapshot) => {
             snapshot.forEach((attendee) => {
               firebase.database().ref(`attendees/${attendee.val().id}`).remove()
-                .then(() => console.log('success'))
-                .catch(() => console.log('failed'))
+                .then(() => console.log('success to delete old seminars'))
+                .catch(() => console.log('failed to delete old seminars'))
             })
           })
           firebase.database().ref(`attendeelist/${snap.val().id}`).remove()
@@ -364,25 +304,23 @@ async function sendEmail (emails) {
   await api.sendEmail(emails)
 }
 
-// TODO: Might not be right here.
 export function sendUpdateEmailNotif (seminarid) {
   return (dispatch) => {
     let attendeesListAndDetails = []
     // orderBy equalTo
     firebase.database().ref('attendeelist').child(seminarid)
       .once('value').then((snapshot) => {
-      snapshot.forEach((attendeeid) => {
-        firebase.database().ref('attendees').child(attendeeid.val())
-          .once('value').then((snapshot) => {
-          attendeesListAndDetails.push(snapshot.val())
-        })
+        snapshot.forEach((attendeeid) => {
+          firebase.database().ref('attendees').child(attendeeid.val())
+            .once('value').then((snapshot) => {
+              attendeesListAndDetails.push(snapshot.val())
+            })
           .then(() => {
             console.log(attendeesListAndDetails)
-            // TODO: Handle error and success! --> Probably do not need to because it is automatically after a seminar is updated
             sendEmail(attendeesListAndDetails).then(() => {
               console.log('success')
             })
-              .catch(() => console.log('Fail'))
+              .catch(() => console.log('Fail to send update email notifications'))
           })
       })
     })

@@ -7,11 +7,9 @@ export default (app) => {
   app.post('/staffs', (req, res) => {
     fs.readFile('../Server/Resources/utsdummydatabase.json', function read (err, data) {
       if (err) {
-        console.log('Register error!')
         return err
       }
       const dataSource = JSON.parse(data)
-      console.log(dataSource)
 
       for (let staff of dataSource.staffs) {
         if (staff.password === req.body.password && staff.email === req.body.email) {

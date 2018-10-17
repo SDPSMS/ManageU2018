@@ -92,9 +92,8 @@ const LoggedOutNav = StackNavigator(
     navigationOptions: ({ navigation }) => ({
       headerStyle: { backgroundColor: Colours.defaultPrimaryColour },
       gesturesEnabled: false,
-      // TODO: Gives styling to ManageU Text here.
       title: 'ManageU',
-      headerTintColor: Colours.textPrimaryColour ,
+      headerTintColor: Colours.textPrimaryColour,
       headerLeft: DrawerButton(navigation)
     })
   })

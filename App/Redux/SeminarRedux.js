@@ -71,7 +71,6 @@ export default (state = initialState, action) => {
         speaker: '',
         venue: '',
         venueCapacity: '',
-        // TODO: And then reorder?
         seminars: [...state.seminars, action.payload]
       }
 
@@ -107,7 +106,6 @@ export default (state = initialState, action) => {
     case 'SAVE_SEMINAR':
       return {
         ...state,
-        // TODO: Should change seminarSelected: null,
         // seminarSelected: null,
         abstract: '',
         date: '',
