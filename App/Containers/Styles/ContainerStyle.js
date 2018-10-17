@@ -112,5 +112,12 @@ export default StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10,
     marginTop: 10
+  },
+
+  loadingContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 })
