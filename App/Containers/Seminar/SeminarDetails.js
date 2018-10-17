@@ -43,8 +43,7 @@ class SeminarDetails extends Component {
     const { user, seminar } = this.props
     if (user !== null && seminar.ownerid === user.id) {
       return (
-        <View style={{alignItems: 'right',
-        alignSelf: 'right'}}>
+        <View>
           <SimpleIcon
             name={'settings'}
             size={30}

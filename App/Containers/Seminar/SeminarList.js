@@ -7,7 +7,8 @@ import {
   sortSeminarByVenue,
   getSeminarBySpeaker,
   getSeminarByOrganiserName,
-  startAddSeminar
+  startAddSeminar,
+  loadAllSeminars
 } from '../../Action/SeminarAction'
 import styles from '../Styles/ContainerStyle'
 import SeminarItem from './SeminarItem'
@@ -28,9 +29,9 @@ class SeminarList extends Component {
       venue: '',
       search: '',
       showFilterModal: false,
-      startDate: moment().format('L'),
+      startDate: moment().format('YYYY-MM-DD'),
       // Adding a day today.
-      endDate: moment().add('1', 'days').format('L'),
+      endDate: moment().add('1', 'days').format('YYYY-MM-DD'),
       speaker: '',
       organiser: ''
     }
@@ -92,6 +93,7 @@ class SeminarList extends Component {
           <TextField placeholder='  SEARCH HERE!' value={this.state.search}
                    onChangeText={(email) => this.setState({email})} />
           <RoundedButton text='Filter' onPress={() => this.setState({showFilterModal: true})} />
+          <RoundedButton text='Clear filter' onPress={() => this.props.loadAllSeminars()} />
         </View>
 
         {/* Modal diaglog for setting filters */}
@@ -149,5 +151,6 @@ export default connect(mapStateToProps, {
   sortSeminarByVenue,
   getSeminarBySpeaker,
   getSeminarByOrganiserName,
-  startAddSeminar
+  startAddSeminar,
+  loadAllSeminars
 })(SeminarList)

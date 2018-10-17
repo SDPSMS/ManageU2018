@@ -21,8 +21,10 @@ class AuthLoadingScreen extends Component {
   render () {
     // TODO: Instead of usign secondary container, we can create a new one and says like LaunchScreen Container?
     return (
-      <View style={styles.secondaryContainer}>
-        <Loader />
+      <View style={styles.loadingContainer}>
+        <Text style={styles.titleText} >Welcome to ManageU</Text>
+        <Text>Connecting to services...</Text>   
+        <Loader size='large'/>
       </View>
     )
   }

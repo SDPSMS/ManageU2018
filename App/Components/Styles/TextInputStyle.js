@@ -12,6 +12,17 @@ export default {
     borderRadius: 50,
     borderColor: 'white',
     backgroundColor: '#E7E6E8'
-  }
+  },
 
+  multilineContainer: {
+    padding: Metrics.baseMargin,
+    width: 355,
+    alignItems: 'center',
+    alignSelf: 'center',
+    margin: 5,
+    borderWidth: 5,
+    borderRadius: 20,
+    borderColor: 'white',
+    backgroundColor: '#E7E6E8'
+  }
 }

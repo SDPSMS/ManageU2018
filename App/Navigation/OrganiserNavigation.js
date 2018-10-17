@@ -16,6 +16,7 @@ import Help from '../Containers/Help'
 import DrawerButton from '../Components/DrawerButton'
 import AbstractEdit from '../Containers/Seminar/UpdateAndAddSeminarStack/AbstractEdit'
 import DateTimeEdit from '../Containers/Seminar/UpdateAndAddSeminarStack/DateTimeEdit'
+import Colours from '../Themes/Colors'
 
 const SeminarStack = StackNavigator(
   {
@@ -132,8 +133,9 @@ const OrganiserRootNav = StackNavigator(
     OrganiserNav: { screen: OrganiserNav }
   }, {
     navigationOptions: ({ navigation }) => ({
-      headerStyle: { backgroundColor: '#6495ed' },
+      headerStyle: { backgroundColor: Colours.defaultPrimaryColour },
       title: 'ManageU',
+      headerTintColor: Colours.textPrimaryColour ,
       gesturesEnabled: false,
       headerLeft: DrawerButton(navigation)
     })

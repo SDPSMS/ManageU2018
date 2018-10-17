@@ -38,6 +38,9 @@ class Register extends Component {
   render () {
     return (
       <View style={styles.mainContainer}>
+      <BackButton
+          onPress={() => this.props.unselectSeminar()}
+        />
         <View>
           <Text style={styles.subtitleText1}>You have been authenticated, Enter the email and password you want to use
             for

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList, Button, TouchableHighlight } from 'react-native'
+import { Platform, View, Text, FlatList, Button, TouchableHighlight, PermissionsAndroid } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Colors, Metrics, Fonts } from '../../Themes/'
@@ -13,13 +13,20 @@ import ModalDialog from '../../Components/ModalDialog'
 import TextField from '../../Components/TextField'
 import MessageText from '../../Components/MessageText'
 import { loadAttendees } from '../../Action/SeminarAction'
-import { deleteAttendee, editAttendee } from '../../Action/AttendeeAction'
+import {
+  deleteAttendee,
+  editAttendee,
+  editAttendeeStart,
+  deleteAttendeeStart,
+  closeModal
+} from '../../Action/AttendeeAction'
 import RNHTMLtoPDF from 'react-native-html-to-pdf'
 import CustomDropdown from '../../Components/Dropdown'
+import Share from 'react-native-share'
+import RNPrint from 'react-native-print'
 
 class AttendeeList extends Component {
   componentDidMount () {
-    this.props.loadAttendees(this.props.seminarId)
   }
 
   constructor (props) {
@@ -39,32 +46,37 @@ class AttendeeList extends Component {
   }
 
   editAttendees () {
-    const {name, status, selectedUser} = this.state
+    const {name, email, status, selectedUser} = this.state
     const {editAttendee} = this.props
-    this.state.name === '' ? this.setState({name: selectedUser.name}) : console.log('resetting value because empty')
-    this.state.role === '' ? this.setState({role: selectedUser.role}) : console.log('resetting value because empty')
 
-    editAttendee(selectedUser.id, name, status, selectedUser.email)
-    this.setState({showModal: false})
+    editAttendee(selectedUser.id, name, status, email)
   }
 
   deleteAttendees (attendeeId) {
     const {deleteAttendee, seminarId} = this.props
     deleteAttendee(seminarId, attendeeId)
-    this.setState({showModal: false})
   }
-
-  // createPDF () {
-  //   const {attendeeLists} = this.props
-  //   console.log(attendeeLists)
-  // }
 
   async createPDF () {
     const {attendeeLists} = this.props
     let text = ''
     attendeeLists.forEach((attendee) => {
-      text += `<div style="width:46%; height:15%; float:left; border: 1px solid black; border-radius: 2px; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
+      text += `<div style="width:46%; height:12.5%; float:left; border: 1px solid black; border-radius: 25px; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
     })
+
+    if (Platform.OS === 'android') {
+      const granted = await PermissionsAndroid.check(
+        'android.permission.WRITE_EXTERNAL_STORAGE'
+      )
+      if (!granted) {
+        const response = await PermissionsAndroid.request(
+          'android.permission.WRITE_EXTERNAL_STORAGE'
+        )
+        if (!response) {
+          return
+        }
+      }
+    }
 
     const html = `
                     <html style="height:100%;padding:0;margin:0;">
@@ -74,14 +86,36 @@ class AttendeeList extends Component {
                     </html>
                   `
 
-    let options = {
-      html: html,
-      fileName: 'attendees',
-      directory: 'Documents'
+    if (Platform.OS === 'ios') {
+      let options = {
+        html: html,
+        fileName: 'attendees',
+        directory: 'docs',
+        base64: true
+      }
+
+      await RNHTMLtoPDF.convert(options).then(filePath => {
+        console.log(filePath)
+        Share.open({
+          title: 'ManageU',
+          message: 'ManageU',
+          url: filePath.filePath,
+          subject: `Your Attendees List in Seminar ${this.props.seminar.label}`
+        })
+      })
     }
 
-    let file = await RNHTMLtoPDF.convert(options)
-    console.log(file.filePath)
+    if (Platform.OS === 'android') {
+      const results = await RNHTMLtoPDF.convert({
+        html,
+        fileName: 'attendees',
+        base64: true
+      })
+
+      await console.log(results.filePath)
+
+      await RNPrint.print({filePath: results.filePath})
+    }
   }
 
   renderPrintButton () {
@@ -104,14 +138,20 @@ class AttendeeList extends Component {
         dialogContent = (
           <View>
             <TextField
-              placeholder={'name'}
-              value={selectedUser.name}
+              placeholder={'Name'}
+              value={this.props.selectedAttendee.name}
               onChangeText={(name) => this.setState({name})}
+            />
+            <TextField
+              placeholder={'Email'}
+              value={this.props.selectedAttendee.email}
+              onChangeText={(email) => this.setState({email})}
             />
             <CustomDropdown data={this.state.dropDownMenu}
                             label={'Status'}
-                            value={selectedUser.status}
+                            value={this.props.selectedAttendee.status}
                             onChangeText={(status) => this.setState({status})} />
+            <MessageText>{this.props.error}</MessageText>
           </View>
         )
         break
@@ -131,8 +171,9 @@ class AttendeeList extends Component {
         confirmText='Confirm'
         negativeText='Cancel'
         onPressPositive={onPressPositive}
-        onPressNegative={() => this.setState({showModal: false})} children={dialogContent}
-        title={title} isVisible={this.state.showModal} />
+        showLoading={this.props.isLoading}
+        onPressNegative={() => this.props.closeModal()} children={dialogContent}
+        title={title} isVisible={this.props.showModal} />
     )
   }
 
@@ -145,7 +186,7 @@ class AttendeeList extends Component {
           onPress={() => this.props.navigation.popToTop()}
         />
         <Text style={styles.sectionText}>List of Attendees</Text>
-        <MessageText>{this.props.message}</MessageText>
+        <Text style={styles.subtitleText1}>Number of Attendees: {this.props.attendeeLists.length}</Text>
         <FlatList
           data={this.props.attendeeLists}
           renderItem={
@@ -160,17 +201,25 @@ class AttendeeList extends Component {
                 <View style={{flex: 1, marginRight: 10, marginTop: 12}}>
                   <View style={{marginBottom: 10}}>
                     <Button title='Edit'
-                            onPress={() => this.setState({showModal: true, selectedUser: item, mode: 'edit'})} />
+                            onPress={() => {
+                              this.setState({selectedUser: item, mode: 'edit'})
+                              this.props.editAttendeeStart(item.id)
+                            }} />
                   </View>
                   <View style={{marginBottom: 10}}>
                     <Button title='Delete' color={Colors.fire}
-                            onPress={() => this.setState({showModal: true, id: item.id, mode: 'delete'})} />
+                            onPress={() => {
+                              this.setState({id: item.id, mode: 'delete'})
+                              this.props.deleteAttendeeStart()
+                            }}
+                    />
                   </View>
                 </View>
               </View>
           }
           keyExtractor={(item, index) => index.toString()}
         />
+        <MessageText>{this.props.message}</MessageText>
         {this.renderDialog()}
         {this.renderPrintButton()}
       </View>
@@ -189,8 +238,18 @@ function mapStateToProps (state) {
     seminarId: state.seminar.seminarSelected.id,
     user: state.user.user,
     showModal: state.attendee.showModal,
-    message: state.attendee.message
+    error: state.attendee.error,
+    isLoading: state.attendee.isLoading,
+    message: state.attendee.message,
+    selectedAttendee: state.attendee.selectedAttendee
   }
 }
 
-export default connect(mapStateToProps, {deleteAttendee, loadAttendees, editAttendee})(AttendeeList)
+export default connect(mapStateToProps, {
+  deleteAttendee,
+  loadAttendees,
+  editAttendee,
+  editAttendeeStart,
+  deleteAttendeeStart,
+  closeModal
+})(AttendeeList)

@@ -60,7 +60,7 @@ export default StyleSheet.create({
 
   sectionText: {
     color: Colors.primaryTextColour,
-    padding: Metrics.baseMargin,
+    padding: Metrics.smallMargin,
     alignItems: 'center',
     alignSelf: 'center',
     fontWeight: 'bold',
@@ -114,5 +114,12 @@ export default StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
     fontStyle: 'italic'
+  },
+
+  loadingContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })

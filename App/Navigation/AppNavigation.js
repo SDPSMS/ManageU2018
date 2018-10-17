@@ -12,6 +12,7 @@ import Help from '../Containers/Help'
 import OrganiserHome from './OrganiserNavigation'
 import AdminNavigation from './AdminNavigation'
 import AttendeeList from '../Containers/Attendees/AttendeeList'
+import Colours from '../Themes/Colors'
 
 const AuthenticationStack = StackNavigator(
   {
@@ -89,10 +90,11 @@ const LoggedOutNav = StackNavigator(
     LoggedOutNav: { screen: LoggedOutDrawerNav }
   }, {
     navigationOptions: ({ navigation }) => ({
-      headerStyle: { backgroundColor: '#6495ed' },
+      headerStyle: { backgroundColor: Colours.defaultPrimaryColour },
       gesturesEnabled: false,
       // TODO: Gives styling to ManageU Text here.
       title: 'ManageU',
+      headerTintColor: Colours.textPrimaryColour ,
       headerLeft: DrawerButton(navigation)
     })
   })
