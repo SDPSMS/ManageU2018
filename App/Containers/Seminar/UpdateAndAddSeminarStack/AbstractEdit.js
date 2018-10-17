@@ -15,7 +15,7 @@ class AbstractEdit extends Component {
     const { abstract, label, speaker, venue, ownername } = this.props
 
     return (
-      <View style={{ marginLeft: 20, marginRight: 20 }}>
+      <View style={{ marginLeft: 20, marginRight: 20 }} >
         <BackButton onPress={() => this.props.navigation.pop()} />
         <Text style={styles.sectionText}>Edit Your Seminar</Text>
         <TextField

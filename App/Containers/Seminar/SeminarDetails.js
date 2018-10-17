@@ -134,10 +134,15 @@ class SeminarDetails extends Component {
 
         <Details placeholder='Organiser Name: ' detail={this.props.seminar.ownername} />
 
-        {this.showJoinButton()}
-        <View>
-          <RoundedButton text='Display Attendees'
-            onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
+      <Text></Text>
+      <Text></Text>
+      <Text></Text>
+      <Text></Text>
+
+        
+          {this.showJoinButton()}
+          <View> 
+          <RoundedButton text='Display Attendees' onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
         </View>
 
         <ModalDialog
