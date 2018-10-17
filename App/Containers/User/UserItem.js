@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { selectUser, deleteUser } from '../../Action/UserAction'
 import RoundedButton from '../../Components/RoundedButton'
-import { Colors, Metrics, Fonts } from '../../Themes/'
+import Details from '../../Components/Details'
+import styles from '../Styles/ContainerStyle'
 
 // we do not need the react lifecycle, so stateless components
 const UserItem = (props) => {
@@ -13,11 +14,11 @@ const UserItem = (props) => {
       // props.seminar refer to the seminar id.
       onPress={() => props.selectUser(props.user)}
     >
-      <View style={{ borderRadius: 1}}>
+      <View style={styles.listContainer}>
                 <View style={{flex: 2, marginLeft: 10, marginTop: 5}}>
-                <Text>Email: {props.user.email}</Text>
-                <Text>Name: {props.user.name}</Text>
-                <Text>Role: {props.user.role}</Text>
+                <Details placeholder='Email: ' detail={props.user.email} />
+                <Details placeholder='Name: ' detail={props.user.name} />
+                <Details placeholder='Role: ' detail={props.user.role} />
         </View>
         <RoundedButton text='Delete user' onPress={() => props.deleteUser(props.user.id)} />
       </View>
