@@ -77,7 +77,7 @@ export function attendSeminar (name, email, status, seminarid) {
         dispatch(attendSeminarFailed())
       }
     })
-      .catch(() => { console.log('failed!') })
+      .catch(() => { console.log('Attend Seminar failed!') })
   }
   //   dispatch({type: types.SEMINAR_ATTEND_START})
   //   const useridlists = []
@@ -119,7 +119,6 @@ export function deleteAttendee (seminarId, attendeeId) {
       .then(() => {
         firebase.database().ref(`attendees/${attendeeId}`).remove()
           .then(() => {
-            console.log(attendeeId)
             dispatch({ type: types.DELETE_ATTENDEE_SUCCESS, payload: attendeeId })
           })
       })

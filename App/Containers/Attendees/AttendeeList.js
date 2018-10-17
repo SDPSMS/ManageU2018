@@ -26,9 +26,6 @@ import Share from 'react-native-share'
 import RNPrint from 'react-native-print'
 
 class AttendeeList extends Component {
-  componentDidMount () {
-  }
-
   constructor (props) {
     super(props)
     this.state = {
@@ -59,7 +56,7 @@ class AttendeeList extends Component {
 
   async createPDF () {
     const { attendeeLists } = this.props
-    let text = ''
+    let text = null
     attendeeLists.forEach((attendee) => {
       text += `<div style="width:46%; height:12.5%; float:left; border: 1px solid black; border-radius: 25px; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
     })
@@ -78,6 +75,7 @@ class AttendeeList extends Component {
       }
     }
 
+    console.log(Platform.OS)
     const html = `
                     <html style="height:100%;padding:0;margin:0;">
                       <body style="height:100%;padding:0;margin: 0;">
@@ -95,7 +93,6 @@ class AttendeeList extends Component {
       }
 
       await RNHTMLtoPDF.convert(options).then(filePath => {
-        console.log(filePath)
         Share.open({
           title: 'ManageU',
           message: 'ManageU',
@@ -107,12 +104,9 @@ class AttendeeList extends Component {
 
     if (Platform.OS === 'android') {
       const results = await RNHTMLtoPDF.convert({
-        html,
-        fileName: 'attendees',
-        base64: true
+        html: html,
+        fileName: 'attendees'
       })
-
-      await console.log(results.filePath)
 
       await RNPrint.print({ filePath: results.filePath })
     }
@@ -121,7 +115,7 @@ class AttendeeList extends Component {
   renderPrintButton () {
     const { seminar, user } = this.props
     if (user != null && seminar != null) {
-      return seminar.ownerid === user.id ? (<Button title='Create PDF' onPress={() => this.createPDF()} />) : ''
+      return seminar.ownerid === user.id ? (<Button title='Create PDF' onPress={() => this.createPDF()} />) : <Text/>
     }
   }
 
@@ -178,15 +172,20 @@ class AttendeeList extends Component {
   }
 
   render () {
+    let length = 0
+    if (this.props.attendeeLists !== null) {
+      length = this.props.attendeeLists.length
+    }
     return (
       <View style={{ flex: 1 }}>
         <SimpleIcon
           name={'close'}
           size={30}
-          onPress={() => this.props.navigation.popToTop()}
+          onPress={() => this.props.navigation.popToTop()
+          }
         />
         <Text style={styles.sectionText}>List of Attendees</Text>
-        <Text style={styles.subtitleText1}>Number of Attendees: {this.props.attendeeLists.length}</Text>
+        <Text style={styles.subtitleText1}>Number of Attendees: {length}</Text>
         <MessageText>{this.props.message}</MessageText>
         <FlatList
           data={this.props.attendeeLists}
