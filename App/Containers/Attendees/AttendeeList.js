@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList, Button, TouchableHighlight } from 'react-native'
+import { Platform, View, Text, FlatList, Button, TouchableHighlight, PermissionsAndroid } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Colors, Metrics, Fonts } from '../../Themes/'
@@ -23,6 +23,7 @@ import {
 import RNHTMLtoPDF from 'react-native-html-to-pdf'
 import CustomDropdown from '../../Components/Dropdown'
 import Share from 'react-native-share'
+import RNPrint from 'react-native-print'
 
 class AttendeeList extends Component {
   componentDidMount () {
@@ -68,17 +69,19 @@ class AttendeeList extends Component {
       text += `<div style="width:46%; height:12.5%; float:left; border: 1px solid black; border-radius: 25px; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
     })
 
-    attendeeLists.forEach((attendee) => {
-      text += `<div style="width:46%; height:12.5%; float:left; border: 1px solid black; border-radius: 25px; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
-    })
-
-    attendeeLists.forEach((attendee) => {
-      text += `<div style="width:46%; height:12.5%; float:left; border: 1px solid black; border-radius: 25px; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
-    })
-
-    attendeeLists.forEach((attendee) => {
-      text += `<div style="width:46%; height:12.5%; float:left; border: 1px solid black; border-radius: 25px; margin: 5px; margin-left: 20px">` + '<h1 align="center">' + attendee.name + '</h1>' + `</div>`
-    })
+    if (Platform.OS === 'android') {
+      const granted = await PermissionsAndroid.check(
+        'android.permission.WRITE_EXTERNAL_STORAGE'
+      )
+      if (!granted) {
+        const response = await PermissionsAndroid.request(
+          'android.permission.WRITE_EXTERNAL_STORAGE'
+        )
+        if (!response) {
+          return
+        }
+      }
+    }
 
     const html = `
                     <html style="height:100%;padding:0;margin:0;">
@@ -88,20 +91,36 @@ class AttendeeList extends Component {
                     </html>
                   `
 
-    let options = {
-      html: html,
-      fileName: 'attendees',
-      directory: 'docs'
+    if (Platform.OS === 'ios') {
+      let options = {
+        html: html,
+        fileName: 'attendees',
+        directory: 'docs',
+        base64: true
+      }
+
+      await RNHTMLtoPDF.convert(options).then(filePath => {
+        console.log(filePath)
+        Share.open({
+          title: 'ManageU',
+          message: 'ManageU',
+          url: filePath.filePath,
+          subject: `Your Attendees List in Seminar ${this.props.seminar.label}`
+        })
+      })
     }
 
-    await RNHTMLtoPDF.convert(options).then(filePath => {
-      Share.open({
-        title: 'Share this!',
-        message: 'I just wanted to show you this:',
-        url: filePath.filePath,
-        subject: 'I am only visible for emails :('
+    if (Platform.OS === 'android') {
+      const results = await RNHTMLtoPDF.convert({
+        html,
+        fileName: 'attendees',
+        base64: true
       })
-    })
+
+      await console.log(results.filePath)
+
+      await RNPrint.print({filePath: results.filePath})
+    }
   }
 
   renderPrintButton () {

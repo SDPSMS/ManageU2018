@@ -36,14 +36,14 @@ export function loadAllSeminars () {
       })
       .then((seminarslists) => {
         console.log(seminarslists)
-        dispatch({ type: 'LOAD_ALL_SEMINAR', payload: seminarslists })
+        dispatch({type: 'LOAD_ALL_SEMINAR', payload: seminarslists})
       })
   }
 }
 
 export function selectSeminar (seminarId) {
   return (dispatch) => {
-    dispatch({ type: 'SELECTED_SEMINAR', payload: seminarId })
+    dispatch({type: 'SELECTED_SEMINAR', payload: seminarId})
     dispatch(NavigationActions.push('SeminarDetails'))
   }
 }
@@ -51,33 +51,36 @@ export function selectSeminar (seminarId) {
 export function unselectSeminar () {
   return (dispatch) => {
     dispatch(NavigationActions.goBack())
-    dispatch({ type: 'NONE_SELECTED' })
+    dispatch({type: 'NONE_SELECTED'})
   }
 }
 
 export function editSeminar (seminar) {
   return (dispatch) => {
     console.log(seminar)
-    dispatch({ type: 'EDIT_SEMINAR', payload: seminar })
+    dispatch({type: 'EDIT_SEMINAR', payload: seminar})
     dispatch(NavigationActions.push('AbstractEdit'))
   }
 }
 
 // TODO: Instead of using this, wrap everything in one object called details
-export function saveSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity, ownername }) {
-  const { currentUser } = firebase.auth()
+export function saveSeminar ({abstract, date, startTime, endTime, label, speaker, venue, id, venueCapacity, ownername}) {
+  const {currentUser} = firebase.auth()
   const startDate = ConvertToTimestamp(date, startTime)
   const endDate = ConvertToTimestamp(date, endTime)
   return (dispatch) => {
     firebase.database().ref(`seminars/${id}`)
-      .update({ abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownername })
+      .update({abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownername})
       .then(() => {
         // SAVE SEMINAR IN THE DATABASE
-        dispatch({ type: 'SAVE_SEMINAR', payload: { id, abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownername } })
+        dispatch({
+          type: 'SAVE_SEMINAR',
+          payload: {id, abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownername}
+        })
         dispatch(NavigationActions.navigate('SeminarList'))
       })
       .catch(() => {
-        dispatch({ type: types.SEMINAR_SAVE_FAILED })
+        dispatch({type: types.SEMINAR_SAVE_FAILED})
       })
     // handle catch as well.
   }
@@ -89,7 +92,7 @@ export function deleteSeminar (seminarId) {
       .remove()
       .then(() => {
         // after remove, we dispatch the actions so that the redux state can be updated.
-        dispatch({ type: 'DELETE_SEMINAR', payload: seminarId })
+        dispatch({type: 'DELETE_SEMINAR', payload: seminarId})
         dispatch(NavigationActions.navigate('SeminarList'))
       })
   }
@@ -102,23 +105,48 @@ export function startAddSeminar () {
   }
 }
 
-export function addNewSeminar ({ abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName }) {
-  const { currentUser } = firebase.auth()
+export function addNewSeminar ({abstract, date, startTime, endTime, label, speaker, venue, venueCapacity, organiserName}) {
+  const {currentUser} = firebase.auth()
   const startDate = ConvertToTimestamp(date, startTime)
   const endDate = ConvertToTimestamp(date, endTime)
   return (dispatch) => {
     // setting the current user uid (who created the seminar) as a foreign key in the seminars entity.
     const ref = firebase.database().ref('seminars').push()
     const key = ref.getKey()
-    ref.set({ id: key, abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownerid: currentUser.uid, ownername: organiserName })
+    ref.set({
+      id: key,
+      abstract,
+      startDate,
+      endDate,
+      label,
+      speaker,
+      venue,
+      venueCapacity,
+      ownerid: currentUser.uid,
+      ownername: organiserName
+    })
       .then(() => {
-        dispatch({ type: 'ADD_SEMINAR', payload: { id: key, abstract, startDate, endDate, label, speaker, venue, venueCapacity, ownerid: currentUser.uid, ownername: organiserName } })
+        dispatch({
+          type: 'ADD_SEMINAR',
+          payload: {
+            id: key,
+            abstract,
+            startDate,
+            endDate,
+            label,
+            speaker,
+            venue,
+            venueCapacity,
+            ownerid: currentUser.uid,
+            ownername: organiserName
+          }
+        })
         dispatch(NavigationActions.navigate('SeminarList'))
       })
   }
 }
 
-export function formUpdate ({ prop, value }) {
+export function formUpdate ({prop, value}) {
   return {
     type: 'FORM_UPDATE',
     payload: {
@@ -129,7 +157,7 @@ export function formUpdate ({ prop, value }) {
 
 export function loadAttendeeStart () {
   return (dispatch) => {
-    dispatch({ type: 'LIST_ATTENDEE_START' })
+    dispatch({type: 'LIST_ATTENDEE_START'})
     dispatch(NavigationActions.navigate('SeminarAttendeesView'))
   }
 }
@@ -150,26 +178,48 @@ function loadAttendeeEmpty (attendeesListAndDetails) {
 
 export function loadAttendees (seminarId) {
   return (dispatch) => {
-    let attendeesListAndDetails = []
-    // orderBy equalTo
+    let attendeeLists = []
     firebase.database().ref(`attendeelist/${seminarId}`)
-      .once('value').then((snapshot) => {
+      .on('value', (snapshot) => {
         snapshot.forEach((attendeeid) => {
           firebase.database().ref(`attendees/${attendeeid.key}`)
-            .once('value')
-            .then((snapshot) => {
-              attendeesListAndDetails.push(snapshot.val())
-            })
-            .then(() => {
-              dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
-              // attendeesListAndDetails.length === 0 ? dispatch(loadAttendeeEmpty(attendeesListAndDetails)) : dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
-              dispatch(loadAttendeeFinish())
+            .on('value', (snapshot) => {
+              attendeeLists.push(snapshot.val())
             })
         })
+        if (attendeeLists.length !== 0) {
+          dispatch({type: 'FETCH_ATTENDEE_LISTS', payload: attendeeLists})
+          // attendeesListAndDetails.length === 0 ? dispatch(loadAttendeeEmpty(attendeesListAndDetails)) : dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
+          dispatch(loadAttendeeFinish())
+        } else {
+          dispatch(loadAttendeeEmpty())
+        }
       })
-    dispatch(loadAttendeeEmpty())
   }
 }
+
+// orderBy equalTo
+// firebase.database().ref(`attendeelist/${seminarId}`)
+//   .once('value')
+//   .then((snapshot) => {
+//     let attendeesListAndDetails = []
+//     snapshot.forEach((attendeeid) => {
+//       firebase.database().ref(`attendees/${attendeeid.key}`)
+//         .on('value', (snapshot) => {
+//           attendeesListAndDetails.push(snapshot.val())
+//           console.log(snapshot.val())
+//           return snapshot.val()
+//         })
+//     })
+//     // .then(() => {
+//
+//     //   // attendeesListAndDetails.length === 0 ? dispatch(loadAttendeeEmpty(attendeesListAndDetails)) : dispatch({ type: 'FETCH_ATTENDEE_LISTS', payload: attendeesListAndDetails })
+//     //   dispatch(loadAttendeeFinish())
+//     // })
+//   })
+//   .then((attendeesListAndDetails) => {
+//     console.log(attendeesListAndDetails)
+//   })
 
 export function deleteOldSeminars () {
   return (dispatch) => {
@@ -195,6 +245,7 @@ export function deleteOldSeminars () {
       })
   }
 }
+
 // export function sortSeminarByDate () {
 //   return (dispatch) => {
 //     const sorted = []
@@ -220,9 +271,9 @@ export function sortSeminarByDate (startDate, endDate) {
     // Sort by date.
     firebase.database().ref('seminars').orderByChild('startDate').startAt(startDateTS).endAt(endDateTS).on('value', (snapshot) => {
       if (snapshot.val() != null && snapshot.val().length !== 0) {
-        dispatch({ type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val() })
+        dispatch({type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val()})
       } else {
-        dispatch({ type: types.SORT_SEMINAR_ERROR, message: 'No Seminar in the given date range found!' })
+        dispatch({type: types.SORT_SEMINAR_ERROR, message: 'No Seminar in the given date range found!'})
       }
     })
   }
@@ -233,9 +284,9 @@ export function sortSeminarByVenue (venue) {
     // Sort by date.
     firebase.database().ref('seminars').orderByChild('venue').equalTo(venue).on('value', (snapshot) => {
       if (snapshot.val() != null && snapshot.val().length !== 0) {
-        dispatch({ type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val() })
+        dispatch({type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val()})
       } else {
-        dispatch({ type: types.SORT_SEMINAR_ERROR, message: `No Seminar in the room ${venue} found!` })
+        dispatch({type: types.SORT_SEMINAR_ERROR, message: `No Seminar in the room ${venue} found!`})
       }
     })
   }
@@ -246,9 +297,9 @@ export function getSeminarBySpeaker (speaker) {
     // Sort by date.
     firebase.database().ref('seminars').orderByChild('speaker').equalTo(speaker).on('value', (snapshot) => {
       if (snapshot.val() != null && snapshot.val().length !== 0) {
-        dispatch({ type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val() })
+        dispatch({type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val()})
       } else {
-        dispatch({ type: types.SORT_SEMINAR_ERROR, message: `No Seminar with name ${speaker} found!` })
+        dispatch({type: types.SORT_SEMINAR_ERROR, message: `No Seminar with name ${speaker} found!`})
       }
     })
   }
@@ -259,7 +310,7 @@ export function getSeminarByOrganiserName (organiserName) {
   return (dispatch) => {
     firebase.database().ref('seminars').orderByChild('ownername').equalTo(organiserName).on('value', (snapshot) => {
       if (snapshot.val() != null) {
-        dispatch({ type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val() })
+        dispatch({type: types.SORT_SEMINAR_SUCCESS, payload: snapshot.val()})
       } else {
         dispatch({
           type: types.SORT_SEMINAR_ERROR,
@@ -282,20 +333,20 @@ export function sendUpdateEmailNotif (seminarid) {
     // orderBy equalTo
     firebase.database().ref('attendeelist').child(seminarid)
       .once('value').then((snapshot) => {
-        snapshot.forEach((attendeeid) => {
-          firebase.database().ref('attendees').child(attendeeid.val())
-            .once('value').then((snapshot) => {
-              attendeesListAndDetails.push(snapshot.val())
-            })
-            .then(() => {
-              console.log(attendeesListAndDetails)
-              // TODO: Handle error and success! --> Probably do not need to because it is automatically after a seminar is updated
-              sendEmail(attendeesListAndDetails).then(() => {
-                console.log('success')
-              })
-                .catch(() => console.log('Fail'))
-            })
+      snapshot.forEach((attendeeid) => {
+        firebase.database().ref('attendees').child(attendeeid.val())
+          .once('value').then((snapshot) => {
+          attendeesListAndDetails.push(snapshot.val())
         })
+          .then(() => {
+            console.log(attendeesListAndDetails)
+            // TODO: Handle error and success! --> Probably do not need to because it is automatically after a seminar is updated
+            sendEmail(attendeesListAndDetails).then(() => {
+              console.log('success')
+            })
+              .catch(() => console.log('Fail'))
+          })
       })
+    })
   }
 }

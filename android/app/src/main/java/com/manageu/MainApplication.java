@@ -3,6 +3,7 @@ package com.manageu;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.christopherdro.RNPrint.RNPrintPackage;
 import cl.json.RNSharePackage;
 import com.christopherdro.htmltopdf.RNHTMLtoPDFPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNPrintPackage(),
             new RNSharePackage(),
             new RNHTMLtoPDFPackage(),
             new ReactNativeConfigPackage(),
