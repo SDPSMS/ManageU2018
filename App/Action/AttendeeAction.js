@@ -67,7 +67,7 @@ export function attendSeminar (name, email, status, seminarid) {
               const newAttendee = firebase.database().ref('attendees').push({ name, status, email })
               firebase.database().ref(`attendees/${newAttendee.getKey()}`).update({ id: newAttendee.getKey() })
               firebase.database().ref(`attendeelist/${seminarid}/${newAttendee.getKey()}`).set({ id: newAttendee.getKey() })
-                .then(() => dispatch(attendSeminarSuccess(name, status, email, seminarid)))
+                .then(() => dispatch(attendSeminarSuccess(name, status, email, newAttendee.getKey())))
             }
           })
       } else {

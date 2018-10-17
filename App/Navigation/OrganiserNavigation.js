@@ -68,6 +68,12 @@ const MySeminarStack = StackNavigator(
     SeminarDetails: {
       screen: SeminarDetails
     },
+    AbstractEdit: {
+      screen: AbstractEdit
+    },
+    DateTimeEdit: {
+      screen: DateTimeEdit
+    },
     Print: {
       screen: Print
     }

@@ -37,7 +37,6 @@ class DateTimeEdit extends Component {
       venueCpct = venueCapacity
     }
 
-    console.log(id)
     this.props.sendUpdateEmailNotif(id)
     this.props.saveSeminar({ abstract, date, startTime, endTime, label, speaker, venue: vnue, id, venueCapacity: venueCpct, ownername: val, host, seminardesc })
   }
