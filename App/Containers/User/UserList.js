@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import RoundedButton from '../../Components/RoundedButton'
 import UserItem from './UserItem'
 import styles from '../Styles/ContainerStyle'
-import { Colors, Metrics, Fonts } from '../../Themes/'
+
 
 class UserList extends Component {
   componentDidMount () {
@@ -29,17 +29,18 @@ class UserList extends Component {
           }
           keyExtractor={(item, index) => index.toString()}
         />
+        <RoundedButton text='Add new User' onPress={() => this.props.navigation.push('AddUser')} />
           <Text></Text>
-          <RoundedButton text='Add new User' onPress={() => this.props.navigation.push('AddUser')} />
-          <Text />
-          <Text />
-          <Text />
-          <Text />
-          <Text />
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
+          
         </ScrollView>
-
-      </View>
-
+        
+        
+        </View>
     )
   }
 }

@@ -48,12 +48,14 @@ class SeminarDetails extends Component {
           <SimpleIcon
             name={'settings'}
             size={30}
+            color='#517fa4'
             onPress={() => this.props.editSeminar(this.props.seminar)}
           />
 
           <SimpleIcon
             name={'minus'}
             size={30}
+            color='#517fa4'
             onPress={() => this.props.deleteSeminar(this.props.seminar.id)}
           />
         </View>

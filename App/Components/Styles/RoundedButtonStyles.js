@@ -5,11 +5,12 @@ export default StyleSheet.create({
   button: {
     alignItems: 'center',
     alignSelf: 'center',
-    width: 330,
+    width: 300,
     height: 42,
     borderRadius: 50,
     marginHorizontal: Metrics.section,
     marginVertical: 3,
+    marginBottom: 5,
     backgroundColor: Colors.defaultPrimaryColour,
     justifyContent: 'center'
 

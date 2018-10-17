@@ -75,7 +75,6 @@ class AttendeeList extends Component {
       }
     }
 
-    console.log(Platform.OS)
     const html = `
                     <html style="height:100%;padding:0;margin:0;">
                       <body style="height:100%;padding:0;margin: 0;">
@@ -141,6 +140,11 @@ class AttendeeList extends Component {
               value={this.props.selectedAttendee.email}
               onChangeText={(email) => this.setState({ email })}
             />
+            <TextField
+              placeholder={'Email'}
+              value={this.props.selectedAttendee.email}
+              onChangeText={(email) => this.setState({email})}
+            />
             <CustomDropdown data={this.state.dropDownMenu}
               label={'Status'}
               value={this.props.selectedAttendee.status}
@@ -185,25 +189,25 @@ class AttendeeList extends Component {
           }
         />
         <Text style={styles.sectionText}>List of Attendees</Text>
-        <Text style={styles.subtitleText1}>Number of Attendees: {length}</Text>
-        <MessageText>{this.props.message}</MessageText>
+        <Text style={styles.subtitleText1}>Number of Attendees: {this.props.attendeeLists.length}</Text>
         <FlatList
           data={this.props.attendeeLists}
           renderItem={
-            ({ item }) =>
-              <View style={{ flexDirection: 'row', margin: 10, borderBottomWidth: 3, borderBottomColor: Colors.cloud }}>
-                <View style={{ flex: 2, marginLeft: 10, marginTop: 5 }}>
-                  <Text>Email: {item.email}</Text>
-                  <Text>Name: {item.name}</Text>
-                  <Text>Status: {item.status}</Text>
+            ({item}) =>
+              <View style={{flexDirection: 'row', margin: 10, borderBottomWidth: 3,
+              borderTopWidth: 3, borderColor: Colors.cloud}}>
+                <View style={{flex: 2, marginLeft: 10, marginTop: 7}}>
+                  <Text style={{fontSize: 20, color: 'black'}}>Email: {item.email}</Text>
+                  <Text style={{fontSize: 20, color: 'black'}}>Name: {item.name}</Text>
+                  <Text style={{fontSize: 20, color: 'black'}}>Status: {item.status}</Text>
                 </View>
-                <View style={{ flex: 1, marginRight: 10 }}>
-                  <View style={{ marginBottom: 10 }}>
+                <View style={{flex: 1, marginRight: 10, marginTop: 12}}>
+                  <View style={{marginBottom: 10}}>
                     <Button title='Edit'
-                      onPress={() => {
-                        this.setState({ selectedUser: item, mode: 'edit' })
-                        this.props.editAttendeeStart(item.id)
-                      }} />
+                            onPress={() => {
+                              this.setState({selectedUser: item, mode: 'edit'})
+                              this.props.editAttendeeStart(item.id)
+                            }} />
                   </View>
                   <View style={{ marginBottom: 10 }}>
                     <Button title='Delete' color={Colors.fire}
@@ -218,6 +222,7 @@ class AttendeeList extends Component {
           }
           keyExtractor={(item, index) => index.toString()}
         />
+        <MessageText>{this.props.message}</MessageText>
         {this.renderDialog()}
         {this.renderPrintButton()}
       </View>

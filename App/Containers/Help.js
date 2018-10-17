@@ -6,7 +6,7 @@ import RoundedButton from '../Components/RoundedButton'
 export default class Help extends Component {
   render () {
     return (
-      <View style={styles.container}>
+      <View style={styles.containerHelp}>
         <RoundedButton text='Online Help' onPress={() => { Linking.openURL('https://google.com/') }} />
         <ScrollView>
           <Text style={styles.sectionText}>Need help?</Text>
@@ -45,12 +45,11 @@ export default class Help extends Component {
            - If you wish to edit a seminar, open the seminar's detail view, then press on the 'Edit' button.
              Once you have made changes, press the 'done' button and the changes will be saved.
           </Text>
-          <Text />
-          <Text />
-          <Text />
-        </ScrollView>
-        <RoundedButton text='Online Help' />
-
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
+          </ScrollView>
+          <RoundedButton text='Online Help' onPress={() => { Linking.openURL('https://google.com/')}} />
       </View>
     )
   }

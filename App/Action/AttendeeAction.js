@@ -38,7 +38,7 @@ export function attendSeminarFinish () {
 
 export function attendSeminar (name, email, status, seminarid) {
   return (dispatch) => {
-    dispatch({ type: types.SEMINAR_ATTEND_START })
+    dispatch({type: types.SEMINAR_ATTEND_START})
     checkStudentsDatabaseForRegister(email).then((response) => {
       if (response.ok) {
         const useridlists = []

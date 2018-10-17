@@ -20,7 +20,7 @@ export default class TextFieldLarge extends Component {
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secure}
-        multiline
+        multiline={true}
         numberOfLines={4}
         underlineColorAndroid='transparent'
       />

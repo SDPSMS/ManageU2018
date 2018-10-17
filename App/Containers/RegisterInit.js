@@ -34,7 +34,7 @@ class RegisterInit extends Component {
     return (
       <View style={styles.mainContainer}>
         <View>
-          <Text style={styles.sectionText}>Register</Text>
+          <Text style={styles.loginText}>Register</Text>
           <Text style={styles.subtitleText1}>Authenticate your UTS Email and password to sign up</Text>
           <Text style={styles.subtitleText2}>Please note that only UTS Staff may sign up</Text>
           <TextField placeholder=' Email' value={this.state.email}
