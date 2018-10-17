@@ -43,7 +43,7 @@ class SeminarDetails extends Component {
     const {user, seminar} = this.props
     if (user !== null && seminar.ownerid === user.id) {
       return (
-        <View style={{flexDirection: 'row',}}>
+        <View style={{flexDirection: 'row'}}>
           <SimpleIcon
             name={'settings'}
             size={30}
@@ -112,11 +112,6 @@ class SeminarDetails extends Component {
           {this.renderEditAndCancelButton()}
 
         </View>
-        {/* Title of Seminar */}
-        <Text style={styles.semDetailsText}>{this.props.seminar.label}</Text>
-        <Text />
-        {/* Seminar details */}
-        <Details placeholder='Speaker: ' style={styles.seminardetailsText} detail={this.props.seminar.speaker} />s
 
         {/* Title of Seminar */}
         <Text style={styles.semDetailsText}>{this.props.seminar.label}</Text>
@@ -144,32 +139,18 @@ class SeminarDetails extends Component {
         <Text />
         <Text />
 
-      </ScrollView>
+        {this.showJoinButton()}
+        <View>
+          <RoundedButton text='Display Attendees'
+                         onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
+        </View>
 
-    {this.showJoinButton()}
-    <View>
-      <RoundedButton text='Display Attendees'
-                     onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
-    </View>
-
-    < ModalDialog
-    onPressPositive = {()
-  =>
-    this.attendSeminar()
-  }
-    onPressNegative = {()
-  =>
-    this.finishAttendSeminar()
-  }
-    children = {dialogContent}
-    title = 'Join a Seminar'
-    isVisible = {this.state.showModal
-  }
-    showLoading = {this.props.isLoading
-  }
-    />
-  </View>
-  )
+        <ModalDialog
+          onPressPositive={() => this.attendSeminar()}
+          onPressNegative={() => this.finishAttendSeminar()} children={dialogContent}
+          title='Join a Seminar' isVisible={this.state.showModal} showLoading={this.props.isLoading} />
+      </View>
+    )
   }
 
   render () {

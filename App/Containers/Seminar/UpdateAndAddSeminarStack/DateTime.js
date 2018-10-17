@@ -9,6 +9,7 @@ import MyTimePicker from '../../../Components/TimePicker'
 import styles from '../../Styles/ContainerStyle'
 import venueData from './venueData'
 import SearchDropdown from '../../../Components/SearchableDropdown'
+import BackButton from '../../../Components/BackButton'
 
 class DateTime extends Component {
   constructor (props) {
@@ -40,9 +41,8 @@ class DateTime extends Component {
     const { date, startTime, endTime, venue } = this.props
 
     return (
-      
       <View style={{ marginLeft: 20, marginRight: 20 }}>
-      <BackButton onPress={() => this.props.navigation.pop()} />
+        <BackButton onPress={() => this.props.navigation.pop()} />
         <Text style={styles.sectionText}>Choose Your Seminar Time</Text>
         <MyDatePicker date={date} onDateChange={(value) => this.props.formUpdate({ prop: 'date', value })} />
         <MyTimePicker time={startTime} placeholder='Start Time'
