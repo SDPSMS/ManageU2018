@@ -7,6 +7,7 @@ import TextField from '../../Components/TextField'
 import * as types from '../../Types/userType'
 import CustomDropdown from '../../Components/Dropdown'
 import styles from '../Styles/ContainerStyle'
+import BackButton from '../../Components/BackButton'
 
 class AddUser extends Component {
   constructor (props) {
@@ -23,7 +24,8 @@ class AddUser extends Component {
 
     return (
       <View style={styles.containerHelp}>
-        <Text style={styles.loginText}>Edit User</Text>
+        <BackButton onPress={() => this.props.navigation.pop()} />
+        <Text style={styles.loginText}>Add User</Text>
         <TextField
           value={email}
           placeholder='Email Address'
