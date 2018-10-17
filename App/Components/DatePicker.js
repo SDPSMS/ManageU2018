@@ -17,11 +17,11 @@ export default class MyDatePicker extends Component {
 
     return (
       <DatePicker
-        style={{ width: 300, marginLeft: 10, marginRight: 10, borderWidth: 2, borderColor: 'red' }}
-        date={date}
+        style={{ width: 300, alignItems: 'center', alignSelf: 'center',  marginVertical: 5,borderWidth: 2, borderColor: 'red' }}
         mode='date'
         showIcon={false}
         placeholder='Select Date'
+        date={date}
         format={format}
         // Will need to set this to current date
         minDate={minimumDate}

@@ -150,13 +150,14 @@ class AttendeeList extends Component {
           data={this.props.attendeeLists}
           renderItem={
             ({item}) =>
-              <View style={{flexDirection: 'row', margin: 10, borderBottomWidth: 3, borderBottomColor: Colors.cloud}}>
-                <View style={{flex: 2, marginLeft: 10, marginTop: 5}}>
-                  <Text>Email: {item.email}</Text>
-                  <Text>Name: {item.name}</Text>
-                  <Text>Status: {item.status}</Text>
+              <View style={{flexDirection: 'row', margin: 10, borderBottomWidth: 3,
+              borderTopWidth: 3, borderColor: Colors.cloud}}>
+                <View style={{flex: 2, marginLeft: 10, marginTop: 7}}>
+                  <Text style={{fontSize: 20, color: 'black'}}>Email: {item.email}</Text>
+                  <Text style={{fontSize: 20, color: 'black'}}>Name: {item.name}</Text>
+                  <Text style={{fontSize: 20, color: 'black'}}>Status: {item.status}</Text>
                 </View>
-                <View style={{flex: 1, marginRight: 10}}>
+                <View style={{flex: 1, marginRight: 10, marginTop: 12}}>
                   <View style={{marginBottom: 10}}>
                     <Button title='Edit'
                             onPress={() => this.setState({showModal: true, selectedUser: item, mode: 'edit'})} />

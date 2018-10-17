@@ -77,7 +77,8 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     paddingTop: 100,
     paddingBottom: 30,
-    fontSize: 55
+    fontSize: 55,
+    fontStyle: 'italic'
   },
 
   subtitleText1: {
@@ -107,10 +108,11 @@ export default StyleSheet.create({
   semDetailsText: {
     color: Colors.primaryTextColour,
     fontWeight: 'bold',
-    fontSize: 35,
+    fontSize: 37,
     justifyContent: 'center', 
     textAlign: 'center',
     marginBottom: 10,
-    marginTop: 10
+    marginTop: 10,
+    fontStyle: 'italic'
   }
 })

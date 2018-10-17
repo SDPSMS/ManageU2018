@@ -6,8 +6,7 @@ import RoundedButton from '../Components/RoundedButton';
 export default class Help extends Component {
   render () {
     return (
-      <View style={styles.container}>
-        <RoundedButton text='Online Help' onPress={() => { Linking.openURL('https://google.com/')}} />
+      <View style={styles.containerHelp}>
         <ScrollView>
           <Text style={styles.sectionText}>Need help?</Text>
           <Text style={styles.titleText}>Getting Started</Text>
@@ -49,7 +48,7 @@ export default class Help extends Component {
           <Text></Text>
           <Text></Text>
           </ScrollView>
-          <RoundedButton text='Online Help' />
+          <RoundedButton text='Online Help' onPress={() => { Linking.openURL('https://google.com/')}} />
          
           
           

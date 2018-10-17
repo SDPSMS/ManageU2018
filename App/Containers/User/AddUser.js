@@ -6,6 +6,7 @@ import AccentButton from '../../Components/RoundedButton'
 import TextField from '../../Components/TextField'
 import * as types from '../../Types/userType'
 import CustomDropdown from '../../Components/Dropdown'
+import styles from '../Styles/ContainerStyle'
 
 class AddUser extends Component {
   constructor (props) {
@@ -16,15 +17,17 @@ class AddUser extends Component {
       role: ''
     }
   }
-
+  
   // TODO: Create form component for add/updating seminar
   render () {
     const { email, name, role } = this.state
+    
     return (
-      <View>
+      <View style={styles.containerHelp}>
+        <Text style={styles.loginText}>Edit User</Text>
         <TextField
           value={email}
-          placeholder='Email'
+          placeholder='Email Address'
           onChangeText={(email) => this.setState({ email })}
         />
         <TextField

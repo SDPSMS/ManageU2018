@@ -21,6 +21,7 @@ export default class BackButton extends Component {
       <SimpleIcon
         name={'close'}
         size={30}
+        color='#517fa4'
         onPress={onPress}
       />
     )

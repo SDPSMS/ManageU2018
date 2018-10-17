@@ -8,6 +8,7 @@ import TextField from '../../Components/TextField'
 import CustomDropdown from '../../Components/Dropdown'
 import * as types from '../../Types/userType'
 import MessageText from '../../Components/MessageText'
+import { Colors, Metrics, Fonts } from '../../Themes/'
 
 /**
  * TODO: Redundant class, similar to AddSeminar, try checking guys and see what you guys can do about it.
@@ -33,22 +34,28 @@ class EditUser extends Component {
     const { selectedUser } = this.props
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles}>
+        <View style={{padding: Metrics.baseMargin, backgroundColor: Colors.background,
+          marginBottom: 50}}>
+        <Text style={{color: Colors.primaryTextColour, alignSelf: 'center', 
+          fontWeight: 'bold', paddingTop: 50, paddingBottom: 30,  fontSize: 45,
+          fontStyle: 'italic'}}>EDIT USER</Text>
+          <Text>        Name </Text>
           <TextField
             placeholder={'name'}
             value={selectedUser.name}
             onChangeText={(name) => this.setState({ name })}
           />
-          <CustomDropdown
+          <CustomDropdown 
             label='Role' value={this.state.role} onChangeText={(role) => this.setState({ role })}
             data={[{ value: types.ORGANISER }]}
           />
-        </View>
-        <MessageText>{this.props.error}</MessageText>
-        <AccentButton
+          <MessageText>{this.props.error}</MessageText>
+          <AccentButton
           text={'Update'}
           onPress={this.onUpdatePressed.bind(this)}
         />
+        </View>
+        
       </ScrollView>
     )
   }

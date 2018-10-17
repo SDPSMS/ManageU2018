@@ -6,6 +6,7 @@ export default {
   dropdownContainer: {
     padding: 5
   },
+
   textInputStyle: {
     padding: 12,
     borderWidth: 1,

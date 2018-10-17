@@ -43,16 +43,19 @@ class SeminarDetails extends Component {
     const { user, seminar } = this.props
     if (user !== null && seminar.ownerid === user.id) {
       return (
-        <View>
+        <View style={{alignItems: 'right',
+        alignSelf: 'right'}}>
           <SimpleIcon
             name={'settings'}
             size={30}
+            color='#517fa4'
             onPress={() => this.props.editSeminar(this.props.seminar)}
           />
 
           <SimpleIcon
             name={'minus'}
             size={30}
+            color='#517fa4'
             onPress={() => this.props.deleteSeminar(this.props.seminar.id)}
           />
         </View>
