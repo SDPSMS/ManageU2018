@@ -40,7 +40,9 @@ class DateTime extends Component {
     const { date, startTime, endTime, venue } = this.props
 
     return (
+      
       <View style={{ marginLeft: 20, marginRight: 20 }}>
+      <BackButton onPress={() => this.props.navigation.pop()} />
         <Text style={styles.sectionText}>Choose Your Seminar Time</Text>
         <MyDatePicker date={date} onDateChange={(value) => this.props.formUpdate({ prop: 'date', value })} />
         <MyTimePicker time={startTime} placeholder='Start Time'

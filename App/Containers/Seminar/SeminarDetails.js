@@ -43,12 +43,13 @@ class SeminarDetails extends Component {
     const {user, seminar} = this.props
     if (user !== null && seminar.ownerid === user.id) {
       return (
-        <View>
+        <View style={{flexDirection: 'row',}}>
           <SimpleIcon
             name={'settings'}
             size={30}
             color='#517fa4'
             onPress={() => this.props.editSeminar(this.props.seminar)}
+            style={{marginLeft: 20}}
           />
 
           <SimpleIcon
@@ -56,6 +57,7 @@ class SeminarDetails extends Component {
             size={30}
             color='#517fa4'
             onPress={() => this.props.deleteSeminar(this.props.seminar.id)}
+            style={{marginLeft: 20}}
           />
         </View>
       )
@@ -105,53 +107,69 @@ class SeminarDetails extends Component {
 
     return (
       <View style={styles.container}>
-        <BackButton
-          onPress={() => this.props.unselectSeminar()}
-        />
-        {this.renderEditAndCancelButton()}
+        <View style={{flexDirection: 'row'}}>
+          <BackButton onPress={() => this.props.unselectSeminar()} />
+          {this.renderEditAndCancelButton()}
 
-        <ScrollView>
-
-          {/* Title of Seminar */}
-          <Text style={styles.semDetailsText}>{this.props.seminar.label}</Text>
-          <Details placeholder='Abstract: ' style={styles.seminardetailsText} detail={this.props.seminar.seminardesc} />
-          <Text />
-          {/* Seminar details */}
-          <Details placeholder='Speaker: ' style={styles.seminardetailsText} detail={this.props.seminar.speaker} />
-
-          {/* Abstract text */}
-          <Details placeholder='Speaker Bio: ' detail={this.props.seminar.abstract} />
-
-          {/* Seminar date */}
-          <Details style={styles.seminardetailsText} placeholder='Date: ' detail={date} />
-          {/* Seminar time */}
-          <Details placeholder='Time: ' detail={startTime + ' - ' + endTime} />
-
-          <Details placeholder='Venue: ' detail={this.props.seminar.venue} />
-
-          <Details placeholder='Venue Capacity: ' detail={this.props.seminar.venueCapacity} />
-
-          <Details placeholder='Organiser Name: ' detail={this.props.seminar.ownername} />
-
-          <Text />
-          <Text />
-          <Text />
-          <Text />
-
-        </ScrollView>
-
-        {this.showJoinButton()}
-        <View>
-          <RoundedButton text='Display Attendees'
-                         onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
         </View>
+        {/* Title of Seminar */}
+        <Text style={styles.semDetailsText}>{this.props.seminar.label}</Text>
+        <Text />
+        {/* Seminar details */}
+        <Details placeholder='Speaker: ' style={styles.seminardetailsText} detail={this.props.seminar.speaker} />s
 
-        <ModalDialog
-          onPressPositive={() => this.attendSeminar()}
-          onPressNegative={() => this.finishAttendSeminar()} children={dialogContent}
-          title='Join a Seminar' isVisible={this.state.showModal} showLoading={this.props.isLoading} />
-      </View>
-    )
+        {/* Title of Seminar */}
+        <Text style={styles.semDetailsText}>{this.props.seminar.label}</Text>
+        <Details placeholder='Abstract: ' style={styles.seminardetailsText} detail={this.props.seminar.seminardesc} />
+        <Text />
+        {/* Seminar details */}
+        <Details placeholder='Speaker: ' style={styles.seminardetailsText} detail={this.props.seminar.speaker} />
+
+        {/* Abstract text */}
+        <Details placeholder='Speaker Bio: ' detail={this.props.seminar.abstract} />
+
+        {/* Seminar date */}
+        <Details style={styles.seminardetailsText} placeholder='Date: ' detail={date} />
+        {/* Seminar time */}
+        <Details placeholder='Time: ' detail={startTime + ' - ' + endTime} />
+
+        <Details placeholder='Venue: ' detail={this.props.seminar.venue} />
+
+        <Details placeholder='Venue Capacity: ' detail={this.props.seminar.venueCapacity} />
+
+        <Details placeholder='Organiser Name: ' detail={this.props.seminar.ownername} />
+
+        <Text />
+        <Text />
+        <Text />
+        <Text />
+
+      </ScrollView>
+
+    {this.showJoinButton()}
+    <View>
+      <RoundedButton text='Display Attendees'
+                     onPress={() => this.props.navigation.navigate('SeminarAttendeesView')} />
+    </View>
+
+    < ModalDialog
+    onPressPositive = {()
+  =>
+    this.attendSeminar()
+  }
+    onPressNegative = {()
+  =>
+    this.finishAttendSeminar()
+  }
+    children = {dialogContent}
+    title = 'Join a Seminar'
+    isVisible = {this.state.showModal
+  }
+    showLoading = {this.props.isLoading
+  }
+    />
+  </View>
+  )
   }
 
   render () {
