@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import colours from '../Themes/Colors'
 import { ActivityIndicator, View } from 'react-native'
 
 /**
@@ -14,7 +15,7 @@ const Loader = ({ size }) => {
     <View styles={styles.loader}>
       <ActivityIndicator
         size={size || 'small'}
-        color={'#0000ff'}
+        color={colours.defaultPrimaryColour}
       />
     </View>
   )
