@@ -1,67 +1,84 @@
-#  ManageU
+# ManageU
+
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 
-* Standard compliant React Native App Utilizing [Ignite](https://github.com/infinitered/ignite)
+## Introduction
 
-## :arrow_up: How to Setup
+This is a project written for UTS Capstone Subject: Systems Development Project.
 
-**Step 1:** git clone this repo:
+### Team Composition
 
-**Step 2:** cd to the cloned repo:
+- Ziwei Tang – Project Leader
+- [Wilson Yu](https://github.com/unmentioned) – Project Vice Leader
+- [Limyandi Vicotrico](https://github.com/limyandi) – Technical Lead
+- [Jayden Liang](https://github.com/squabbi) – Librarian
+- Jacob Harris – Quality Assurance
+- [Charlie Park](https://github.com/charllieee) – Documentation
 
-**Step 3:** Install the Application with `yarn` or `npm i`
+### Background
+
+The UTS Faculty of Engineering and Information Technology (FEIT) run various seminars
+throughout the year. 
+UTS currently uses: 
+- Eventbrite and 
+- Ungerboek to help people gain knowledge of these seminars. 
+
+> Eventbrite is normally used for small events like workshops
+where the main goal is to register attendees. On the other hand, Ungerboek is used for larger
+events like conferences that run for several days, have hundreds of attendees, deal with
+conference fees and many more. 
+
+> While all of these full featured event management systems
+are very helpful, they might be a little bit too complex when the FEIT staff want to run a simple
+seminar. ManageU is an easy to use application which allows staff to create seminars quickly
+and easily, resolving the inconveniences of the current system.
+
+## User Interface Design
+
+![image](https://user-images.githubusercontent.com/19499685/90324446-2ec22380-dfae-11ea-95d6-f85e5440d0a2.png)
+![image](https://user-images.githubusercontent.com/19499685/90324444-2cf86000-dfae-11ea-90f9-df6916b52c6f.png)
+
+## Software Architecture
+
+The ManageU application is a Standard compliant React Native App Utilizing [Ignite](https://github.com/infinitered/ignite).
+
+The Flux architecture is used for the application, which utilises a unidirectional data flow.
+
+![image](https://user-images.githubusercontent.com/19499685/90324427-f3bff000-dfad-11ea-9765-ee8d925a4269.png)
+
+### Class Diagram
+
+![image](https://user-images.githubusercontent.com/19499685/90324429-f91d3a80-dfad-11ea-8b19-7f3475794a89.png)
+
+### Solution Architecture
+
+![image](https://user-images.githubusercontent.com/19499685/90324539-30d8b200-dfaf-11ea-8a32-b5cf845f2bd1.png)
 
 
-## :arrow_forward: How to Run App
+![SolutionArchitecture](https://user-images.githubusercontent.com/19499685/90324365-0128aa80-dfad-11ea-9566-aac899acc2e7.png)
 
-1. cd to the repo
-2. Run Build for either OS
-  * for iOS
-    * run `react-native run-ios`
-  * for Android
-    * Run Genymotion
-    * run `react-native run-android`
+## Utility Tools
 
-## :no_entry_sign: Standard Compliant
+The Agile Methodology was used to build the application. With 7 weeks available to complete the project, the timeframe for each sprint is two week, with evaluation after each sprint finish. Trello has been utilised to keep track of story and story points.
 
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
-This project adheres to Standard.  Our CI enforces this, so we suggest you enable linting to keep your project compliant during development.
+![image](https://user-images.githubusercontent.com/19499685/90324398-962ba380-dfad-11ea-863c-bde473f48a76.png)
 
-**To Lint on Commit**
+Each user story contains the following elements that will help the team be informed on the
+project sprint schedule.
 
-This is implemented using [husky](https://github.com/typicode/husky). There is no additional setup needed.
-
-**Bypass Lint**
-
-If you have to bypass lint for a special commit that you will come back and clean (pushing something to a branch etc.) then you can bypass git hooks with adding `--no-verify` to your commit command.
-
-**Understanding Linting Errors**
-
-The linting rules are from JS Standard and React-Standard.  [Regular JS errors can be found with descriptions here](http://eslint.org/docs/rules/), while [React errors and descriptions can be found here](https://github.com/yannickcr/eslint-plugin-react).
-
-## :closed_lock_with_key: Secrets
-
-This project uses [react-native-config](https://github.com/luggit/react-native-config) to expose config variables to your javascript code in React Native. You can store API keys
-and other sensitive information in a `.env` file:
-
-```
-API_URL=https://myapi.com
-GOOGLE_MAPS_API_KEY=abcdefgh
-```
-
-and access them from React Native like so:
-
-```
-import Secrets from 'react-native-config'
-
-Secrets.API_URL  // 'https://myapi.com'
-Secrets.GOOGLE_MAPS_API_KEY  // 'abcdefgh'
-```
-
-The `.env` file is ignored by git keeping those secrets out of your repo.
-
-### Get started:
-1. Copy .env.example to .env
-2. Add your config variables
-3. Follow instructions at [https://github.com/luggit/react-native-config#setup](https://github.com/luggit/react-native-config#setup)
-4. Done!
+1. Priority (Values: Red, Yellow, Green)
+This element signifies the priority of the user story using the high, medium and low rating
+based on the colour of the element which are red, yellow and green respectively.
+2. Completion Date and Status (Green, Grey)
+This element displays the deadline for the user story to be implemented. Once completed,
+the person responsible for this user story can change the element to green which shows that
+this user story is complete.
+3. Estimation (Values: 1 - 10)
+This element displays the difficulty or complexity to implement the user story, this also
+indicates how long it will take to implement where 1 is easy and quick while 10 is complex
+and will take time to complete.
+4. Assigned team member
+This element indicates who is responsible for the marked user story. Depending on the
+difficulty of the user story, multiple team members can be assigned to a single user story.
+This allows division of work much more easily and improve clarity of which tasks are assigned
+to whom.
